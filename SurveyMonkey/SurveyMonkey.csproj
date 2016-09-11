@@ -40,6 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Containers\ButtonsText.cs" />
+    <Compile Include="Containers\CustomVariable.cs" />
+    <Compile Include="Containers\Survey.cs" />
     <Compile Include="SurveyMonkeyApi.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
