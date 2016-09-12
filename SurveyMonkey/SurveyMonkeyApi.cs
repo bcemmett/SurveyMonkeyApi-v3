@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using SurveyMonkey.Containers;
 using System.Net;
+using System.Text;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -10,11 +11,21 @@ namespace SurveyMonkey
     {
         private string _apiKey;
         private string _oAuthSecret;
+        private IWebClient _webClient;
 
         public SurveyMonkeyApi(string apiKey, string oAuthSecret)
         {
             _apiKey = apiKey;
             _oAuthSecret = oAuthSecret;
+            _webClient = new LiveWebClient();
+            _webClient.Encoding = Encoding.UTF8;
+        }
+
+        internal SurveyMonkeyApi(string apiKey, string oAuthSecret, IWebClient webClient)
+        {
+            _apiKey = apiKey;
+            _oAuthSecret = oAuthSecret;
+            _webClient = webClient;
         }
 
         public List<Survey> GetSurveys()
@@ -28,30 +39,35 @@ namespace SurveyMonkey
 
         private JToken MakeApiRequest(string endpoint, Verb verb, RequestData data)
         {
+            ResetApiCommunicator();
             string result;
-            using (var client = new WebClient())
+
+            _webClient.Headers.Add("Content-Type", "application/json");
+            _webClient.Headers.Add("Authorization", "bearer " + _oAuthSecret);
+            _webClient.QueryString.Add("api_key", _apiKey);
+            if (verb == Verb.GET)
             {
-                client.Headers.Add("Content-Type", "application/json");
-                client.Headers.Add("Authorization", "bearer " + _oAuthSecret);
-                client.QueryString.Add("api_key", _apiKey);
-                if (verb == Verb.GET)
+                foreach (var item in data)
                 {
-                    foreach (var item in data)
-                    {
-                        client.QueryString.Add(item.Key, item.Value.ToString());
-                    }
-                    result = client.DownloadString(endpoint);
+                    _webClient.QueryString.Add(item.Key, item.Value.ToString());
                 }
-                else
-                {
-                    var settings = JsonConvert.SerializeObject(data);
-                    result = client.UploadString(endpoint, verb.ToString(), settings);
-                }
-                
-                var parsed = JObject.Parse(result);
-                return parsed["data"];
+                result = _webClient.DownloadString(endpoint);
             }
-        }  
+            else
+            {
+                var settings = JsonConvert.SerializeObject(data);
+                result = _webClient.UploadString(endpoint, verb.ToString(), settings);
+            }
+                
+            var parsed = JObject.Parse(result);
+            return parsed["data"];
+        }
+
+        private void ResetApiCommunicator()
+        {
+            _webClient.Headers.Clear();
+            _webClient.QueryString.Clear();
+        }
     }
 
     internal class RequestData : Dictionary<string, object>
