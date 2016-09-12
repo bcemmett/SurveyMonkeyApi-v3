@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SurveyMonkey.Containers
 {
+    [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
     public class Survey
     {
         public string Title { get; set; }

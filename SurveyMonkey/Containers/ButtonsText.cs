@@ -1,5 +1,8 @@
-﻿namespace SurveyMonkey.Containers
+﻿using Newtonsoft.Json;
+
+namespace SurveyMonkey.Containers
 {
+    [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
     public class ButtonsText
     {
         public string DoneButton { get; set; }
