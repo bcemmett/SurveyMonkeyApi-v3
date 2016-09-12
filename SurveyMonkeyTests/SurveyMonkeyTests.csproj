@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="GetSurveyTests.cs" />
     <Compile Include="MockWebClient.cs" />
+    <Compile Include="MockWebClientRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
