@@ -39,7 +39,7 @@ namespace SurveyMonkey
 
         private JToken MakeApiRequest(string endpoint, Verb verb, RequestData data)
         {
-            ResetApiCommunicator();
+            ResetWebClient();
             string result;
 
             _webClient.Headers.Add("Content-Type", "application/json");
@@ -63,7 +63,7 @@ namespace SurveyMonkey
             return parsed["data"];
         }
 
-        private void ResetApiCommunicator()
+        private void ResetWebClient()
         {
             _webClient.Headers.Clear();
             _webClient.QueryString.Clear();
