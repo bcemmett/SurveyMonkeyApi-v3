@@ -20,24 +20,34 @@ namespace SurveyMonkey
         public List<Survey> GetSurveys()
         {
             string endPoint = "https://api.surveymonkey.net/v3/surveys";
-            string verb = "GET";
+            var verb = Verb.GET;
             JToken result = MakeApiRequest(endPoint, verb, new RequestData());
             var surveys = result.ToObject<List<Survey>>();
             return surveys;
         }
 
-        private JToken MakeApiRequest(string endpoint, string verb, RequestData data)
+        private JToken MakeApiRequest(string endpoint, Verb verb, RequestData data)
         {
+            string result;
             using (var client = new WebClient())
             {
                 client.Headers.Add("Content-Type", "application/json");
                 client.Headers.Add("Authorization", "bearer " + _oAuthSecret);
                 client.QueryString.Add("api_key", _apiKey);
-                foreach (var item in data)
+                if (verb == Verb.GET)
                 {
-                    client.QueryString.Add(item.Key, item.Value.ToString());
+                    foreach (var item in data)
+                    {
+                        client.QueryString.Add(item.Key, item.Value.ToString());
+                    }
+                    result = client.DownloadString(endpoint);
                 }
-                string result = client.DownloadString(endpoint);
+                else
+                {
+                    var settings = JsonConvert.SerializeObject(data);
+                    result = client.UploadString(endpoint, verb.ToString(), settings);
+                }
+                
                 var parsed = JObject.Parse(result);
                 return parsed["data"];
             }
