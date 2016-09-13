@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using SurveyMonkey;
 using System.Diagnostics;
+using System.Threading;
 
 namespace SurveyMonkeyTests
 {
@@ -39,6 +40,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(repeatedResponse);
             client.Responses.Add(repeatedResponse);
             client.Responses.Add(repeatedResponse);
+            client.Responses.Add(repeatedResponse);
 
             var api = new SurveyMonkeyApi("key", "token", client);
 
@@ -58,6 +60,12 @@ namespace SurveyMonkeyTests
             api.GetSurveys();
             Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds - toleranceMilliseconds);
             Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds + toleranceMilliseconds);
+
+            //If some time has elapsed, there should be no delay
+            Thread.Sleep(1000);
+            stopwatch.Restart();
+            api.GetSurveys();
+            Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, toleranceMilliseconds);
         }
     }
 }
