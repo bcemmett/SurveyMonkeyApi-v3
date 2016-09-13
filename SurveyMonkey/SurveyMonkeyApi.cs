@@ -9,22 +9,26 @@ namespace SurveyMonkey
     public class SurveyMonkeyApi
     {
         private string _apiKey;
-        private string _oAuthSecret;
+        private string _oAuthToken;
         private IWebClient _webClient;
 
-        public SurveyMonkeyApi(string apiKey, string oAuthSecret)
+        public SurveyMonkeyApi(string apiKey, string oAuthToken)
         {
-            _apiKey = apiKey;
-            _oAuthSecret = oAuthSecret;
             _webClient = new LiveWebClient();
-            _webClient.Encoding = Encoding.UTF8;
+            SetupWebClient(apiKey, oAuthToken);
         }
 
-        internal SurveyMonkeyApi(string apiKey, string oAuthSecret, IWebClient webClient)
+        internal SurveyMonkeyApi(string apiKey, string oAuthToken, IWebClient webClient)
+        {
+            _webClient = webClient;
+            SetupWebClient(apiKey, oAuthToken);
+        }
+
+        private void SetupWebClient(string apiKey, string oAuthToken)
         {
             _apiKey = apiKey;
-            _oAuthSecret = oAuthSecret;
-            _webClient = webClient;
+            _oAuthToken = oAuthToken;
+            _webClient.Encoding = Encoding.UTF8;
         }
 
         public List<Survey> GetSurveys()
@@ -42,7 +46,7 @@ namespace SurveyMonkey
             string result;
 
             _webClient.Headers.Add("Content-Type", "application/json");
-            _webClient.Headers.Add("Authorization", "bearer " + _oAuthSecret);
+            _webClient.Headers.Add("Authorization", "bearer " + _oAuthToken);
             _webClient.QueryString.Add("api_key", _apiKey);
             if (verb == Verb.GET)
             {
