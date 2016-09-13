@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SurveyMonkey.Containers
+namespace SurveyMonkey.Containers.Enums
 {
     [JsonConverter(typeof(LaxEnumJsonConverter))]
     public enum ValidationType
