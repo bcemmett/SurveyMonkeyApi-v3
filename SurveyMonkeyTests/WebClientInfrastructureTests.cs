@@ -45,19 +45,19 @@ namespace SurveyMonkeyTests
             //Should be no rate limit first time
             stopwatch.Start();
             api.GetSurveys();
-            Assert.GreaterOrEqual(toleranceMilliseconds, stopwatch.ElapsedMilliseconds);
+            Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, toleranceMilliseconds);
 
             //Second request should be rate limited
             stopwatch.Restart();
             api.GetSurveys();
-            Assert.LessOrEqual(defaultRateLimitMilliseconds - toleranceMilliseconds, stopwatch.ElapsedMilliseconds);
-            Assert.GreaterOrEqual(defaultRateLimitMilliseconds + toleranceMilliseconds, stopwatch.ElapsedMilliseconds);
+            Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds - toleranceMilliseconds);
+            Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds + toleranceMilliseconds);
             
             //Check subsequent requests are rate limited too
             stopwatch.Restart();
             api.GetSurveys();
-            Assert.LessOrEqual(defaultRateLimitMilliseconds - toleranceMilliseconds, stopwatch.ElapsedMilliseconds);
-            Assert.GreaterOrEqual(defaultRateLimitMilliseconds + toleranceMilliseconds, stopwatch.ElapsedMilliseconds);
+            Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds - toleranceMilliseconds);
+            Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds + toleranceMilliseconds);
         }
     }
 }
