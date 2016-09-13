@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using SurveyMonkey.Containers;
 using System.Text;
+using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
@@ -11,6 +13,8 @@ namespace SurveyMonkey
         private string _apiKey;
         private string _oAuthToken;
         private IWebClient _webClient;
+        private DateTime _lastRequestTime = DateTime.MinValue;
+        private int _rateLimitDelay = 500;
 
         public SurveyMonkeyApi(string apiKey, string oAuthToken)
         {
@@ -42,6 +46,7 @@ namespace SurveyMonkey
 
         private JToken MakeApiRequest(string endpoint, Verb verb, RequestData data)
         {
+            RateLimit();
             ResetWebClient();
             string result;
 
@@ -62,8 +67,22 @@ namespace SurveyMonkey
                 result = _webClient.UploadString(endpoint, verb.ToString(), settings);
             }
                 
+            _lastRequestTime = DateTime.UtcNow;
+
             var parsed = JObject.Parse(result);
             return parsed["data"];
+        }
+
+        private void RateLimit()
+        {
+            TimeSpan timeSpan = DateTime.UtcNow - _lastRequestTime;
+            int elapsedTime = (int)timeSpan.TotalMilliseconds;
+            int remainingTime = _rateLimitDelay - elapsedTime;
+            if ((_lastRequestTime != DateTime.MinValue) && (remainingTime > 0))
+            {
+                Thread.Sleep(remainingTime);
+            }
+            _lastRequestTime = DateTime.UtcNow; //Also setting here as otherwise if an exception is thrown while making the request it wouldn't get set at all
         }
 
         private void ResetWebClient()
