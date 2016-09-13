@@ -46,12 +46,23 @@
   <ItemGroup>
     <Compile Include="Containers\ButtonsText.cs" />
     <Compile Include="Containers\CustomVariable.cs" />
+    <Compile Include="Containers\Headings.cs" />
+    <Compile Include="Containers\Image.cs" />
     <Compile Include="Containers\Page.cs" />
     <Compile Include="Containers\Question.cs" />
+    <Compile Include="Containers\RandomAssignment.cs" />
+    <Compile Include="Containers\Required.cs" />
+    <Compile Include="Containers\Sorting.cs" />
+    <Compile Include="Containers\SortingType.cs" />
     <Compile Include="Containers\Survey.cs" />
+    <Compile Include="Containers\Validation.cs" />
+    <Compile Include="Containers\ValidationType.cs" />
     <Compile Include="LiveWebClient.cs" />
     <Compile Include="IWebClient.cs" />
     <Compile Include="Json.cs" />
+    <Compile Include="QuestionFamily.cs" />
+    <Compile Include="QuestionSubtype.cs" />
+    <Compile Include="RequiredType.cs" />
     <Compile Include="SurveyMonkeyApi.Infrastructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Verb.cs" />
