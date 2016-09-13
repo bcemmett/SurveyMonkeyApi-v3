@@ -46,6 +46,8 @@
   <ItemGroup>
     <Compile Include="Containers\ButtonsText.cs" />
     <Compile Include="Containers\CustomVariable.cs" />
+    <Compile Include="Containers\Page.cs" />
+    <Compile Include="Containers\Question.cs" />
     <Compile Include="Containers\Survey.cs" />
     <Compile Include="LiveWebClient.cs" />
     <Compile Include="IWebClient.cs" />

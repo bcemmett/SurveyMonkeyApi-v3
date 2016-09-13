@@ -15,5 +15,15 @@ namespace SurveyMonkey
             var surveys = result["data"].ToObject<List<Survey>>();
             return surveys;
         }
+
+        public Survey GetSurveyOverview(long id)
+        {
+            string endPoint = "https://api.surveymonkey.net/v3/surveys/{0}";
+            var verb = Verb.GET;
+            var fullEndpoint = String.Format(endPoint, id);
+			JToken result = MakeApiRequest(fullEndpoint, verb, new RequestData());
+            var survey = result.ToObject<Survey>();
+            return survey;
+        }
     }
 }

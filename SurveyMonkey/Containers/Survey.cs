@@ -23,5 +23,7 @@ namespace SurveyMonkey.Containers
         public string CollectUrl { get; set; }
         public string AnalyzeUrl { get; set; }
         public string SummaryUrl { get; set; }
+        public int ResponseCount { get; set; }
+        public List<Page> Pages { get; set; }
     }
 }
