@@ -50,12 +50,13 @@
     <Compile Include="LiveWebClient.cs" />
     <Compile Include="IWebClient.cs" />
     <Compile Include="Json.cs" />
-    <Compile Include="SurveyMonkeyApi.cs" />
+    <Compile Include="SurveyMonkeyApi.Infrastructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Verb.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+    <Compile Include="SurveyMonkeyApi.Surveys.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -8,7 +8,7 @@ using Newtonsoft.Json.Linq;
 
 namespace SurveyMonkey
 {
-    public class SurveyMonkeyApi
+    public partial class SurveyMonkeyApi
     {
         private string _apiKey;
         private string _oAuthToken;
@@ -33,15 +33,6 @@ namespace SurveyMonkey
             _apiKey = apiKey;
             _oAuthToken = oAuthToken;
             _webClient.Encoding = Encoding.UTF8;
-        }
-
-        public List<Survey> GetSurveys()
-        {
-            string endPoint = "https://api.surveymonkey.net/v3/surveys";
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
-            var surveys = result.ToObject<List<Survey>>();
-            return surveys;
         }
 
         private JToken MakeApiRequest(string endpoint, Verb verb, RequestData data)
@@ -70,7 +61,7 @@ namespace SurveyMonkey
             _lastRequestTime = DateTime.UtcNow;
 
             var parsed = JObject.Parse(result);
-            return parsed["data"];
+            return parsed;
         }
 
         private void RateLimit()
