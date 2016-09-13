@@ -3,7 +3,7 @@
 namespace SurveyMonkey
 {
     [System.ComponentModel.DesignerCategory("")]
-    class LiveWebClient : WebClient, IWebClient
+    internal class LiveWebClient : WebClient, IWebClient
     {
     }
 }

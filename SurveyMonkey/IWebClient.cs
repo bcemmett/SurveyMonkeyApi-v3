@@ -4,7 +4,7 @@ using System.Text;
 
 namespace SurveyMonkey
 {
-    public interface IWebClient
+    internal interface IWebClient
     {
         WebHeaderCollection Headers { get; set; }
         NameValueCollection QueryString { get; set; }

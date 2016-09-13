@@ -1,6 +1,6 @@
 ﻿namespace SurveyMonkey
 {
-    public enum Verb
+    internal enum Verb
     {
         GET,
         POST
