@@ -17,7 +17,7 @@ namespace SurveyMonkey.Containers
         public long Id { get; set; }
         public string Href { get; set; }
         public ButtonsText ButtonsText { get; set; }
-        public List<CustomVariable> CustomVariables { get; set; }
+        public CustomVariable CustomVariables { get; set; } //todo work out how to deserialise multiple variables as a list
         public string Preview { get; set; }
         public string EditUrl { get; set; }
         public string CollectUrl { get; set; }
