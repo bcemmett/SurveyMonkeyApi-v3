@@ -17,5 +17,6 @@ namespace SurveyMonkey.Containers
         public Sorting Sorting { get; set; }
         public Validation Validation { get; set; }
         public bool Visible { get; set; }
+        public QuestionAnswer Answers { get; set; }
     }
 }

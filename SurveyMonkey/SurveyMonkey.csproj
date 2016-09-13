@@ -45,13 +45,17 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Containers\ButtonsText.cs" />
+    <Compile Include="Containers\Choice.cs" />
+    <Compile Include="Containers\Column.cs" />
     <Compile Include="Containers\CustomVariable.cs" />
     <Compile Include="Containers\Headings.cs" />
     <Compile Include="Containers\Image.cs" />
     <Compile Include="Containers\Page.cs" />
     <Compile Include="Containers\Question.cs" />
+    <Compile Include="Containers\QuestionAnswer.cs" />
     <Compile Include="Containers\RandomAssignment.cs" />
     <Compile Include="Containers\Required.cs" />
+    <Compile Include="Containers\Row.cs" />
     <Compile Include="Containers\Sorting.cs" />
     <Compile Include="Containers\SortingType.cs" />
     <Compile Include="Containers\Survey.cs" />

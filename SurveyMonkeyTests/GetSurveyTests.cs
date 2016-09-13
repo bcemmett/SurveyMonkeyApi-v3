@@ -102,6 +102,11 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(null, results.Pages.First().Questions.First().Sorting);
             Assert.AreEqual(null, results.Pages.First().Questions.First().Validation);
             Assert.AreEqual(true, results.Pages.First().Questions.First().Visible);
+
+            Assert.AreEqual(10568741072, results.Pages.Last().Questions.First().Answers.Choices.First().Id);
+            Assert.AreEqual(1, results.Pages.Last().Questions.First().Answers.Choices.First().Position);
+            Assert.AreEqual(true, results.Pages.Last().Questions.First().Answers.Choices.First().Visible);
+            Assert.AreEqual("CCC", results.Pages.Last().Questions.First().Answers.Choices.Last().Text);
         }
     }
 }

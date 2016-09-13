@@ -1,0 +1,14 @@
+﻿using Newtonsoft.Json;
+
+namespace SurveyMonkey.Containers
+{
+    [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
+    public class Row
+    {
+        public string Text { get; set; }
+        public int Position { get; set; }
+        public bool Visible { get; set; }
+        public bool Required { get; set; }
+        public string Type { get; set; }
+    }
+}
