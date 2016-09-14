@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using SurveyMonkey.Containers;
+using SurveyMonkey.Helpers;
 using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkey
@@ -11,19 +12,20 @@ namespace SurveyMonkey
         public List<Survey> GetSurveyList()
         {
             var settings = new GetSurveyListSettings();
-            return GetSurveyList(settings);
+            return GetSurveyListRequest(settings);
         }
 
         public List<Survey> GetSurveyList(GetSurveyListSettings settings)
         {
-            return GetSurveyListRequest();
+            return GetSurveyListRequest(settings);
         }
 
-        private List<Survey> GetSurveyListRequest()
+        private List<Survey> GetSurveyListRequest(GetSurveyListSettings settings)
         {
+            var requestData = PropertyCasingHelper.GetPopulatedProperties(settings);
             string endPoint = "https://api.surveymonkey.net/v3/surveys";
             var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            JToken result = MakeApiRequest(endPoint, verb, requestData);
             var surveys = result["data"].ToObject<List<Survey>>();
             return surveys;
         }
