@@ -2,12 +2,19 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using SurveyMonkey.Containers;
+using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi
     {
         public List<Survey> GetSurveyList()
+        {
+            var settings = new GetSurveyListSettings();
+            return GetSurveyList(settings);
+        }
+
+        public List<Survey> GetSurveyList(GetSurveyListSettings settings)
         {
             string endPoint = "https://api.surveymonkey.net/v3/surveys";
             var verb = Verb.GET;

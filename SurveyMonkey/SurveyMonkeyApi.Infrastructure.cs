@@ -1,10 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using SurveyMonkey.Containers;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkey
 {
@@ -81,9 +80,5 @@ namespace SurveyMonkey
             _webClient.Headers.Clear();
             _webClient.QueryString.Clear();
         }
-    }
-
-    internal class RequestData : Dictionary<string, object>
-    {
     }
 }
