@@ -47,7 +47,6 @@
     <Compile Include="Containers\ButtonsText.cs" />
     <Compile Include="Containers\Choice.cs" />
     <Compile Include="Containers\Column.cs" />
-    <Compile Include="Containers\CustomVariable.cs" />
     <Compile Include="Containers\Headings.cs" />
     <Compile Include="Containers\Image.cs" />
     <Compile Include="Containers\Page.cs" />
