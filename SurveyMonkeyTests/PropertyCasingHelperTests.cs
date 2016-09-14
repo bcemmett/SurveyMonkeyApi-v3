@@ -1,5 +1,8 @@
-﻿using NUnit.Framework;
+﻿using System;
+using NUnit.Framework;
+using SurveyMonkey.Enums;
 using SurveyMonkey.Helpers;
+using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkeyTests
 {
@@ -21,6 +24,24 @@ namespace SurveyMonkeyTests
         {
             Assert.AreEqual("DESC", PropertyCasingHelper.CamelCaseToUnderscore("DESC"));
             Assert.AreEqual("de_s_c", PropertyCasingHelper.CamelCaseToUnderscore("DeSC"));
+        }
+
+        [Test]
+        public void ObjectPropertiesAreProcessed()
+        {
+            var input = new GetSurveyListSettings
+            {
+                EndModifiedAt = new DateTime(2016, 5, 6),
+                Page = 5,
+                SortBy = GetSurveyListSortBy.DateModified,
+                SortOrder = GetSurveyListSortOrder.DESC
+            };
+            var result = PropertyCasingHelper.GetPopulatedProperties(input);
+            Assert.AreEqual(new DateTime(2016, 5, 6), result["end_modified_at"]);
+            Assert.AreEqual(5, result["page"]);
+            Assert.AreEqual("date_modified", result["sort_by"]);
+            Assert.AreEqual("DESC", result["sort_order"]);
+            Assert.AreEqual(4, result.Count);
         }
     }
 }
