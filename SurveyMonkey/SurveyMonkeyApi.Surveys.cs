@@ -12,17 +12,49 @@ namespace SurveyMonkey
         public List<Survey> GetSurveyList()
         {
             var settings = new GetSurveyListSettings();
-            return GetSurveyListRequest(settings);
+            return GetSurveyListPager(settings);
         }
 
         public List<Survey> GetSurveyList(GetSurveyListSettings settings)
         {
-            return GetSurveyListRequest(settings);
+            return GetSurveyListPager(settings);
         }
 
-        private List<Survey> GetSurveyListRequest(GetSurveyListSettings settings)
+        private List<Survey> GetSurveyListPager(GetSurveyListSettings settings)
         {
-            var requestData = PropertyCasingHelper.GetPopulatedProperties(settings);
+            //Get the specific page & quantity
+            if (settings.Page.HasValue || settings.PerPage.HasValue)
+            {
+                var requestData = PropertyCasingHelper.GetPopulatedProperties(settings);
+                return GetSurveyListRequest(requestData);
+            }
+
+            //Auto-page
+            const int maxSurveysPerPage = 1000;
+            var surveys = new List<Survey>();
+            bool cont = true;
+            int page = 1;
+            while (cont)
+            {
+                settings.Page = page;
+                settings.PerPage = maxSurveysPerPage;
+                var requestData = PropertyCasingHelper.GetPopulatedProperties(settings);
+                var newSurveys = GetSurveyListRequest(requestData);
+                if (newSurveys.Count > 0)
+                {
+                    surveys.AddRange(newSurveys);
+                }
+                if (newSurveys.Count < maxSurveysPerPage)
+                {
+                    cont = false;
+                }
+                page++;
+            }
+            return surveys;
+        }
+
+        private List<Survey> GetSurveyListRequest(RequestData requestData)
+        {
             string endPoint = "https://api.surveymonkey.net/v3/surveys";
             var verb = Verb.GET;
             JToken result = MakeApiRequest(endPoint, verb, requestData);
