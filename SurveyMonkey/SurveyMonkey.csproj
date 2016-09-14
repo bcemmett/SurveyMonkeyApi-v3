@@ -51,7 +51,7 @@
     <Compile Include="Containers\Image.cs" />
     <Compile Include="Containers\Page.cs" />
     <Compile Include="Containers\Question.cs" />
-    <Compile Include="Containers\QuestionAnswer.cs" />
+    <Compile Include="Containers\QuestionAnswers.cs" />
     <Compile Include="Containers\RandomAssignment.cs" />
     <Compile Include="Containers\Required.cs" />
     <Compile Include="Containers\Row.cs" />

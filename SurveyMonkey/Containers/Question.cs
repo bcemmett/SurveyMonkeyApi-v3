@@ -18,6 +18,6 @@ namespace SurveyMonkey.Containers
         public bool Visible { get; set; }
         public bool ForcedRanking { get; set; }
         public string Href { get; set; }
-        public QuestionAnswer Answers { get; set; }
+        public QuestionAnswers Answers { get; set; }
     }
 }

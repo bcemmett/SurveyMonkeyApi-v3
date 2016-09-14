@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace SurveyMonkey.Containers
 {
     [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
-    public class QuestionAnswer
+    public class QuestionAnswers
     {
         public List<Choice> Choices { get; set; }
         public List<Row> Rows { get; set; }
