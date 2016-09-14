@@ -1,6 +1,6 @@
 ﻿using Newtonsoft.Json;
 
-namespace SurveyMonkey.Containers.Enums
+namespace SurveyMonkey.Enums
 {
     [JsonConverter(typeof(LaxEnumJsonConverter))]
     public enum QuestionSubtype

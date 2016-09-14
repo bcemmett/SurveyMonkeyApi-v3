@@ -1,13 +1,13 @@
 ﻿using Newtonsoft.Json;
-using SurveyMonkey.Containers.Enums;
+using SurveyMonkey.Enums;
 
 namespace SurveyMonkey.Containers
 {
     [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
-    public class Required
+    public class QuestionRequired
     {
         public string Text { get; set; }
-        public RequiredType Type { get; set; }
+        public QuestionRequiredType Type { get; set; }
         public string Amount { get; set; }
     }
 }

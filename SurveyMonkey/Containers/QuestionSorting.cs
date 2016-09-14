@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
-using SurveyMonkey.Containers.Enums;
+using SurveyMonkey.Enums;
 
 namespace SurveyMonkey.Containers
 {
     [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
-    public class Sorting
+    public class QuestionSorting
     {
-        public SortingType Type { get; set; }
+        public QuestionSortingType Type { get; set; }
         public bool IgnoreLast { get; set; }
     }
 }

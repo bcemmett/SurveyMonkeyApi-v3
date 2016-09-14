@@ -2,7 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using SurveyMonkey;
-using SurveyMonkey.Containers.Enums;
+using SurveyMonkey.Enums;
 
 namespace SurveyMonkeyTests
 {

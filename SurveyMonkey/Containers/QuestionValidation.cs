@@ -1,12 +1,12 @@
 ﻿using Newtonsoft.Json;
-using SurveyMonkey.Containers.Enums;
+using SurveyMonkey.Enums;
 
 namespace SurveyMonkey.Containers
 {
     [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
-    public class Validation
+    public class QuestionValidation
     {
-        public ValidationType Type { get; set; }
+        public QuestionValidationType Type { get; set; }
         public string Text { get; set; }
         public object Min { get; set; }
         public object Max { get; set; }
