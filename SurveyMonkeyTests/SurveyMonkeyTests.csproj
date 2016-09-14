@@ -48,6 +48,7 @@
     <Compile Include="MockWebClient.cs" />
     <Compile Include="MockWebClientRequest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="PropertyCasingHelperTests.cs" />
     <Compile Include="WebClientInfrastructureTests.cs" />
   </ItemGroup>
   <ItemGroup>

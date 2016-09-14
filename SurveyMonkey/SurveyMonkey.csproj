@@ -62,6 +62,7 @@
     <Compile Include="Containers\Survey.cs" />
     <Compile Include="Containers\QuestionValidation.cs" />
     <Compile Include="Enums\QuestionValidationType.cs" />
+    <Compile Include="Helpers\PropertyCasingHelper.cs" />
     <Compile Include="LiveWebClient.cs" />
     <Compile Include="IWebClient.cs" />
     <Compile Include="Json.cs" />

@@ -16,6 +16,11 @@ namespace SurveyMonkey
 
         public List<Survey> GetSurveyList(GetSurveyListSettings settings)
         {
+            return GetSurveyListRequest();
+        }
+
+        private List<Survey> GetSurveyListRequest()
+        {
             string endPoint = "https://api.surveymonkey.net/v3/surveys";
             var verb = Verb.GET;
             JToken result = MakeApiRequest(endPoint, verb, new RequestData());
