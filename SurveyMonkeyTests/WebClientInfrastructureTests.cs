@@ -18,7 +18,7 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var results = api.GetSurveys();
+            var results = api.GetSurveyList();
             
             Assert.AreEqual("application/json", client.Headers["Content-Type"]);
             Assert.AreEqual("bearer TestOAuthToken", client.Headers["Authorization"]);
@@ -46,25 +46,25 @@ namespace SurveyMonkeyTests
 
             //Should be no rate limit first time
             stopwatch.Start();
-            api.GetSurveys();
+            api.GetSurveyList();
             Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, toleranceMilliseconds);
 
             //Second request should be rate limited
             stopwatch.Restart();
-            api.GetSurveys();
+            api.GetSurveyList();
             Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds - toleranceMilliseconds);
             Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds + toleranceMilliseconds);
             
             //Check subsequent requests are rate limited too
             stopwatch.Restart();
-            api.GetSurveys();
+            api.GetSurveyList();
             Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds - toleranceMilliseconds);
             Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds + toleranceMilliseconds);
 
             //If some time has elapsed, there should be no delay
             Thread.Sleep(1000);
             stopwatch.Restart();
-            api.GetSurveys();
+            api.GetSurveyList();
             Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, toleranceMilliseconds);
         }
     }

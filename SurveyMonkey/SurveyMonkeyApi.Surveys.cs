@@ -7,7 +7,7 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi
     {
-        public List<Survey> GetSurveys()
+        public List<Survey> GetSurveyList()
         {
             string endPoint = "https://api.surveymonkey.net/v3/surveys";
             var verb = Verb.GET;

@@ -18,7 +18,7 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var results = api.GetSurveys();
+            var results = api.GetSurveyList();
             Assert.AreEqual(1, client.Requests.Count);
             Assert.AreEqual(55249163, results.First().Id);
             Assert.AreEqual(@"https://api.surveymonkey.net/v3/surveys/55249163", results.First().Href);
