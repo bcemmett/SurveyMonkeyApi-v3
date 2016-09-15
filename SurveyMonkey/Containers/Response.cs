@@ -17,8 +17,8 @@ namespace SurveyMonkey.Containers
         public string CustomValue { get; set; }
         public string EditUrl { get; set; }
         public string AnalyzeUrl { get; set; }
-        public object LogicPath { get; set; } //TODO this structure isn't documented
-        public object Metadata { get; set; } //TODO this structure isn't documented
+        public Dictionary<string, object> LogicPath { get; set; } //TODO this structure isn't documented
+        public Dictionary<string, object> Metadata { get; set; } //TODO this structure isn't documented
         public List<object> PagePath { get; set; } //TODO this structure isn't documented
         public DateTime? DateCreated { get; set; }
         public DateTime? DateModified { get; set; }

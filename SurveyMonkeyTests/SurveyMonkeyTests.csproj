@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="GetResponseTests.cs" />
     <Compile Include="GetSurveyTests.cs" />
     <Compile Include="MockWebClient.cs" />
     <Compile Include="MockWebClientRequest.cs" />
