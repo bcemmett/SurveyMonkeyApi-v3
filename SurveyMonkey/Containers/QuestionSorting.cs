@@ -7,6 +7,6 @@ namespace SurveyMonkey.Containers
     public class QuestionSorting
     {
         public QuestionSortingType Type { get; set; }
-        public bool IgnoreLast { get; set; }
+        public bool? IgnoreLast { get; set; }
     }
 }

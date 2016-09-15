@@ -47,7 +47,7 @@ namespace SurveyMonkey
                     if ((prop.PropertyType == typeof(int) || prop.PropertyType == typeof(long))
                         && !Int64.TryParse(jp.Value.ToString(), out n))
                     {
-                        prop.SetValue(instance, 0);
+                        prop.SetValue(instance, null);
                     }
                     else
                     {

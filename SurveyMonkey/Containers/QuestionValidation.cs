@@ -10,7 +10,7 @@ namespace SurveyMonkey.Containers
         public string Text { get; set; }
         public object Min { get; set; }
         public object Max { get; set; }
-        public int Sum { get; set; }
+        public int? Sum { get; set; }
         public string SumText { get; set; }
     }
 }
