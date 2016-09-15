@@ -9,6 +9,8 @@ namespace SurveyMonkey.Containers
     public class Response
     {
         public long? Id { get; set; }
+        public long? SurveyId { get; set; }
+        public long? CollectorId { get; set; }
         public string Href { get; set; }
         public Dictionary<string, string> CustomVariables { get; set; }
         public int? TotalTime { get; set; }
@@ -17,7 +19,7 @@ namespace SurveyMonkey.Containers
         public string AnalyzeUrl { get; set; }
         public object LogicPath { get; set; } //TODO this structure isn't documented
         public object Metadata { get; set; } //TODO this structure isn't documented
-        //public List<PagePath> PagePath { get; set; } //TODO this structure isn't documented
+        public List<object> PagePath { get; set; } //TODO this structure isn't documented
         public DateTime? DateCreated { get; set; }
         public DateTime? DateModified { get; set; }
         public ResponseStatus? ResponseStatus { get; set; }
