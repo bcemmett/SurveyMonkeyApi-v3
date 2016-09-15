@@ -64,10 +64,9 @@ namespace SurveyMonkey
 
         public Survey GetSurveyOverview(long id)
         {
-            string endPoint = "https://api.surveymonkey.net/v3/surveys/{0}";
             var verb = Verb.GET;
-            var fullEndpoint = String.Format(endPoint, id);
-			JToken result = MakeApiRequest(fullEndpoint, verb, new RequestData());
+            var endpoint = String.Format("https://api.surveymonkey.net/v3/surveys/{0}", id);
+            JToken result = MakeApiRequest(endpoint, verb, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
         }

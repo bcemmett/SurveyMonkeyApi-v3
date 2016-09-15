@@ -54,6 +54,10 @@
     <Compile Include="Containers\QuestionAnswers.cs" />
     <Compile Include="Containers\RandomAssignment.cs" />
     <Compile Include="Containers\QuestionRequired.cs" />
+    <Compile Include="Containers\Response.cs" />
+    <Compile Include="Containers\ResponseAnswer.cs" />
+    <Compile Include="Containers\ResponsePage.cs" />
+    <Compile Include="Containers\ResponseQuestion.cs" />
     <Compile Include="Containers\Row.cs" />
     <Compile Include="Containers\QuestionSorting.cs" />
     <Compile Include="Enums\GetSurveyListSortOrder.cs" />
@@ -61,6 +65,8 @@
     <Compile Include="Enums\QuestionSortingType.cs" />
     <Compile Include="Containers\Survey.cs" />
     <Compile Include="Containers\QuestionValidation.cs" />
+    <Compile Include="Enums\CollectionMode.cs" />
+    <Compile Include="Enums\ResponseStatus.cs" />
     <Compile Include="Enums\QuestionValidationType.cs" />
     <Compile Include="Helpers\PropertyCasingHelper.cs" />
     <Compile Include="LiveWebClient.cs" />
@@ -73,6 +79,7 @@
     <Compile Include="RequestSettings\RequestData.cs" />
     <Compile Include="SurveyMonkeyApi.Infrastructure.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SurveyMonkeyApi.Responses.cs" />
     <Compile Include="Verb.cs" />
   </ItemGroup>
   <ItemGroup>
