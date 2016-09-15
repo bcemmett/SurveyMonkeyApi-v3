@@ -40,7 +40,7 @@ namespace SurveyMonkey
 
                 if (prop != null)
                 {
-                    /*The api sometimes misbehaves and returns stringy values like "None"
+                    /*The v2 api sometimes misbehaves and returns stringy values like "None"
                     when it should be returning numeric values, leading to a FormatException
                     doing the conversion. Detect and an use 0 in these situations*/
                     long n;
@@ -54,6 +54,13 @@ namespace SurveyMonkey
                         prop.SetValue(instance, jp.Value.ToObject(prop.PropertyType, serializer));
                     }
                 }
+#if DEBUG
+                else
+                {
+                    //During debugging, we want to know if we've omitted any properties that can be deserialised
+                    throw new Exception(String.Format(@"Discarded property '{0}'", jp.Name));
+                }
+#endif
             }
 
             return instance;
