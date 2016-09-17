@@ -46,7 +46,9 @@ namespace SurveyMonkey.Helpers
             {
                 if (property.GetValue(obj) != null)
                 {
-                    Type underlyingType = Nullable.GetUnderlyingType(property.PropertyType);
+                    Type underlyingType = property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)
+                        ? Nullable.GetUnderlyingType(property.PropertyType)
+                        : property.PropertyType;
                     if (underlyingType.IsEnum)
                     {
                         output.Add(CamelCaseToUnderscore(property.Name), CamelCaseToUnderscore(property.GetValue(obj).ToString()));
