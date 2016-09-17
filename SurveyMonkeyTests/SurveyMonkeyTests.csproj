@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GetResponseTests.cs" />
+    <Compile Include="GetCollectorTests.cs" />
     <Compile Include="GetSurveyTests.cs" />
     <Compile Include="JsonDateTimeTests.cs" />
     <Compile Include="MockWebClient.cs" />
