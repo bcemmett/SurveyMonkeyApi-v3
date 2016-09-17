@@ -51,7 +51,28 @@ namespace SurveyMonkey
                     }
                     else
                     {
-                        prop.SetValue(instance, jp.Value.ToObject(prop.PropertyType, serializer));
+                        if (prop.PropertyType == typeof(DateTime?))
+                        {
+                            var rawDate = (DateTime)jp.Value.ToObject(typeof(DateTime), serializer);
+                            var convertedDate = new DateTime();
+                            switch (rawDate.Kind)
+                            {
+                                case DateTimeKind.Local:
+                                    convertedDate = rawDate.ToUniversalTime();
+                                    break;
+                                case DateTimeKind.Unspecified:
+                                    convertedDate = DateTime.SpecifyKind(rawDate, DateTimeKind.Utc);
+                                    break;
+                                case DateTimeKind.Utc:
+                                    convertedDate = rawDate;
+                                    break;
+                            }
+                            prop.SetValue(instance, convertedDate);
+                        }
+                        else
+                        {
+                            prop.SetValue(instance, jp.Value.ToObject(prop.PropertyType, serializer));
+                        }
                     }
                 }
 #if DEBUG

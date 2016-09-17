@@ -22,8 +22,8 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
-            Assert.AreEqual(new DateTime(2016, 9, 13, 7, 29, 9, DateTimeKind.Utc).ToLocalTime(), results.First().DateModified);
-            Assert.AreEqual(new DateTime(2016, 9, 13, 7, 29, 01, DateTimeKind.Utc).ToLocalTime(), results.First().DateCreated);
+            Assert.AreEqual(new DateTime(2016, 9, 13, 7, 29, 9, DateTimeKind.Utc), results.First().DateModified);
+            Assert.AreEqual(new DateTime(2016, 9, 13, 7, 29, 1, DateTimeKind.Utc), results.First().DateCreated);
             Assert.AreEqual(8, results.First().TotalTime);
             Assert.IsEmpty(results.First().CustomVariables);
             Assert.AreEqual("81.187.77.182", results.First().IpAddress);
@@ -93,8 +93,8 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
-            Assert.AreEqual(new DateTime(2016, 9, 13, 7, 29, 9, DateTimeKind.Utc).ToLocalTime(), results.First().DateModified);
-            Assert.AreEqual(new DateTime(2016, 9, 13, 7, 29, 01, DateTimeKind.Utc).ToLocalTime(), results.First().DateCreated);
+            Assert.AreEqual(new DateTime(2016, 9, 13, 7, 29, 9, DateTimeKind.Utc), results.First().DateModified);
+            Assert.AreEqual(new DateTime(2016, 9, 13, 7, 29, 01, DateTimeKind.Utc), results.First().DateCreated);
             Assert.AreEqual(8, results.First().TotalTime);
             Assert.IsEmpty(results.First().CustomVariables);
             Assert.AreEqual("81.187.77.182", results.First().IpAddress);
