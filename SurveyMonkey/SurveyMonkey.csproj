@@ -76,6 +76,7 @@
     <Compile Include="Enums\QuestionFamily.cs" />
     <Compile Include="Enums\QuestionSubtype.cs" />
     <Compile Include="Enums\QuestionRequiredType.cs" />
+    <Compile Include="RequestSettings\PagingSettings.cs" />
     <Compile Include="RequestSettings\GetResponseListSettings.cs" />
     <Compile Include="RequestSettings\GetSurveyTemplatesSettings.cs" />
     <Compile Include="RequestSettings\GetSurveyCategoriesSettings.cs" />

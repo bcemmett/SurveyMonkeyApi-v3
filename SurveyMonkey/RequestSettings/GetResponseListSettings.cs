@@ -3,7 +3,7 @@ using SurveyMonkey.Enums;
 
 namespace SurveyMonkey.RequestSettings
 {
-    public class GetResponseListSettings
+    public class GetResponseListSettings : PagingSettings
     {
         public enum TotalTimeUnitsOption
         {
@@ -23,8 +23,6 @@ namespace SurveyMonkey.RequestSettings
             DateModified
         }
 
-        public int? Page { get; set; }
-        public int? PerPage { get; set; }
         public string CollectorIds { get; set; }
         public DateTime? StartCreatedAt { get; set; }
         public DateTime? EndCreatedAt { get; set; }
