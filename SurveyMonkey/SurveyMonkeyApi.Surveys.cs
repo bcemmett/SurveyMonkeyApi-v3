@@ -30,27 +30,27 @@ namespace SurveyMonkey
             }
 
             //Auto-page
-            const int maxSurveysPerPage = 1000;
-            var surveys = new List<Survey>();
+            const int maxResultsPerPage = 1000;
+            var results = new List<Survey>();
             bool cont = true;
             int page = 1;
             while (cont)
             {
                 settings.Page = page;
-                settings.PerPage = maxSurveysPerPage;
+                settings.PerPage = maxResultsPerPage;
                 var requestData = PropertyCasingHelper.GetPopulatedProperties(settings);
-                var newSurveys = GetSurveyListRequest(requestData);
-                if (newSurveys.Count > 0)
+                var newResults = GetSurveyListRequest(requestData);
+                if (newResults.Count > 0)
                 {
-                    surveys.AddRange(newSurveys);
+                    results.AddRange(newResults);
                 }
-                if (newSurveys.Count < maxSurveysPerPage)
+                if (newResults.Count < maxResultsPerPage)
                 {
                     cont = false;
                 }
                 page++;
             }
-            return surveys;
+            return results;
         }
 
         private List<Survey> GetSurveyListRequest(RequestData requestData)
