@@ -67,7 +67,7 @@ namespace SurveyMonkey
             }
 
             //Auto-page
-            const int maxResultsPerPage = 1000;
+            const int maxResultsPerPage = 100;
             var results = new List<Response>();
             bool cont = true;
             int page = 1;
