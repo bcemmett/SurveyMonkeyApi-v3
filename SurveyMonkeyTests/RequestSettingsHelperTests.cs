@@ -13,7 +13,7 @@ namespace SurveyMonkeyTests
         {
             var input = new LotsOfProperties()
             {
-                Time1 = new DateTime(2016, 5, 1),
+                Time1 = new DateTime(2016, 5, 1, 12, 30, 18, DateTimeKind.Utc),
                 String1 = "A string",
                 Int1 = 1234,
                 Long1 = 3216549874654984,
@@ -21,7 +21,7 @@ namespace SurveyMonkeyTests
                 EnumCaps1 = GetSurveyListSettings.SortOrderOption.DESC
             };
             var result = RequestSettingsHelper.GetPopulatedProperties(input);
-            Assert.AreEqual(new DateTime(2016, 5, 1), result["time_1"]);
+            Assert.AreEqual("2016-05-01T12:30:18", result["time_1"]);
             Assert.AreEqual("A string", result["string_1"]);
             Assert.AreEqual(1234, result["int_1"]);
             Assert.AreEqual("num_responses", result["enum_camel_1"]);

@@ -20,6 +20,10 @@ namespace SurveyMonkey.Helpers
                     {
                         output.Add(PropertyCasingHelper.CamelToSnake(property.Name), PropertyCasingHelper.CamelToSnake(property.GetValue(obj).ToString()));
                     }
+                    else if (underlyingType == typeof(DateTime))
+                    {
+                        output.Add(PropertyCasingHelper.CamelToSnake(property.Name), ((DateTime)property.GetValue(obj)).ToString("s"));
+                    }
                     else
                     {
                         output.Add(PropertyCasingHelper.CamelToSnake(property.Name), property.GetValue(obj));
