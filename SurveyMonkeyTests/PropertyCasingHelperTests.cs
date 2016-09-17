@@ -34,7 +34,7 @@ namespace SurveyMonkeyTests
                 EndModifiedAt = new DateTime(2016, 5, 6),
                 Page = 5,
                 SortBy = GetSurveyListSortBy.DateModified,
-                SortOrder = GetSurveyListSortOrder.DESC
+                SortOrder = SortOrder.DESC
             };
             var result = PropertyCasingHelper.GetPopulatedProperties(input);
             Assert.AreEqual(new DateTime(2016, 5, 6), result["end_modified_at"]);

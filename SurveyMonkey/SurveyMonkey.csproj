@@ -60,7 +60,9 @@
     <Compile Include="Containers\ResponseQuestion.cs" />
     <Compile Include="Containers\Row.cs" />
     <Compile Include="Containers\QuestionSorting.cs" />
-    <Compile Include="Enums\GetSurveyListSortOrder.cs" />
+    <Compile Include="Enums\GetResponseListSortBy.cs" />
+    <Compile Include="Enums\GetResponseListTotalTimeUnits.cs" />
+    <Compile Include="Enums\SortOrder.cs" />
     <Compile Include="Enums\GetSurveyListSortBy.cs" />
     <Compile Include="Enums\QuestionSortingType.cs" />
     <Compile Include="Containers\Survey.cs" />
@@ -75,6 +77,7 @@
     <Compile Include="Enums\QuestionFamily.cs" />
     <Compile Include="Enums\QuestionSubtype.cs" />
     <Compile Include="Enums\QuestionRequiredType.cs" />
+    <Compile Include="RequestSettings\GetResponseListSettings.cs" />
     <Compile Include="RequestSettings\GetSurveyListSettings.cs" />
     <Compile Include="RequestSettings\RequestData.cs" />
     <Compile Include="SurveyMonkeyApi.Infrastructure.cs" />

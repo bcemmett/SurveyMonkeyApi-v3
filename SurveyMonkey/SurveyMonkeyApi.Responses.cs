@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Newtonsoft.Json.Linq;
 using SurveyMonkey.Containers;
+using SurveyMonkey.Helpers;
 using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkey
@@ -16,30 +17,55 @@ namespace SurveyMonkey
 
         public List<Response> GetSurveyResponseOverviews(int id)
         {
-            return GetResponsesRequest(id, false, SurveyOrCollector.Survey);
+            var settings = new GetResponseListSettings();
+            return GetResponsesRequest(id, false, SurveyOrCollector.Survey, settings);
         }
 
         public List<Response> GetSurveyResponseDetails(int id)
         {
-            return GetResponsesRequest(id, true, SurveyOrCollector.Survey);
+            var settings = new GetResponseListSettings();
+            return GetResponsesRequest(id, true, SurveyOrCollector.Survey, settings);
         }
 
         public List<Response> GetCollectorResponseOverviews(int id)
         {
-            return GetResponsesRequest(id, false, SurveyOrCollector.Collector);
+            var settings = new GetResponseListSettings();
+            return GetResponsesRequest(id, false, SurveyOrCollector.Collector, settings);
         }
 
         public List<Response> GetCollectorResponseDetails(int id)
         {
-            return GetResponsesRequest(id, true, SurveyOrCollector.Collector);
+            var settings = new GetResponseListSettings();
+            return GetResponsesRequest(id, true, SurveyOrCollector.Collector, settings);
         }
 
-        private List<Response> GetResponsesRequest(int id, bool details, SurveyOrCollector source)
+        public List<Response> GetSurveyResponseOverviews(int id, GetResponseListSettings settings)
         {
+            return GetResponsesRequest(id, false, SurveyOrCollector.Survey, settings);
+        }
+
+        public List<Response> GetSurveyResponseDetails(int id, GetResponseListSettings settings)
+        {
+            return GetResponsesRequest(id, true, SurveyOrCollector.Survey, settings);
+        }
+
+        public List<Response> GetCollectorResponseOverviews(int id, GetResponseListSettings settings)
+        {
+            return GetResponsesRequest(id, false, SurveyOrCollector.Collector, settings);
+        }
+
+        public List<Response> GetCollectorResponseDetails(int id, GetResponseListSettings settings)
+        {
+            return GetResponsesRequest(id, true, SurveyOrCollector.Collector, settings);
+        }
+
+        private List<Response> GetResponsesRequest(int id, bool details, SurveyOrCollector source, GetResponseListSettings settings)
+        {
+            var requestData = PropertyCasingHelper.GetPopulatedProperties(settings);
             var bulk = details ? "/bulk" : String.Empty;
             string endPoint = String.Format("https://api.surveymonkey.net/v3/{0}s/{1}/responses{2}", source.ToString().ToLower(), id, bulk);
             var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            JToken result = MakeApiRequest(endPoint, verb, requestData);
             var responses = result["data"].ToObject<List<Response>>();
             return responses;
         }

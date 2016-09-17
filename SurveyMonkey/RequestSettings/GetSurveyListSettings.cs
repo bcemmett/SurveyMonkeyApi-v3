@@ -8,7 +8,7 @@ namespace SurveyMonkey.RequestSettings
         public int? Page { get; set; }
         public int? PerPage { get; set; }
         public GetSurveyListSortBy? SortBy { get; set; }
-        public GetSurveyListSortOrder? SortOrder { get; set; }
+        public SortOrder? SortOrder { get; set; }
         public DateTime? StartModifiedAt { get; set; }
         public DateTime? EndModifiedAt { get; set; }
     }

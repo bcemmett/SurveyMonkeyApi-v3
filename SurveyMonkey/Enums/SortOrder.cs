@@ -1,6 +1,6 @@
 ﻿namespace SurveyMonkey.Enums
 {
-    public enum GetSurveyListSortOrder
+    public enum SortOrder
     {
         ASC,
         DESC
