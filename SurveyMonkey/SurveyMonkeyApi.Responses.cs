@@ -9,61 +9,59 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi
     {
-        private enum SurveyOrCollector
+        public enum ObjectType
         {
             Survey,
             Collector
         }
 
-        public List<Response> GetSurveyResponseOverviews(int id)
+        public Response GetResponseOverview(int objectId, ObjectType objectType, int responseId)
+        {
+            return GetResponseRequest(objectId, objectType, responseId, false);
+        }
+
+        public Response GetResponseDetail(int objectId, ObjectType objectType, int responseId)
+        {
+            return GetResponseRequest(objectId, objectType, responseId, true);
+        }
+
+        private Response GetResponseRequest(int objectId, ObjectType source, int responseId, bool details)
+        {
+            var detailString = details ? "/details" : String.Empty;
+            string endPoint = String.Format("https://api.surveymonkey.net/v3/{0}s/{1}/responses/{2}", source.ToString().ToLower(), objectId, responseId, detailString);
+            var verb = Verb.GET;
+            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            var responses = result["data"].ToObject<Response>();
+            return responses;
+        }
+
+        public List<Response> GetResponseOverviewList(int objectId, ObjectType objectType)
         {
             var settings = new GetResponseListSettings();
-            return GetResponsesRequest(id, false, SurveyOrCollector.Survey, settings);
+            return GetResponseListRequest(objectId, objectType, settings, false);
         }
 
-        public List<Response> GetSurveyResponseDetails(int id)
+        public List<Response> GetResponseDetailList(int objectId, ObjectType objectType)
         {
             var settings = new GetResponseListSettings();
-            return GetResponsesRequest(id, true, SurveyOrCollector.Survey, settings);
+            return GetResponseListRequest(objectId, objectType, settings, true);
         }
 
-        public List<Response> GetCollectorResponseOverviews(int id)
+        public List<Response> GetResponseOverviewList(int objectId, ObjectType objectType, GetResponseListSettings settings)
         {
-            var settings = new GetResponseListSettings();
-            return GetResponsesRequest(id, false, SurveyOrCollector.Collector, settings);
+            return GetResponseListRequest(objectId, objectType, settings, false);
         }
 
-        public List<Response> GetCollectorResponseDetails(int id)
+        public List<Response> GetResponseDetailList(int objectId, ObjectType objectType, GetResponseListSettings settings)
         {
-            var settings = new GetResponseListSettings();
-            return GetResponsesRequest(id, true, SurveyOrCollector.Collector, settings);
+            return GetResponseListRequest(objectId, objectType, settings, true);
         }
 
-        public List<Response> GetSurveyResponseOverviews(int id, GetResponseListSettings settings)
-        {
-            return GetResponsesRequest(id, false, SurveyOrCollector.Survey, settings);
-        }
-
-        public List<Response> GetSurveyResponseDetails(int id, GetResponseListSettings settings)
-        {
-            return GetResponsesRequest(id, true, SurveyOrCollector.Survey, settings);
-        }
-
-        public List<Response> GetCollectorResponseOverviews(int id, GetResponseListSettings settings)
-        {
-            return GetResponsesRequest(id, false, SurveyOrCollector.Collector, settings);
-        }
-
-        public List<Response> GetCollectorResponseDetails(int id, GetResponseListSettings settings)
-        {
-            return GetResponsesRequest(id, true, SurveyOrCollector.Collector, settings);
-        }
-
-        private List<Response> GetResponsesRequest(int id, bool details, SurveyOrCollector source, GetResponseListSettings settings)
+        private List<Response> GetResponseListRequest(int id, ObjectType objectType, GetResponseListSettings settings, bool details)
         {
             var requestData = PropertyCasingHelper.GetPopulatedProperties(settings);
             var bulk = details ? "/bulk" : String.Empty;
-            string endPoint = String.Format("https://api.surveymonkey.net/v3/{0}s/{1}/responses{2}", source.ToString().ToLower(), id, bulk);
+            string endPoint = String.Format("https://api.surveymonkey.net/v3/{0}s/{1}/responses{2}", objectType.ToString().ToLower(), id, bulk);
             var verb = Verb.GET;
             JToken result = MakeApiRequest(endPoint, verb, requestData);
             var responses = result["data"].ToObject<List<Response>>();

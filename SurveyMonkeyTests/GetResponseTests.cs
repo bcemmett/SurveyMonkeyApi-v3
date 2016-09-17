@@ -18,7 +18,7 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var results = api.GetSurveyResponseDetails(84672934);
+            var results = api.GetResponseDetailList(84672934, SurveyMonkeyApi.ObjectType.Survey);
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
@@ -56,7 +56,7 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var results = api.GetSurveyResponseDetails(84672934);
+            var results = api.GetResponseOverviewList(84672934, SurveyMonkeyApi.ObjectType.Survey);
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
@@ -89,7 +89,7 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var results = api.GetCollectorResponseDetails(91395530);
+            var results = api.GetResponseDetailList(91395530, SurveyMonkeyApi.ObjectType.Collector);
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
@@ -127,7 +127,7 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var results = api.GetCollectorResponseDetails(91395530);
+            var results = api.GetResponseOverviewList(91395530, SurveyMonkeyApi.ObjectType.Collector);
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
