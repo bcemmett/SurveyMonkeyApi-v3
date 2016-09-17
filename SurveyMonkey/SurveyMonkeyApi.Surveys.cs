@@ -80,5 +80,58 @@ namespace SurveyMonkey
             var survey = result.ToObject<Survey>();
             return survey;
         }
+
+        public List<SurveyCategory> GetSurveyCategories()
+        {
+            var settings = new GetSurveyCategoriesSettings();
+            return GetSurveyCategoriesPager(settings);
+        }
+
+        public List<SurveyCategory> GetSurveyCategories(GetSurveyCategoriesSettings settings)
+        {
+            return GetSurveyCategoriesPager(settings);
+        }
+
+        private List<SurveyCategory> GetSurveyCategoriesPager(GetSurveyCategoriesSettings settings)
+        {
+            //Get the specific page & quantity
+            if (settings.Page.HasValue || settings.PerPage.HasValue)
+            {
+                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
+                return GetSurveyCategoriesRequest(requestData);
+            }
+
+            //Auto-page
+            const int maxResultsPerPage = 1000;
+            var results = new List<SurveyCategory>();
+            bool cont = true;
+            int page = 1;
+            while (cont)
+            {
+                settings.Page = page;
+                settings.PerPage = maxResultsPerPage;
+                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
+                var newResults = GetSurveyCategoriesRequest(requestData);
+                if (newResults.Count > 0)
+                {
+                    results.AddRange(newResults);
+                }
+                if (newResults.Count < maxResultsPerPage)
+                {
+                    cont = false;
+                }
+                page++;
+            }
+            return results;
+        }
+
+        private List<SurveyCategory> GetSurveyCategoriesRequest(RequestData requestData)
+        {
+            string endPoint = "/survey_categories";
+            var verb = Verb.GET;
+            JToken result = MakeApiRequest(endPoint, verb, requestData);
+            var categories = result["data"].ToObject<List<SurveyCategory>>();
+            return categories;
+        }
     }
 }
