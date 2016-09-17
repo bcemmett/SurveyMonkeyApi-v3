@@ -133,5 +133,58 @@ namespace SurveyMonkey
             var categories = result["data"].ToObject<List<SurveyCategory>>();
             return categories;
         }
+
+        public List<SurveyTemplate> GetSurveyTemplates()
+        {
+            var settings = new GetSurveyTemplatesSettings();
+            return GetSurveyTemplatesPager(settings);
+        }
+
+        public List<SurveyTemplate> GetSurveyTemplates(GetSurveyTemplatesSettings settings)
+        {
+            return GetSurveyTemplatesPager(settings);
+        }
+
+        private List<SurveyTemplate> GetSurveyTemplatesPager(GetSurveyTemplatesSettings settings)
+        {
+            //Get the specific page & quantity
+            if (settings.Page.HasValue || settings.PerPage.HasValue)
+            {
+                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
+                return GetSurveyTemplatesRequest(requestData);
+            }
+
+            //Auto-page
+            const int maxResultsPerPage = 1000;
+            var results = new List<SurveyTemplate>();
+            bool cont = true;
+            int page = 1;
+            while (cont)
+            {
+                settings.Page = page;
+                settings.PerPage = maxResultsPerPage;
+                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
+                var newResults = GetSurveyTemplatesRequest(requestData);
+                if (newResults.Count > 0)
+                {
+                    results.AddRange(newResults);
+                }
+                if (newResults.Count < maxResultsPerPage)
+                {
+                    cont = false;
+                }
+                page++;
+            }
+            return results;
+        }
+
+        private List<SurveyTemplate> GetSurveyTemplatesRequest(RequestData requestData)
+        {
+            string endPoint = "/survey_templates";
+            var verb = Verb.GET;
+            JToken result = MakeApiRequest(endPoint, verb, requestData);
+            var templates = result["data"].ToObject<List<SurveyTemplate>>();
+            return templates;
+        }
     }
 }

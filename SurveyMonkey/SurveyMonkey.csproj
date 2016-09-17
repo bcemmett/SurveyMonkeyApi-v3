@@ -60,6 +60,7 @@
     <Compile Include="Containers\ResponseQuestion.cs" />
     <Compile Include="Containers\Row.cs" />
     <Compile Include="Containers\QuestionSorting.cs" />
+    <Compile Include="Containers\SurveyTemplate.cs" />
     <Compile Include="Containers\SurveyCategory.cs" />
     <Compile Include="Enums\QuestionSortingType.cs" />
     <Compile Include="Containers\Survey.cs" />
@@ -76,6 +77,7 @@
     <Compile Include="Enums\QuestionSubtype.cs" />
     <Compile Include="Enums\QuestionRequiredType.cs" />
     <Compile Include="RequestSettings\GetResponseListSettings.cs" />
+    <Compile Include="RequestSettings\GetSurveyTemplatesSettings.cs" />
     <Compile Include="RequestSettings\GetSurveyCategoriesSettings.cs" />
     <Compile Include="RequestSettings\GetSurveyListSettings.cs" />
     <Compile Include="RequestSettings\RequestData.cs" />
