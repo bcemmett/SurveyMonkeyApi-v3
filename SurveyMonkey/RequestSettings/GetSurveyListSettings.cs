@@ -1,5 +1,4 @@
 ﻿using System;
-using SurveyMonkey.Enums;
 
 namespace SurveyMonkey.RequestSettings
 {
