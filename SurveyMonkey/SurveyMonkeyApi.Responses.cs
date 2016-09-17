@@ -31,7 +31,7 @@ namespace SurveyMonkey
             string endPoint = String.Format("https://api.surveymonkey.net/v3/{0}s/{1}/responses/{2}{3}", source.ToString().ToLower(), objectId, responseId, detailString);
             var verb = Verb.GET;
             JToken result = MakeApiRequest(endPoint, verb, new RequestData());
-            var responses = result["data"].ToObject<Response>();
+            var responses = result.ToObject<Response>();
             return responses;
         }
 

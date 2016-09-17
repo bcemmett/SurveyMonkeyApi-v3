@@ -14,7 +14,7 @@ namespace SurveyMonkeyTests
         {
             var client = new MockWebClient();
             client.Responses.Add(@"
-                {""per_page"":50,""total"":3,""data"":[{""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420283"",""custom_variables"":{},""ip_address"":""81.187.77.182"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""22222""}]}]}],""page_path"":[],""recipient_id"":""123456789"",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}},{""total_time"":7,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420510"",""custom_variables"":{},""ip_address"":""81.187.77.182"",""id"":""4968420510"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:21+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420510"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""2!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:14+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=Lx7StOGuxNDuVUAr8BPyjg2ViuVtA8zOHdXIxBAegrKWNdxw4B0iMvxwLegwwvY3"",""metadata"":{}},{""total_time"":15,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420845"",""custom_variables"":{},""ip_address"":""81.187.77.182"",""id"":""4968420845"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:40+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420845"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315477""}]},{""id"":""1013185659"",""answers"":[{""text"":""The second!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:24+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=bc2BsaGJJWvkzcJSuPORfnpY5wGZdCs_2F0hBWIXcOYE1FZDU3KKxUI_2BgiFpNVzGc4"",""metadata"":{}}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/bulk?page=1&per_page=50""}}
+                {""per_page"":50,""total"":3,""data"":[{""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420283"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""22222""}]}]}],""page_path"":[],""recipient_id"":""123456789"",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}},{""total_time"":7,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420510"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420510"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:21+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420510"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""2!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:14+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=Lx7StOGuxNDuVUAr8BPyjg2ViuVtA8zOHdXIxBAegrKWNdxw4B0iMvxwLegwwvY3"",""metadata"":{}},{""total_time"":15,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420845"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420845"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:40+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420845"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315477""}]},{""id"":""1013185659"",""answers"":[{""text"":""The second!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:24+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=bc2BsaGJJWvkzcJSuPORfnpY5wGZdCs_2F0hBWIXcOYE1FZDU3KKxUI_2BgiFpNVzGc4"",""metadata"":{}}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/bulk?page=1&per_page=50""}}
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
@@ -26,7 +26,7 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(new DateTime(2016, 9, 13, 7, 29, 1, DateTimeKind.Utc), results.First().DateCreated);
             Assert.AreEqual(8, results.First().TotalTime);
             Assert.IsEmpty(results.First().CustomVariables);
-            Assert.AreEqual("81.187.77.182", results.First().IpAddress);
+            Assert.AreEqual("18.187.48.612", results.First().IpAddress);
             Assert.AreEqual(ResponseStatus.Completed, results.First().ResponseStatus);
             Assert.AreEqual(String.Empty, results.First().CustomValue);
             Assert.IsEmpty(results.First().LogicPath);
@@ -85,7 +85,7 @@ namespace SurveyMonkeyTests
         {
             var client = new MockWebClient();
             client.Responses.Add(@"
-                {""per_page"":50,""total"":3,""data"":[{""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420283"",""custom_variables"":{},""ip_address"":""81.187.77.182"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""22222""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}},{""total_time"":7,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420510"",""custom_variables"":{},""ip_address"":""81.187.77.182"",""id"":""4968420510"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:21+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420510"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""2!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:14+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=Lx7StOGuxNDuVUAr8BPyjg2ViuVtA8zOHdXIxBAegrKWNdxw4B0iMvxwLegwwvY3"",""metadata"":{}},{""total_time"":15,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420845"",""custom_variables"":{},""ip_address"":""81.187.77.182"",""id"":""4968420845"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:40+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420845"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315477""}]},{""id"":""1013185659"",""answers"":[{""text"":""The second!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:24+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=bc2BsaGJJWvkzcJSuPORfnpY5wGZdCs_2F0hBWIXcOYE1FZDU3KKxUI_2BgiFpNVzGc4"",""metadata"":{}}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/bulk?page=1&per_page=50""}}
+                {""per_page"":50,""total"":3,""data"":[{""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420283"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""22222""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}},{""total_time"":7,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420510"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420510"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:21+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420510"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""2!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:14+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=Lx7StOGuxNDuVUAr8BPyjg2ViuVtA8zOHdXIxBAegrKWNdxw4B0iMvxwLegwwvY3"",""metadata"":{}},{""total_time"":15,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420845"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420845"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:40+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420845"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315477""}]},{""id"":""1013185659"",""answers"":[{""text"":""The second!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:24+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=bc2BsaGJJWvkzcJSuPORfnpY5wGZdCs_2F0hBWIXcOYE1FZDU3KKxUI_2BgiFpNVzGc4"",""metadata"":{}}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/bulk?page=1&per_page=50""}}
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
@@ -97,7 +97,7 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(new DateTime(2016, 9, 13, 7, 29, 01, DateTimeKind.Utc), results.First().DateCreated);
             Assert.AreEqual(8, results.First().TotalTime);
             Assert.IsEmpty(results.First().CustomVariables);
-            Assert.AreEqual("81.187.77.182", results.First().IpAddress);
+            Assert.AreEqual("18.187.48.612", results.First().IpAddress);
             Assert.AreEqual(ResponseStatus.Completed, results.First().ResponseStatus);
             Assert.AreEqual(String.Empty, results.First().CustomValue);
             Assert.IsEmpty(results.First().LogicPath);
@@ -149,6 +149,72 @@ namespace SurveyMonkeyTests
             Assert.IsNull(results.First().EditUrl);
             Assert.IsNull(results.First().AnalyzeUrl);
             Assert.IsNull(results.First().Pages);
+        }
+
+        [Test]
+        public void GetResponseDetailIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420283"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""22222""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}}
+            ");
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var result = api.GetResponseDetail(84672934, SurveyMonkeyApi.ObjectType.Survey, 4968420283);
+
+            Assert.AreEqual(@"http://www.surveymonkey.com/analyze/browse/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283", result.AnalyzeUrl);
+            Assert.AreEqual(CollectionMode.Default, result.CollectionMode);
+            Assert.AreEqual(91395530, result.CollectorId);
+            Assert.AreEqual(String.Empty, result.CustomValue);
+            Assert.IsEmpty(result.CustomVariables);
+            Assert.AreEqual(new DateTime(2016, 9, 13, 07, 29, 01, DateTimeKind.Utc), result.DateCreated);
+            Assert.AreEqual(new DateTime(2016, 9, 13, 07, 29, 09, DateTimeKind.Utc), result.DateModified);
+            Assert.AreEqual(@"http://www.surveymonkey.com/r/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7", result.EditUrl);
+            Assert.AreEqual(@"https://api.surveymonkey.net/v3/surveys/84672934/responses/4968420283", result.Href);
+            Assert.AreEqual(4968420283, result.Id);
+            Assert.AreEqual("18.187.48.612", result.IpAddress);
+            Assert.IsEmpty(result.LogicPath);
+            Assert.IsEmpty(result.Metadata);
+            Assert.IsEmpty(result.PagePath);
+            Assert.IsNull(result.RecipientId);
+            Assert.AreEqual(ResponseStatus.Completed, result.ResponseStatus);
+            Assert.AreEqual(84672934, result.SurveyId);
+            Assert.AreEqual(8, result.TotalTime);
+
+            Assert.AreEqual(253784818, result.Pages.First().Id);
+            Assert.AreEqual(10565315476, result.Pages.First().Questions.First().Answers.First().ChoiceId);
+            Assert.AreEqual("22222", result.Pages.First().Questions.Last().Answers.First().Text);
+            Assert.IsNull(result.Pages.First().Questions.Last().Answers.First().ChoiceId);
+        }
+
+        [Test]
+        public void GetResponseOverviewIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420283"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}}
+            ");
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var result = api.GetResponseDetail(84672934, SurveyMonkeyApi.ObjectType.Collector, 4968420283);
+
+            Assert.AreEqual(@"http://www.surveymonkey.com/analyze/browse/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283", result.AnalyzeUrl);
+            Assert.AreEqual(CollectionMode.Default, result.CollectionMode);
+            Assert.AreEqual(91395530, result.CollectorId);
+            Assert.AreEqual(String.Empty, result.CustomValue);
+            Assert.IsEmpty(result.CustomVariables);
+            Assert.AreEqual(new DateTime(2016, 9, 13, 07, 29, 01, DateTimeKind.Utc), result.DateCreated);
+            Assert.AreEqual(new DateTime(2016, 9, 13, 07, 29, 09, DateTimeKind.Utc), result.DateModified);
+            Assert.AreEqual(@"http://www.surveymonkey.com/r/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7", result.EditUrl);
+            Assert.AreEqual(@"https://api.surveymonkey.net/v3/collectors/91395530/responses/4968420283", result.Href);
+            Assert.AreEqual(4968420283, result.Id);
+            Assert.AreEqual("18.187.48.612", result.IpAddress);
+            Assert.IsEmpty(result.LogicPath);
+            Assert.IsEmpty(result.Metadata);
+            Assert.IsEmpty(result.PagePath);
+            Assert.IsNull(result.RecipientId);
+            Assert.AreEqual(ResponseStatus.Completed, result.ResponseStatus);
+            Assert.AreEqual(84672934, result.SurveyId);
+            Assert.AreEqual(8, result.TotalTime);
+            Assert.IsNull(result.Pages);
         }
     }
 }
