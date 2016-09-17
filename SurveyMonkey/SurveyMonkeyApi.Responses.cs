@@ -62,7 +62,7 @@ namespace SurveyMonkey
             //Get the specific page & quantity
             if (settings.Page.HasValue || settings.PerPage.HasValue)
             {
-                var requestData = PropertyCasingHelper.GetPopulatedProperties(settings);
+                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
                 return GetResponseListRequest(id, objectType, details, requestData);
             }
 
@@ -75,7 +75,7 @@ namespace SurveyMonkey
             {
                 settings.Page = page;
                 settings.PerPage = maxResultsPerPage;
-                var requestData = PropertyCasingHelper.GetPopulatedProperties(settings);
+                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
                 var newResults = GetResponseListRequest(id, objectType, details, requestData);
                 if (newResults.Count > 0)
                 {

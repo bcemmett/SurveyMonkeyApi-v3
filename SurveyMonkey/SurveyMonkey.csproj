@@ -67,6 +67,7 @@
     <Compile Include="Enums\ResponseStatus.cs" />
     <Compile Include="Enums\QuestionValidationType.cs" />
     <Compile Include="Helpers\PropertyCasingHelper.cs" />
+    <Compile Include="Helpers\RequestSettingsHelper.cs" />
     <Compile Include="LiveWebClient.cs" />
     <Compile Include="IWebClient.cs" />
     <Compile Include="Json.cs" />
