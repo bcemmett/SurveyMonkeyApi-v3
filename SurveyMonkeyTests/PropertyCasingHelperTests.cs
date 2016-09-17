@@ -1,6 +1,5 @@
 ﻿using System;
 using NUnit.Framework;
-using SurveyMonkey.Enums;
 using SurveyMonkey.Helpers;
 using SurveyMonkey.RequestSettings;
 
@@ -33,8 +32,8 @@ namespace SurveyMonkeyTests
             {
                 EndModifiedAt = new DateTime(2016, 5, 6),
                 Page = 5,
-                SortBy = GetSurveyListSortBy.DateModified,
-                SortOrder = SortOrder.DESC
+                SortBy = GetSurveyListSettings.SortByOption.DateModified,
+                SortOrder = GetSurveyListSettings.SortOrderOption.DESC
             };
             var result = PropertyCasingHelper.GetPopulatedProperties(input);
             Assert.AreEqual(new DateTime(2016, 5, 6), result["end_modified_at"]);

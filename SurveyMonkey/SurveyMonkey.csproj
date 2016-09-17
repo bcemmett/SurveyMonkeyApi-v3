@@ -60,10 +60,6 @@
     <Compile Include="Containers\ResponseQuestion.cs" />
     <Compile Include="Containers\Row.cs" />
     <Compile Include="Containers\QuestionSorting.cs" />
-    <Compile Include="Enums\GetResponseListSortBy.cs" />
-    <Compile Include="Enums\GetResponseListTotalTimeUnits.cs" />
-    <Compile Include="Enums\SortOrder.cs" />
-    <Compile Include="Enums\GetSurveyListSortBy.cs" />
     <Compile Include="Enums\QuestionSortingType.cs" />
     <Compile Include="Containers\Survey.cs" />
     <Compile Include="Containers\QuestionValidation.cs" />

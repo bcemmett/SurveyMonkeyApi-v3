@@ -5,6 +5,24 @@ namespace SurveyMonkey.RequestSettings
 {
     public class GetResponseListSettings
     {
+        public enum TotalTimeUnitsOption
+        {
+            Second,
+            Minute,
+            Hour
+        }
+
+        public enum SortOrderOption
+        {
+            ASC,
+            DESC
+        }
+
+        public enum SortByOption
+        {
+            DateModified
+        }
+
         public int? Page { get; set; }
         public int? PerPage { get; set; }
         public DateTime? StartCreatedAt { get; set; }
@@ -19,8 +37,8 @@ namespace SurveyMonkey.RequestSettings
         public string Custom { get; set; }
         public int? TotalTimeMax { get; set; }
         public int? TotalTimeMin { get; set; }
-        public GetResponseListTotalTimeUnits? TotalTimeUnits { get; set; }
-        public SortOrder? SortOrder { get; set; }
-        public GetResponseListSortBy? SortBy { get; set; }
+        public TotalTimeUnitsOption? TotalTimeUnits { get; set; }
+        public SortOrderOption? SortOrder { get; set; }
+        public SortByOption? SortBy { get; set; }
     }
 }
