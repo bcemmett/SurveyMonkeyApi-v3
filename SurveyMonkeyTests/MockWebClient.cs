@@ -21,12 +21,15 @@ namespace SurveyMonkeyTests
             Responses = new List<string>();
         }
 
-        private void RecordRequest()
+        private void RecordRequest(string url, string verb, string body)
         {
             Requests.Add(new MockWebClientRequest
             {
                 Headers = Headers,
-                QueryString = QueryString
+                QueryString = QueryString,
+                Url = url,
+                Verb = verb,
+                Body = body
             });
         }
 
@@ -46,13 +49,13 @@ namespace SurveyMonkeyTests
 
         public string DownloadString(string url)
         {
-            RecordRequest();
+            RecordRequest(url, "NOT SUPPLIED", "NOT SUPPLIED");
             return GetNextData();
         }
 
         public string UploadString(string url, string verb, string body)
         {
-            RecordRequest();
+            RecordRequest(url, verb, body);
             return GetNextData();
         }
 
