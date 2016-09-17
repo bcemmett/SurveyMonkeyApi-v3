@@ -40,6 +40,7 @@ namespace SurveyMonkey
             ResetWebClient();
             string result;
 
+            var url = "https://api.surveymonkey.net/v3" + endpoint;
             _webClient.Headers.Add("Content-Type", "application/json");
             _webClient.Headers.Add("Authorization", "bearer " + _oAuthToken);
             _webClient.QueryString.Add("api_key", _apiKey);
@@ -49,12 +50,12 @@ namespace SurveyMonkey
                 {
                     _webClient.QueryString.Add(item.Key, item.Value.ToString());
                 }
-                result = _webClient.DownloadString(endpoint);
+                result = _webClient.DownloadString(url);
             }
             else
             {
                 var settings = JsonConvert.SerializeObject(data);
-                result = _webClient.UploadString(endpoint, verb.ToString(), settings);
+                result = _webClient.UploadString(url, verb.ToString(), settings);
             }
                 
             _lastRequestTime = DateTime.UtcNow;

@@ -25,6 +25,7 @@ namespace SurveyMonkeyTests
         {
             Requests.Add(new MockWebClientRequest
             {
+                Encoding = Encoding,
                 Headers = Headers,
                 QueryString = QueryString,
                 Url = url,

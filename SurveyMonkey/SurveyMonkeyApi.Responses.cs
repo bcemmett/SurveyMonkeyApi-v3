@@ -28,7 +28,7 @@ namespace SurveyMonkey
         private Response GetResponseRequest(long objectId, ObjectType source, long responseId, bool details)
         {
             var detailString = details ? "/details" : String.Empty;
-            string endPoint = String.Format("https://api.surveymonkey.net/v3/{0}s/{1}/responses/{2}{3}", source.ToString().ToLower(), objectId, responseId, detailString);
+            string endPoint = String.Format("/{0}s/{1}/responses/{2}{3}", source.ToString().ToLower(), objectId, responseId, detailString);
             var verb = Verb.GET;
             JToken result = MakeApiRequest(endPoint, verb, new RequestData());
             var responses = result.ToObject<Response>();
@@ -93,7 +93,7 @@ namespace SurveyMonkey
         private List<Response> GetResponseListRequest(long id, ObjectType objectType, bool details, RequestData requestData)
         {
             var bulk = details ? "/bulk" : String.Empty;
-            string endPoint = String.Format("https://api.surveymonkey.net/v3/{0}s/{1}/responses{2}", objectType.ToString().ToLower(), id, bulk);
+            string endPoint = String.Format("/{0}s/{1}/responses{2}", objectType.ToString().ToLower(), id, bulk);
             var verb = Verb.GET;
             JToken result = MakeApiRequest(endPoint, verb, requestData);
             var responses = result["data"].ToObject<List<Response>>();

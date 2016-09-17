@@ -1,5 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Net;
+using System.Text;
 
 namespace SurveyMonkeyTests
 {
@@ -10,5 +11,6 @@ namespace SurveyMonkeyTests
         public string Url { get; set; }
         public string Verb { get; set; }
         public string Body { get; set; }
+        public Encoding Encoding { get; set; }
     }
 }

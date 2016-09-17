@@ -55,7 +55,7 @@ namespace SurveyMonkey
 
         private List<Survey> GetSurveyListRequest(RequestData requestData)
         {
-            string endPoint = "https://api.surveymonkey.net/v3/surveys";
+            string endPoint = "/surveys";
             var verb = Verb.GET;
             JToken result = MakeApiRequest(endPoint, verb, requestData);
             var surveys = result["data"].ToObject<List<Survey>>();
@@ -65,7 +65,7 @@ namespace SurveyMonkey
         public Survey GetSurveyOverview(long id)
         {
             var verb = Verb.GET;
-            var endpoint = String.Format("https://api.surveymonkey.net/v3/surveys/{0}", id);
+            var endpoint = String.Format("/surveys/{0}", id);
             JToken result = MakeApiRequest(endpoint, verb, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
@@ -73,7 +73,7 @@ namespace SurveyMonkey
 
         public Survey GetSurveyDetails(long id)
         {
-            string endPoint = "https://api.surveymonkey.net/v3/surveys/{0}/details";
+            string endPoint = "/surveys/{0}/details";
             var verb = Verb.GET;
             var fullEndpoint = String.Format(endPoint, id);
             JToken result = MakeApiRequest(fullEndpoint, verb, new RequestData());

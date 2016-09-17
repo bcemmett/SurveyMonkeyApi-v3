@@ -2,6 +2,7 @@
 using NUnit.Framework;
 using SurveyMonkey;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading;
 
 namespace SurveyMonkeyTests
@@ -18,12 +19,13 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var results = api.GetSurveyList();
+            api.GetSurveyList();
             
-            Assert.AreEqual("application/json", client.Headers["Content-Type"]);
-            Assert.AreEqual("bearer TestOAuthToken", client.Headers["Authorization"]);
-            Assert.AreEqual("TestApiKey", client.QueryString["api_key"]);
-            Assert.AreEqual(Encoding.UTF8, client.Encoding);
+            Assert.AreEqual("application/json", client.Requests.First().Headers["Content-Type"]);
+            Assert.AreEqual("bearer TestOAuthToken", client.Requests.First().Headers["Authorization"]);
+            Assert.AreEqual("TestApiKey", client.Requests.First().QueryString["api_key"]);
+            Assert.AreEqual(Encoding.UTF8, client.Requests.First().Encoding);
+            Assert.AreEqual("https://api.surveymonkey.net/v3/surveys", client.Requests.First().Url);
         }
 
         [Test]
