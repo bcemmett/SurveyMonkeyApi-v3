@@ -28,7 +28,7 @@ namespace SurveyMonkey
         private Response GetResponseRequest(int objectId, ObjectType source, int responseId, bool details)
         {
             var detailString = details ? "/details" : String.Empty;
-            string endPoint = String.Format("https://api.surveymonkey.net/v3/{0}s/{1}/responses/{2}", source.ToString().ToLower(), objectId, responseId, detailString);
+            string endPoint = String.Format("https://api.surveymonkey.net/v3/{0}s/{1}/responses/{2}{3}", source.ToString().ToLower(), objectId, responseId, detailString);
             var verb = Verb.GET;
             JToken result = MakeApiRequest(endPoint, verb, new RequestData());
             var responses = result["data"].ToObject<Response>();
