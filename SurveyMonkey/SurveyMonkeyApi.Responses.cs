@@ -15,17 +15,17 @@ namespace SurveyMonkey
             Collector
         }
 
-        public Response GetResponseOverview(int objectId, ObjectType objectType, int responseId)
+        public Response GetResponseOverview(long objectId, ObjectType objectType, long responseId)
         {
             return GetResponseRequest(objectId, objectType, responseId, false);
         }
 
-        public Response GetResponseDetail(int objectId, ObjectType objectType, int responseId)
+        public Response GetResponseDetail(long objectId, ObjectType objectType, long responseId)
         {
             return GetResponseRequest(objectId, objectType, responseId, true);
         }
 
-        private Response GetResponseRequest(int objectId, ObjectType source, int responseId, bool details)
+        private Response GetResponseRequest(long objectId, ObjectType source, long responseId, bool details)
         {
             var detailString = details ? "/details" : String.Empty;
             string endPoint = String.Format("https://api.surveymonkey.net/v3/{0}s/{1}/responses/{2}{3}", source.ToString().ToLower(), objectId, responseId, detailString);
@@ -35,29 +35,29 @@ namespace SurveyMonkey
             return responses;
         }
 
-        public List<Response> GetResponseOverviewList(int objectId, ObjectType objectType)
+        public List<Response> GetResponseOverviewList(long objectId, ObjectType objectType)
         {
             var settings = new GetResponseListSettings();
             return GetResponseListPager(objectId, objectType, settings, false);
         }
 
-        public List<Response> GetResponseDetailList(int objectId, ObjectType objectType)
+        public List<Response> GetResponseDetailList(long objectId, ObjectType objectType)
         {
             var settings = new GetResponseListSettings();
             return GetResponseListPager(objectId, objectType, settings, true);
         }
 
-        public List<Response> GetResponseOverviewList(int objectId, ObjectType objectType, GetResponseListSettings settings)
+        public List<Response> GetResponseOverviewList(long objectId, ObjectType objectType, GetResponseListSettings settings)
         {
             return GetResponseListPager(objectId, objectType, settings, false);
         }
 
-        public List<Response> GetResponseDetailList(int objectId, ObjectType objectType, GetResponseListSettings settings)
+        public List<Response> GetResponseDetailList(long objectId, ObjectType objectType, GetResponseListSettings settings)
         {
             return GetResponseListPager(objectId, objectType, settings, true);
         }
 
-        private List<Response> GetResponseListPager(int id, ObjectType objectType, GetResponseListSettings settings, bool details)
+        private List<Response> GetResponseListPager(long id, ObjectType objectType, GetResponseListSettings settings, bool details)
         {
             //Get the specific page & quantity
             if (settings.Page.HasValue || settings.PerPage.HasValue)
@@ -90,7 +90,7 @@ namespace SurveyMonkey
             return results;
         }
 
-        private List<Response> GetResponseListRequest(int id, ObjectType objectType, bool details, RequestData requestData)
+        private List<Response> GetResponseListRequest(long id, ObjectType objectType, bool details, RequestData requestData)
         {
             var bulk = details ? "/bulk" : String.Empty;
             string endPoint = String.Format("https://api.surveymonkey.net/v3/{0}s/{1}/responses{2}", objectType.ToString().ToLower(), id, bulk);
