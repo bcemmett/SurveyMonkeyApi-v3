@@ -6,7 +6,7 @@ namespace SurveyMonkey.Containers
     [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
     public class QuestionValidation
     {
-        public QuestionValidationType Type { get; set; }
+        public QuestionValidationType? Type { get; set; }
         public string Text { get; set; }
         public object Min { get; set; }
         public object Max { get; set; }

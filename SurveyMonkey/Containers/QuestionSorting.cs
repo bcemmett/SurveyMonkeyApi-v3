@@ -6,7 +6,7 @@ namespace SurveyMonkey.Containers
     [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
     public class QuestionSorting
     {
-        public QuestionSortingType Type { get; set; }
+        public QuestionSortingType? Type { get; set; }
         public bool? IgnoreLast { get; set; }
     }
 }

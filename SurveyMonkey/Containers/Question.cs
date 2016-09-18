@@ -8,8 +8,8 @@ namespace SurveyMonkey.Containers
     public class Question
     {
         public long? Id { get; set; }
-        public QuestionFamily Family { get; set; }
-        public QuestionSubtype Subtype { get; set; }
+        public QuestionFamily? Family { get; set; }
+        public QuestionSubtype? Subtype { get; set; }
         public int? Position { get; set; }
         public QuestionRequired Required { get; set; }
         public QuestionSorting Sorting { get; set; }
