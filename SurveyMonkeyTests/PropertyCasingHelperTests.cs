@@ -24,6 +24,7 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("ManySeparateWords", PropertyCasingHelper.SnakeToCamel("many_separate_words"));
             Assert.AreEqual("ANumber3WithWords", PropertyCasingHelper.SnakeToCamel("a_number_3_with_words"));
             Assert.AreEqual("ManyNumeric345Digits", PropertyCasingHelper.SnakeToCamel("many_numeric_345_digits"));
+            Assert.AreEqual("WordAndAnother", PropertyCasingHelper.SnakeToCamel("wOrd_and_ANOTHER"));
         }
 
         [Test]

@@ -38,6 +38,11 @@ namespace SurveyMonkey.Helpers
 
         internal static string SnakeToCamel(string input)
         {
+            if (input == input.ToUpper())
+            {
+                return input;
+            }
+
             var chars = input.ToCharArray();
             var output = new List<char>();
             bool previousWasUnderscore = false;
@@ -55,7 +60,7 @@ namespace SurveyMonkey.Helpers
                     }
                     else
                     {
-                        output.Add(chars[i]);
+                        output.Add(Char.ToLower(chars[i]));
                     }
                     previousWasUnderscore = false;
                 }
