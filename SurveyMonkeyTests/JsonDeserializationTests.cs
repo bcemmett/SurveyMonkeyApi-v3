@@ -395,6 +395,17 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("hEllo", output.AString);
         }
 
+        [Test]
+        public void UnknownPropertiesAreIgnored()
+        {
+            string input = @"{""a_string"":""hi"",""some_random_object"":""hi"",""an_int"":5}";
+            var parsed = JObject.Parse(input);
+            var result = new JsonDeserializationTestsContainer();
+            Assert.DoesNotThrow(delegate { result = parsed.ToObject<JsonDeserializationTestsContainer>(); });
+            Assert.AreEqual("hi", result.AString);
+            Assert.AreEqual(5, result.AnInt);
+        }
+
         #endregion
 
         #region ObjectsHaveBeenWrittenToUseCorrectTypesAndConverters
