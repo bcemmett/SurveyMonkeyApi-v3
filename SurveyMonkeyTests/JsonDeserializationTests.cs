@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.CompilerServices;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using NUnit.Framework;
@@ -437,10 +438,14 @@ namespace SurveyMonkeyTests
 
             foreach (var type in types)
             {
-                var failMessage = String.Format("{0} needs the [JsonConverter(typeof(CaseTolerantJsonConverter))] attribute", type);
-                var element = (JsonConverterAttribute)Attribute.GetCustomAttributes(type, typeof(JsonConverterAttribute)).FirstOrDefault();
-                Assert.IsNotNull(element, failMessage);
-                Assert.AreEqual(typeof(TolerantJsonConverter),element.ConverterType, failMessage);
+                var compilerGeneratedAttribute = (CompilerGeneratedAttribute)Attribute.GetCustomAttributes(type, typeof(CompilerGeneratedAttribute)).FirstOrDefault();
+                if (compilerGeneratedAttribute == null)
+                {
+                    var failMessage = String.Format("{0} needs the [JsonConverter(typeof(CaseTolerantJsonConverter))] attribute", type);
+                    var element = (JsonConverterAttribute)Attribute.GetCustomAttributes(type, typeof(JsonConverterAttribute)).FirstOrDefault();
+                    Assert.IsNotNull(element, failMessage);
+                    Assert.AreEqual(typeof(TolerantJsonConverter), element.ConverterType, failMessage);
+                }
             }
         }
 
