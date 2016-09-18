@@ -9,5 +9,6 @@ namespace SurveyMonkey.Containers
         public List<Choice> Choices { get; set; }
         public List<Row> Rows { get; set; }
         public List<Column> Cols { get; set; }
+        public OtherAnswer Other { get; set; }
     }
 }

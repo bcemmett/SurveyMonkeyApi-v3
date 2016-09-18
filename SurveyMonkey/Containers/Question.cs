@@ -19,5 +19,6 @@ namespace SurveyMonkey.Containers
         public bool? ForcedRanking { get; set; }
         public string Href { get; set; }
         public QuestionAnswers Answers { get; set; }
+        public string Nickname { get; set; }
     }
 }

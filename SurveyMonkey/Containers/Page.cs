@@ -13,6 +13,5 @@ namespace SurveyMonkey.Containers
         public int? Position { get; set; }
         public int? QuestionCount { get; set; }
         public List<Question> Questions { get; set; }
-
     }
 }

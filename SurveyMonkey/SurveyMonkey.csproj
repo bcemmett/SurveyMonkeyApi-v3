@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Containers\ButtonsText.cs" />
+    <Compile Include="Containers\OtherAnswer.cs" />
     <Compile Include="Containers\Choice.cs" />
     <Compile Include="Containers\Collector.cs" />
     <Compile Include="Containers\Column.cs" />
