@@ -17,10 +17,21 @@ namespace SurveyMonkeyTests
         }
 
         [Test]
+        public void SnakeCaseIsConvertedToCamelCase()
+        {
+            Assert.AreEqual("Single", PropertyCasingHelper.SnakeToCamel("single"));
+            Assert.AreEqual("TwoWords", PropertyCasingHelper.SnakeToCamel("two_words"));
+            Assert.AreEqual("ManySeparateWords", PropertyCasingHelper.SnakeToCamel("many_separate_words"));
+            Assert.AreEqual("ANumber3WithWords", PropertyCasingHelper.SnakeToCamel("a_number_3_with_words"));
+            Assert.AreEqual("ManyNumeric345Digits", PropertyCasingHelper.SnakeToCamel("many_numeric_345_digits"));
+        }
+
+        [Test]
         public void AllCapitalsAreNotConverted()
         {
             Assert.AreEqual("DESC", PropertyCasingHelper.CamelToSnake("DESC"));
             Assert.AreEqual("de_s_c", PropertyCasingHelper.CamelToSnake("DeSC"));
+            Assert.AreEqual("DESC", PropertyCasingHelper.SnakeToCamel("DESC"));
         }
     }
 }

@@ -35,5 +35,32 @@ namespace SurveyMonkey.Helpers
             }
             return new string(output.ToArray());
         }
+
+        internal static string SnakeToCamel(string input)
+        {
+            var chars = input.ToCharArray();
+            var output = new List<char>();
+            bool previousWasUnderscore = false;
+            for(int i=0; i < chars.Length; i++)
+            {
+                if (chars[i] == '_')
+                {
+                    previousWasUnderscore = true;
+                }
+                else
+                {
+                    if (i == 0 || previousWasUnderscore)
+                    {
+                        output.Add(Char.ToUpper(chars[i]));
+                    }
+                    else
+                    {
+                        output.Add(chars[i]);
+                    }
+                    previousWasUnderscore = false;
+                }
+            }
+            return new string(output.ToArray());
+        }
     }
 }
