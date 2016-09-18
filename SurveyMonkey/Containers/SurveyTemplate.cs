@@ -2,7 +2,7 @@
 
 namespace SurveyMonkey.Containers
 {
-    [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
+    [JsonConverter(typeof(TolerantJsonConverter))]
     public class SurveyTemplate
     {
         public string Name { get; set; }

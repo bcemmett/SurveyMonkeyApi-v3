@@ -5,7 +5,7 @@ using SurveyMonkey.Enums;
 
 namespace SurveyMonkey.Containers
 {
-    [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
+    [JsonConverter(typeof(TolerantJsonConverter))]
     public class Response
     {
         public long? Id { get; set; }

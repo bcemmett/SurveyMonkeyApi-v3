@@ -426,15 +426,15 @@ namespace SurveyMonkeyTests
 
             foreach (var type in types)
             {
-                var failMessage = String.Format("{0} needs the [JsonConverter(typeof(LaxPropertyNameJsonConverter))] attribute", type);
+                var failMessage = String.Format("{0} needs the [JsonConverter(typeof(CaseTolerantJsonConverter))] attribute", type);
                 var element = (JsonConverterAttribute)Attribute.GetCustomAttributes(type, typeof(JsonConverterAttribute)).FirstOrDefault();
                 Assert.IsNotNull(element, failMessage);
-                Assert.AreEqual(typeof(LaxPropertyNameJsonConverter),element.ConverterType, failMessage);
+                Assert.AreEqual(typeof(TolerantJsonConverter),element.ConverterType, failMessage);
             }
         }
 
         [Test]
-        public void AllEnumsUseTheLaxEnumDeserialiser()
+        public void AllEnumsUseTheLaxEnumDeserialiser() //todo combine this with the class test
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()
                .SelectMany(t => t.GetTypes())
@@ -442,20 +442,20 @@ namespace SurveyMonkeyTests
 
             foreach (var type in types)
             {
-                var failMessage = String.Format("{0} needs the [JsonConverter(typeof(LaxEnumJsonConverter))] attribute", type);
+                var failMessage = String.Format("{0} needs the [JsonConverter(typeof(CaseTolerantJsonConverter))] attribute", type);
                 var element = (JsonConverterAttribute)Attribute.GetCustomAttributes(type, typeof(JsonConverterAttribute)).FirstOrDefault();
                 Assert.IsNotNull(element, failMessage);
-                Assert.AreEqual(typeof(LaxEnumJsonConverter), element.ConverterType, failMessage);
+                Assert.AreEqual(typeof(TolerantJsonConverter), element.ConverterType, failMessage);
             }
         }
 
         #endregion
     }
 
-    [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
+    [JsonConverter(typeof(TolerantJsonConverter))]
     public class JsonDeserializationTestsContainer
     {
-        [JsonConverter(typeof(LaxEnumJsonConverter))]
+        [JsonConverter(typeof(TolerantJsonConverter))]
         public enum EnumType
         {
             ItemOne,

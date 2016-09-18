@@ -73,7 +73,7 @@
     <Compile Include="Helpers\RequestSettingsHelper.cs" />
     <Compile Include="LiveWebClient.cs" />
     <Compile Include="IWebClient.cs" />
-    <Compile Include="Json.cs" />
+    <Compile Include="TolerantJsonConverter.cs" />
     <Compile Include="Enums\QuestionFamily.cs" />
     <Compile Include="Enums\QuestionSubtype.cs" />
     <Compile Include="Enums\QuestionRequiredType.cs" />

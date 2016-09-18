@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace SurveyMonkey.Containers
 {
-    [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
+    [JsonConverter(typeof(TolerantJsonConverter))]
     public class Survey
     {
         public long? Id { get; set; }

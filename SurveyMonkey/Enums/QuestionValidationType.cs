@@ -2,7 +2,7 @@
 
 namespace SurveyMonkey.Enums
 {
-    [JsonConverter(typeof(LaxEnumJsonConverter))]
+    [JsonConverter(typeof(TolerantJsonConverter))]
     public enum QuestionValidationType
     {
         Any,

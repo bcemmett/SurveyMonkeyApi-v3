@@ -3,7 +3,7 @@ using SurveyMonkey.Enums;
 
 namespace SurveyMonkey.Containers
 {
-    [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
+    [JsonConverter(typeof(TolerantJsonConverter))]
     public class QuestionValidation
     {
         public QuestionValidationType? Type { get; set; }

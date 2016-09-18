@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 
 namespace SurveyMonkey.Containers
 {
-    [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
+    [JsonConverter(typeof(TolerantJsonConverter))]
     public class Column
     {
         public string Text { get; set; }

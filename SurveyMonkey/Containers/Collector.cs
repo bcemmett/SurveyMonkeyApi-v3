@@ -3,24 +3,24 @@ using Newtonsoft.Json;
 
 namespace SurveyMonkey.Containers
 {
-    [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
+    [JsonConverter(typeof(TolerantJsonConverter))]
     public class Collector
     {
-        [JsonConverter(typeof(LaxEnumJsonConverter))]
+        [JsonConverter(typeof(TolerantJsonConverter))]
         public enum StatusType
         {
             Open,
             Closed
         }
 
-        [JsonConverter(typeof(LaxEnumJsonConverter))]
+        [JsonConverter(typeof(TolerantJsonConverter))]
         public enum CollectorType
         {
             Weblink,
             Email
         }
 
-        [JsonConverter(typeof(LaxEnumJsonConverter))]
+        [JsonConverter(typeof(TolerantJsonConverter))]
         public enum EditResponseOption
         {
             UntilComplete,
@@ -28,7 +28,7 @@ namespace SurveyMonkey.Containers
             Always
         }
 
-        [JsonConverter(typeof(LaxEnumJsonConverter))]
+        [JsonConverter(typeof(TolerantJsonConverter))]
         public enum AnonymousOption
         {
             NotAnonymous,
