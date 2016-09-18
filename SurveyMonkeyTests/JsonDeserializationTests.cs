@@ -348,6 +348,55 @@ namespace SurveyMonkeyTests
 
         #endregion
 
+        #region PropertyNameMatching
+
+        [Test]
+        public void ExactPropertyNamesMatch()
+        {
+            string input = @"{""AString"":""hEllo""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual("hEllo", output.AString);
+        }
+
+        [Test]
+        public void SnakeCasePropertyNamesMatch()
+        {
+            string input = @"{""a_string"":""hEllo""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual("hEllo", output.AString);
+        }
+
+        [Test]
+        public void LowerCasePropertyNamesMatch()
+        {
+            string input = @"{""astring"":""hEllo""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual("hEllo", output.AString);
+        }
+
+        [Test]
+        public void RandomCasePropertyNamesMatch()
+        {
+            string input = @"{""aStRinG"":""hEllo""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual("hEllo", output.AString);
+        }
+
+        [Test]
+        public void SurpurflousUnderscorePropertyNamesMatch()
+        {
+            string input = @"{""astri_ng"":""hEllo""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual("hEllo", output.AString);
+        }
+
+        #endregion
+
         #region ObjectsHaveBeenWrittenToUseCorrectTypesAndConverters
 
         [Test]
@@ -400,7 +449,7 @@ namespace SurveyMonkeyTests
             }
         }
 
-#endregion
+        #endregion
     }
 
     [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
