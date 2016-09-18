@@ -42,10 +42,10 @@ namespace SurveyMonkey
                 {
                     /*The v2 api sometimes misbehaves and returns stringy values like "None"
                     when it should be returning numeric values, leading to a FormatException
-                    doing the conversion. Detect and an use 0 in these situations*/
+                    doing the conversion. Detect and an use null in these situations*/
                     long n;
-                    if ((prop.PropertyType == typeof(int) || prop.PropertyType == typeof(long))
-                        && !Int64.TryParse(jp.Value.ToString(), out n))
+                    if (((prop.PropertyType == typeof(int?) || prop.PropertyType == typeof(long?))
+                        && !Int64.TryParse(jp.Value.ToString(), out n)) || jp.Value.Type == JTokenType.Null)
                     {
                         prop.SetValue(instance, null);
                     }

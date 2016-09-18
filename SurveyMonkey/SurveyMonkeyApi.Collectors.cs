@@ -61,5 +61,14 @@ namespace SurveyMonkey
             var collectors = result["data"].ToObject<List<Collector>>();
             return collectors;
         }
+
+        public Collector GetCollectorDetails(long collectorId)
+        {
+            string endPoint = String.Format("/collectors/{0}", collectorId);
+            var verb = Verb.GET;
+            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            var collector = result.ToObject<Collector>();
+            return collector;
+        }
     }
 }
