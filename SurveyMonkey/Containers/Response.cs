@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 using SurveyMonkey.Enums;
 
@@ -27,5 +28,10 @@ namespace SurveyMonkey.Containers
         public string IpAddress { get; set; }
         public long? RecipientId { get; set; }
         public List<ResponsePage> Pages { get; set; }
+
+        public List<ResponseQuestion> Questions
+        {
+            get { return Pages?.SelectMany(page => page.Questions).ToList(); }
+        }
     }
 }

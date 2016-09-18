@@ -74,6 +74,10 @@
     <Compile Include="Helpers\RequestSettingsHelper.cs" />
     <Compile Include="LiveWebClient.cs" />
     <Compile Include="IWebClient.cs" />
+    <Compile Include="ProcessedAnswers\IProcessedResponse.cs" />
+    <Compile Include="ProcessedAnswers\ProcessedAnswer.cs" />
+    <Compile Include="ProcessedAnswers\SingleChoiceAnswer.cs" />
+    <Compile Include="SurveyMonkeyApi.DataProcessing.cs" />
     <Compile Include="TolerantJsonConverter.cs" />
     <Compile Include="Enums\QuestionFamily.cs" />
     <Compile Include="Enums\QuestionSubtype.cs" />

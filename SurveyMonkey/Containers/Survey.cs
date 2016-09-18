@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace SurveyMonkey.Containers
@@ -25,5 +26,11 @@ namespace SurveyMonkey.Containers
         public string SummaryUrl { get; set; }
         public Dictionary<string, string> CustomVariables { get; set; }
         public List<Page> Pages { get; set; }
+
+        public List<Question> Questions {
+            get { return Pages?.SelectMany(page => page.Questions).ToList(); }
+        }
+
+        internal Dictionary<long, Question> QuestionsLookup { get; set; }
     }
 }
