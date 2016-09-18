@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection;
 using Newtonsoft.Json;
@@ -122,11 +123,13 @@ namespace SurveyMonkey
             return (classProperty.PropertyType == typeof(int?) || classProperty.PropertyType == typeof(long?)) && !Int64.TryParse(jsonProperty.Value.ToString(), out n);
         }
 
-        private void WarnOfMissingDeserializationOpportunity(string propertyName)
+        [Conditional("DEBUG")]
+        void WarnOfMissingDeserializationOpportunity(string propertyName)
         {
-            #if DEBUG
+            if(this.GetType() == typeof(TolerantJsonConverter))
+            {
                 throw new ArgumentException("Json property {0} doesn't exist in the model", propertyName);
-            #endif
+            }
         }
     }
 }

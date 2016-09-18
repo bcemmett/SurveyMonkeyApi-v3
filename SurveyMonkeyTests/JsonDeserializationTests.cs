@@ -463,10 +463,10 @@ namespace SurveyMonkeyTests
         #endregion
     }
 
-    [JsonConverter(typeof(TolerantJsonConverter))]
+    [JsonConverter(typeof(WarningSupressingTolerantJsonConverter))]
     public class JsonDeserializationTestsContainer
     {
-        [JsonConverter(typeof(TolerantJsonConverter))]
+        [JsonConverter(typeof(WarningSupressingTolerantJsonConverter))]
         public enum EnumType
         {
             ItemOne,
@@ -479,5 +479,9 @@ namespace SurveyMonkeyTests
         public long? ALong { get; set; }
         public int? AnInt { get; set; }
         public EnumType? AnEnum { get; set; }
+    }
+
+    internal class WarningSupressingTolerantJsonConverter : TolerantJsonConverter
+    {
     }
 }
