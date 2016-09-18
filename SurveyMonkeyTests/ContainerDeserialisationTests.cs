@@ -37,9 +37,26 @@ namespace SurveyMonkeyTests
 
             foreach (var type in types)
             {
-                Assert.AreEqual(
-                    typeof(LaxPropertyNameJsonConverter),
-                    ((JsonConverterAttribute)Attribute.GetCustomAttributes(type, typeof(JsonConverterAttribute)).First()).ConverterType);
+                var failMessage = String.Format("{0} needs the [JsonConverter(typeof(LaxPropertyNameJsonConverter))] attribute", type);
+                var element = (JsonConverterAttribute)Attribute.GetCustomAttributes(type, typeof(JsonConverterAttribute)).FirstOrDefault();
+                Assert.IsNotNull(element, failMessage);
+                Assert.AreEqual(typeof(LaxPropertyNameJsonConverter),element.ConverterType, failMessage);
+            }
+        }
+
+        [Test]
+        public void AllEnumsUseTheLaxEnumDeserialiser()
+        {
+            var types = AppDomain.CurrentDomain.GetAssemblies()
+               .SelectMany(t => t.GetTypes())
+               .Where(t => t.IsEnum && t.Namespace == "SurveyMonkey.Enums");
+
+            foreach (var type in types)
+            {
+                var failMessage = String.Format("{0} needs the [JsonConverter(typeof(LaxEnumJsonConverter))] attribute", type);
+                var element = (JsonConverterAttribute)Attribute.GetCustomAttributes(type, typeof(JsonConverterAttribute)).FirstOrDefault();
+                Assert.IsNotNull(element, failMessage);
+                Assert.AreEqual(typeof(LaxEnumJsonConverter), element.ConverterType, failMessage);
             }
         }
     }
