@@ -49,7 +49,7 @@ namespace SurveyMonkeyTests
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()
                .SelectMany(t => t.GetTypes())
-               .Where(t => t.IsEnum && t.Namespace == "SurveyMonkey.Enums");
+               .Where(t => t.IsEnum && (t.Namespace == "SurveyMonkey.Enums" || t.Namespace == "SurveyMonkey.Containers"));
 
             foreach (var type in types)
             {
