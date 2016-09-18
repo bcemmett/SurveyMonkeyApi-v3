@@ -51,7 +51,7 @@ namespace SurveyMonkey
                         return Enum.ToObject(type, enumVal);
                     }
                 }
-                WarnOfMissingDeserializationOpportunity(reader.Value.ToString());
+                WarnOfMissingDeserializationOpportunity(reader.Value.ToString(), type.FullName);
                 return null;
             }
 
@@ -95,7 +95,7 @@ namespace SurveyMonkey
                 }
                 else
                 {
-                    WarnOfMissingDeserializationOpportunity(name);
+                    WarnOfMissingDeserializationOpportunity(jsonProperty.Name, type.Name);
                 }
             }
             return instance;
@@ -124,11 +124,11 @@ namespace SurveyMonkey
         }
 
         [Conditional("DEBUG")]
-        void WarnOfMissingDeserializationOpportunity(string propertyName)
+        void WarnOfMissingDeserializationOpportunity(string propertyName, string type)
         {
             if(this.GetType() == typeof(TolerantJsonConverter))
             {
-                throw new ArgumentException("Json property {0} doesn't exist in the model", propertyName);
+                throw new ArgumentException(String.Format("Json property {0} doesn't exist on object {1}", propertyName, type));
             }
         }
     }
