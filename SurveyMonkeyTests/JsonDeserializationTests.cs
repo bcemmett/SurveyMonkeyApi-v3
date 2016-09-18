@@ -55,12 +55,295 @@ namespace SurveyMonkeyTests
             DeserializeAndTestDateTime(input, new DateTime(2016, 1, 5, 12, 10, 20, DateTimeKind.Utc));
         }
 
+        [Test]
+        public void NullDateTimeIsLeftNull()
+        {
+            string input = @"{""Timestamp"":null}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.Timestamp);
+        }
+
+        [Test]
+        public void AbsentDateTimeIsLeftNull()
+        {
+            string input = @"{}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.Timestamp);
+        }
+
+        [Test]
+        public void BadlyFormatedDateTimeThrows()
+        {
+            string input = @"{""Timestamp"":""Asdf""}";
+            var parsed = JObject.Parse(input);
+            Assert.Throws<JsonReaderException>(delegate { parsed.ToObject<JsonDeserializationTestsContainer>(); });
+        }
+
         private void DeserializeAndTestDateTime(string input, DateTime desiredResult)
         {
             var parsed = JObject.Parse(input);
-            var output = parsed.ToObject<JsonDateTimeTestsContainer>();
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
             Assert.AreEqual(DateTimeKind.Utc, output.Timestamp.Value.Kind);
             Assert.AreEqual(desiredResult, output.Timestamp);
+        }
+
+        #endregion
+
+        #region StringDeserialization
+
+        [Test]
+        public void StringsAreDeserialized()
+        {
+            string input = @"{""AString"":""hEllo""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual("hEllo", output.AString);
+        }
+
+        [Test]
+        public void NumericStringsAreLeftAsStrings()
+        {
+            string input = @"{""AString"":""12345""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual("12345", output.AString);
+        }
+
+        [Test]
+        public void NullStringsAreLeftNull()
+        {
+            string input = @"{""AString"":null}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.AString);
+        }
+
+        [Test]
+        public void AbsentStringsAreLeftNull()
+        {
+            string input = @"{}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.AString);
+        }
+
+        [Test]
+        public void StringContainingNullAreDeserialized()
+        {
+            string input = @"{""AString"":""null""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual("null", output.AString);
+        }
+
+        #endregion
+
+        #region IntDeserialization
+
+        [Test]
+        public void IntsAreDeserialized()
+        {
+            string input = @"{""AnInt"":12345}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(12345, output.AnInt);
+        }
+
+        [Test]
+        public void NullIntsAreLeftNull()
+        {
+            string input = @"{""AnInt"":null}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.AnInt);
+        }
+
+        [Test]
+        public void StringyIntsAreLeftNull()
+        {
+            string input = @"{""AnInt"":""Asf3s""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.AnInt);
+        }
+
+        [Test]
+        public void StringyNumericIntsAreDeserialized()
+        {
+            string input = @"{""AnInt"":""12345""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(12345, output.AnInt);
+        }
+
+        [Test]
+        public void OverflowingIntsThrow()
+        {
+            string input = @"{""AnInt"":2134515487945}";
+            var parsed = JObject.Parse(input);
+            Assert.Throws<OverflowException>(delegate { parsed.ToObject<JsonDeserializationTestsContainer>(); });
+        }
+
+        [Test]
+        public void OverflowingStringyIntsThrow()
+        {
+            string input = @"{""AnInt"":""2134515487945""}";
+            var parsed = JObject.Parse(input);
+            Assert.Throws<JsonReaderException>(delegate { parsed.ToObject<JsonDeserializationTestsContainer>(); });
+        }
+
+        [Test]
+        public void AbsentIntsAreLeftNull()
+        {
+            string input = @"{}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.AnInt);
+        }
+
+        #endregion
+
+        #region LongDeserialization
+
+        [Test]
+        public void LongsAreDeserialized()
+        {
+            string input = @"{""ALong"":12345}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(12345, output.ALong);
+        }
+
+        [Test]
+        public void NullLongsAreLeftNull()
+        {
+            string input = @"{""ALong"":null}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.ALong);
+        }
+
+        [Test]
+        public void StringyLongsAreLeftNull()
+        {
+            string input = @"{""ALong"":""Asf3s""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.ALong);
+        }
+
+        [Test]
+        public void StringyNumericLongsAreDeserialized()
+        {
+            string input = @"{""ALong"":""12345""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(12345, output.ALong);
+        }
+
+        [Test]
+        public void LargeLongsAreDeserialized()
+        {
+            string input = @"{""ALong"":2134515487945}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(2134515487945, output.ALong);
+        }
+
+        [Test]
+        public void LargeStringyLongsAreDeserialized()
+        {
+            string input = @"{""ALong"":""2134515487945""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(2134515487945, output.ALong);
+        }
+
+        [Test]
+        public void AbsentLongsAreLeftNull()
+        {
+            string input = @"{}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.ALong);
+        }
+
+        #endregion
+
+        #region EnumDeserialization
+
+        [Test]
+        public void EnumsAreDeserialized()
+        {
+            string input = @"{""AnEnum"":""ItemOne""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(JsonDeserializationTestsContainer.EnumType.ItemOne, output.AnEnum);
+        }
+
+        [Test]
+        public void DifferentlyCasedEnumsAreDeserialized()
+        {
+            string input = @"{""AnEnum"":""itemone""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(JsonDeserializationTestsContainer.EnumType.ItemOne, output.AnEnum);
+        }
+
+        [Test]
+        public void EnumsWithUnderscoresAreDeserialized()
+        {
+            string input = @"{""AnEnum"":""iTem_oNE""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(JsonDeserializationTestsContainer.EnumType.ItemOne, output.AnEnum);
+        }
+
+        [Test]
+        public void NumericEnumsAreDeserialized()
+        {
+            string input = @"{""AnEnum"":2}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(JsonDeserializationTestsContainer.EnumType.Item3, output.AnEnum);
+        }
+
+        [Test]
+        public void StringyNumericEnumsAreLeftNull()
+        {
+            string input = @"{""AnEnum"":""2""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.AnEnum);
+        }
+
+        [Test]
+        public void EnumsWithNonMatchingTextAreLeftNull()
+        {
+            string input = @"{""AnEnum"":""FourthItem""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.AnEnum);
+        }
+
+        [Test]
+        public void NullEnumsAreLeftNull()
+        {
+            string input = @"{""AnEnum"":null}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.AnEnum);
+        }
+
+        [Test]
+        public void AbsentEnumsAreLeftNull()
+        {
+            string input = @"{}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.AnEnum);
         }
 
         #endregion
@@ -121,8 +404,20 @@ namespace SurveyMonkeyTests
     }
 
     [JsonConverter(typeof(LaxPropertyNameJsonConverter))]
-    class JsonDateTimeTestsContainer
+    public class JsonDeserializationTestsContainer
     {
+        [JsonConverter(typeof(LaxEnumJsonConverter))]
+        public enum EnumType
+        {
+            ItemOne,
+            ITEMTWO,
+            Item3
+        }
+
         public DateTime? Timestamp { get; set; }
+        public string AString { get; set; }
+        public long? ALong { get; set; }
+        public int? AnInt { get; set; }
+        public EnumType? AnEnum { get; set; }
     }
 }
