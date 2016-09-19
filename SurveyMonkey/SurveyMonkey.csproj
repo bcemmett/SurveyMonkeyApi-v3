@@ -75,6 +75,8 @@
     <Compile Include="LiveWebClient.cs" />
     <Compile Include="IWebClient.cs" />
     <Compile Include="ProcessedAnswers\IProcessedResponse.cs" />
+    <Compile Include="ProcessedAnswers\OpenEndedMultipleAnswer.cs" />
+    <Compile Include="ProcessedAnswers\OpenEndedSingleAnswer.cs" />
     <Compile Include="ProcessedAnswers\ProcessedAnswer.cs" />
     <Compile Include="ProcessedAnswers\MultipleChoiceAnswer.cs" />
     <Compile Include="ProcessedAnswers\SingleChoiceAnswer.cs" />

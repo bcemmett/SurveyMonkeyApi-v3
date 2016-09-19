@@ -67,5 +67,35 @@ namespace SurveyMonkeyTests
 
             Assert.AreEqual(12, replies.Count());
         }
+
+        [Test]
+        public void OpenEndedSingleAnswerIsMatched()
+        {
+            var replies = GetResponses().Where(r => r.QuestionFamily == QuestionFamily.OpenEnded && (r.QuestionSubtype == QuestionSubtype.Essay || r.QuestionSubtype == QuestionSubtype.Single));
+
+            Assert.AreEqual(2, replies.Count());
+            Assert.AreEqual("Some text for my essay Bacon ipsum dolor sit amet pork belly short loin shank ribeye fatback t-bone kevin. Shankle short ribs venison, short loin bresaola beef ribs pork. Pork loin boudin jowl, frankfurter pork belly meatloaf", ((OpenEndedSingleAnswer)replies.First().Response).Text);
+            Assert.AreEqual("Single box", ((OpenEndedSingleAnswer)replies.Last().Response).Text);
+        }
+
+        [Test]
+        public void OpenEndedMultipleAnswerIsMatched()
+        {
+            var replies = GetResponses().Where(r => r.QuestionFamily == QuestionFamily.OpenEnded && (r.QuestionSubtype == QuestionSubtype.Multi || r.QuestionSubtype == QuestionSubtype.Numerical));
+            var multi = (OpenEndedMultipleAnswer) replies.First().Response;
+            Assert.AreEqual("asdf", multi.Rows.First().Text);
+            Assert.AreEqual("Choice 1", multi.Rows.First().RowName);
+            Assert.AreEqual("asdfasdf", multi.Rows.Last().Text);
+            Assert.AreEqual("Choice 5", multi.Rows.Last().RowName);
+
+            var numeric = (OpenEndedMultipleAnswer) replies.Last().Response;
+            Assert.AreEqual("101", numeric.Rows.First().Text);
+            Assert.AreEqual("Choice 1", numeric.Rows.First().RowName);
+            Assert.AreEqual("105", numeric.Rows.Last().Text);
+            Assert.AreEqual("Choice 5", numeric.Rows.Last().RowName);
+            Assert.AreEqual(4, numeric.Rows.Count);
+
+            Assert.AreEqual(2, replies.Count());
+        }
     }
 }

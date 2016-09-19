@@ -69,7 +69,7 @@ namespace SurveyMonkey
 
                 case QuestionFamily.MultipleChoice:
                     return MatchMultipleChoiceAnswer(question, responseAnswers);
-/*
+
                 case QuestionFamily.OpenEnded:
                     switch (question.Subtype)
                     {
@@ -82,7 +82,7 @@ namespace SurveyMonkey
                             return MatchOpenEndedMultipleAnswer(question, responseAnswers);
                     }
                     break;
-
+/*
                 case QuestionFamily.Demographic:
                     return MatchDemographicAnswer(question, responseAnswers);
 
@@ -136,8 +136,6 @@ namespace SurveyMonkey
 
             foreach (var responseAnswer in responseAnswers)
             {
-                //The API occasionally returns an invalid empty answer like "answers":[{"row":"0"},{"row":"123456789"}]
-                //Confirmed by SM as their problem, but need to ignore in the library to avoid a KeyNotFoundException which blows up data processing
                 if (responseAnswer.OtherId.HasValue)
                 {
                     reply.OtherText = responseAnswer.Text;
@@ -149,14 +147,13 @@ namespace SurveyMonkey
             }
             return reply;
         }
-        /*
+
         private OpenEndedSingleAnswer MatchOpenEndedSingleAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new OpenEndedSingleAnswer
             {
-                Text = responseAnswers.First().Text
+                Text = responseAnswers.FirstOrDefault()?.Text
             };
-
             return reply;
         }
 
@@ -169,16 +166,19 @@ namespace SurveyMonkey
 
             foreach (var responseAnswer in responseAnswers)
             {
-                reply.Rows.Add(new OpenEndedMultipleAnswerRow
+                if (responseAnswer.RowId.HasValue)
                 {
-                    RowName = question.AnswersLookup[responseAnswer.Row].Text,
-                    Text = responseAnswer.Text
-                });
+                    reply.Rows.Add(new OpenEndedMultipleAnswerRow
+                    {
+                        RowName = question.Answers.ItemLookup[responseAnswer.RowId.Value],
+                        Text = responseAnswer.Text
+                    });
+                }
             }
 
             return reply;
         }
-
+/*
         private DemographicAnswer MatchDemographicAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new DemographicAnswer();
