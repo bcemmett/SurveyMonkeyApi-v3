@@ -48,6 +48,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="DataProcessingTests.cs" />
     <Compile Include="GetResponseTests.cs" />
     <Compile Include="GetCollectorTests.cs" />
     <Compile Include="GetSurveyTests.cs" />
