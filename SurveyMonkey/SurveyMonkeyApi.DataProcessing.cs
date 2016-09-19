@@ -82,10 +82,10 @@ namespace SurveyMonkey
                             return MatchOpenEndedMultipleAnswer(question, responseAnswers);
                     }
                     break;
-/*
+
                 case QuestionFamily.Demographic:
                     return MatchDemographicAnswer(question, responseAnswers);
-
+/*
                 case QuestionFamily.DateTime:
                     return MatchDateTimeAnswer(question, responseAnswers);
 
@@ -178,22 +178,29 @@ namespace SurveyMonkey
 
             return reply;
         }
-/*
+
         private DemographicAnswer MatchDemographicAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new DemographicAnswer();
 
+            //todo it's a shame to unnecessarily re-generate this dictionary for each response. Could perhaps cache it as per the general ItemLookup
+            Dictionary<long, string> typeLookup = question.Answers.Rows.Where(r => r.Id.HasValue).ToDictionary(r => r.Id.Value, r => r.Type);
             foreach (var responseAnswer in responseAnswers)
             {
-                var propertyName = question.AnswersLookup[responseAnswer.Row].Type.ToString();
-                if (typeof(DemographicAnswer).GetProperty(propertyName, (BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance)) != null)
+                if (responseAnswer.RowId.HasValue)
                 {
-                    typeof(DemographicAnswer).GetProperty(propertyName, (BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance)).SetValue(reply, responseAnswer.Text);
+                    string propertyName = typeLookup[responseAnswer.RowId.Value];
+
+                    PropertyInfo property = typeof(DemographicAnswer).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                    if (property != null)
+                    {
+                        property.SetValue(reply, responseAnswer.Text);
+                    }
                 }
             }
             return reply;
         }
-
+/*
         private DateTimeAnswer MatchDateTimeAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new DateTimeAnswer

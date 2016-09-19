@@ -97,5 +97,36 @@ namespace SurveyMonkeyTests
 
             Assert.AreEqual(2, replies.Count());
         }
+
+        [Test]
+        public void DemographicAnswerIsMatched()
+        {
+            var replies = GetResponses().Where(r => r.QuestionFamily == QuestionFamily.Demographic);
+            var us = (DemographicAnswer)replies.First().Response;
+            Assert.AreEqual("TheName", us.Name);
+            Assert.AreEqual("TheCompany", us.Company);
+            Assert.IsNull(us.Address);
+            Assert.AreEqual("asdf", us.Address2);
+            Assert.AreEqual("London", us.City);
+            Assert.AreEqual("AL", us.State);
+            Assert.AreEqual("90210", us.Zip);
+            Assert.AreEqual("usa", us.Country);
+            Assert.AreEqual("123456789", us.Phone);
+            Assert.IsNull(us.Email);
+
+            var intnl = (DemographicAnswer) replies.Last().Response;
+            Assert.IsNull(intnl.Name);
+            Assert.AreEqual("missing name", intnl.Company);
+            Assert.AreEqual("asdf", intnl.Address);
+            Assert.AreEqual("asdf", intnl.Address2);
+            Assert.AreEqual("asdf", intnl.City);
+            Assert.AreEqual("asdfa", intnl.State);
+            Assert.AreEqual("asdf", intnl.Zip);
+            Assert.AreEqual("United Kingdom", intnl.Country);
+            Assert.AreEqual("123456789", intnl.Phone);
+            Assert.AreEqual("testing@bla.com", intnl.Email);
+
+            Assert.AreEqual(4, replies.Count());
+        }
     }
 }
