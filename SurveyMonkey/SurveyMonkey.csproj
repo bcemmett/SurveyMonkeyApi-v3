@@ -76,6 +76,7 @@
     <Compile Include="IWebClient.cs" />
     <Compile Include="ProcessedAnswers\IProcessedResponse.cs" />
     <Compile Include="ProcessedAnswers\ProcessedAnswer.cs" />
+    <Compile Include="ProcessedAnswers\MultipleChoiceAnswer.cs" />
     <Compile Include="ProcessedAnswers\SingleChoiceAnswer.cs" />
     <Compile Include="SurveyMonkeyApi.DataProcessing.cs" />
     <Compile Include="TolerantJsonConverter.cs" />

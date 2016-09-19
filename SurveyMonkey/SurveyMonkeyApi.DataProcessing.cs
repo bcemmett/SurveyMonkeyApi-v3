@@ -67,9 +67,9 @@ namespace SurveyMonkey
                 case QuestionFamily.SingleChoice:
                     return MatchSingleChoiceAnswer(question, responseAnswers);
 
-                /*case QuestionFamily.MultipleChoice:
+                case QuestionFamily.MultipleChoice:
                     return MatchMultipleChoiceAnswer(question, responseAnswers);
-
+/*
                 case QuestionFamily.OpenEnded:
                     switch (question.Subtype)
                     {
@@ -127,7 +127,7 @@ namespace SurveyMonkey
             return reply;
         }
 
-        /*private MultipleChoiceAnswer MatchMultipleChoiceAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
+        private MultipleChoiceAnswer MatchMultipleChoiceAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new MultipleChoiceAnswer
             {
@@ -138,22 +138,18 @@ namespace SurveyMonkey
             {
                 //The API occasionally returns an invalid empty answer like "answers":[{"row":"0"},{"row":"123456789"}]
                 //Confirmed by SM as their problem, but need to ignore in the library to avoid a KeyNotFoundException which blows up data processing
-                if (responseAnswer.Row != 0)
+                if (responseAnswer.OtherId.HasValue)
                 {
-                    if (question.AnswersLookup[responseAnswer.Row].Type == AnswerType.Row)
-                    {
-                        reply.Choices.Add(question.AnswersLookup[responseAnswer.Row].Text);
-                    }
-                    if (question.AnswersLookup[responseAnswer.Row].Type == AnswerType.Other)
-                    {
-                        reply.Choices.Add(question.AnswersLookup[responseAnswer.Row].Text);
-                        reply.OtherText = responseAnswer.Text;
-                    }
+                    reply.OtherText = responseAnswer.Text;
+                }
+                if (responseAnswer.ChoiceId.HasValue && responseAnswer.ChoiceId != 0)
+                {
+                    reply.Choices.Add(question.Answers.ItemLookup[responseAnswer.ChoiceId.Value]);
                 }
             }
             return reply;
         }
-
+        /*
         private OpenEndedSingleAnswer MatchOpenEndedSingleAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new OpenEndedSingleAnswer

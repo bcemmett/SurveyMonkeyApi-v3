@@ -42,5 +42,30 @@ namespace SurveyMonkeyTests
 
             Assert.AreEqual(15, replies.Count());
         }
+
+        [Test]
+        public void MultipleChoiceAnswersAreMatched()
+        {
+            var replies = GetResponses().Where(r => r.QuestionFamily == QuestionFamily.MultipleChoice);
+            MultipleChoiceAnswer reply;
+
+            reply = (MultipleChoiceAnswer)replies.First().Response;
+            Assert.AreEqual("Second Answer", reply.Choices.First());
+            Assert.AreEqual("Fourth Answer", reply.Choices.Last());
+            Assert.AreEqual(2, reply.Choices.Count);
+            Assert.IsNull(reply.OtherText);
+
+            reply = (MultipleChoiceAnswer)replies.Skip(5).First().Response;
+            Assert.AreEqual("Second Answer", reply.Choices.First());
+            Assert.AreEqual("Third Answer", reply.Choices.Last());
+            Assert.AreEqual(2, reply.Choices.Count);
+            Assert.AreEqual("Bla bla other", reply.OtherText);
+
+            reply = (MultipleChoiceAnswer)replies.Skip(11).First().Response;
+            Assert.IsEmpty(reply.Choices);
+            Assert.AreEqual("Bla bla other", reply.OtherText);
+
+            Assert.AreEqual(12, replies.Count());
+        }
     }
 }
