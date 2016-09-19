@@ -349,6 +349,72 @@ namespace SurveyMonkeyTests
 
         #endregion
 
+        #region BoolDeserialization
+
+        [Test]
+        public void BoolsAreDeserialized()
+        {
+            string input = @"{""ABool"":true}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(true, output.ABool);
+        }
+
+        [Test]
+        public void StringyBoolsAreDeserialized()
+        {
+            string input = @"{""ABool"":""true""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(true, output.ABool);
+        }
+
+        [Test]
+        public void NumericOneBoolsAreDeserialized()
+        {
+            string input = @"{""ABool"":1}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(true, output.ABool);
+        }
+
+        [Test]
+        public void NumericZeroBoolsAreDeserialized()
+        {
+            string input = @"{""ABool"":0}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(false, output.ABool);
+        }
+
+        [Test]
+        public void NumericLargeBoolsAreDeserialized()
+        {
+            string input = @"{""ABool"":5236}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual(true, output.ABool);
+        }
+
+        [Test]
+        public void MalformedBoolsThrow()
+        {
+            string input = @"{""ABool"":""asdf""}";
+            var parsed = JObject.Parse(input);
+            Assert.Throws<JsonReaderException>(delegate { parsed.ToObject<JsonDeserializationTestsContainer>();});
+        }
+
+        [Test]
+        public void AbsentBoolsAreLeftNull()
+        {
+            string input = @"{}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.IsNull(output.ABool);
+        }
+
+        #endregion
+
         #region PropertyNameMatching
 
         [Test]
@@ -468,6 +534,7 @@ namespace SurveyMonkeyTests
         public long? ALong { get; set; }
         public int? AnInt { get; set; }
         public EnumType? AnEnum { get; set; }
+        public bool? ABool { get; set; }
     }
 
     internal class WarningSupressingTolerantJsonConverter : TolerantJsonConverter
