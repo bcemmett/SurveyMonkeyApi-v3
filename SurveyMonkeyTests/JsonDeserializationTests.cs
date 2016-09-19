@@ -428,13 +428,13 @@ namespace SurveyMonkeyTests
                 }
             }
         }
-
+        
         [Test]
-        public void AllContainerUseTheLaxJsonPropertyDeserialiser()
+        public void AllCustomObjectsUseTheTolerantJsonDeserializer()
         {
             var types = AppDomain.CurrentDomain.GetAssemblies()
                .SelectMany(t => t.GetTypes())
-               .Where(t => t.IsClass && t.Namespace == "SurveyMonkey.Containers");
+               .Where(t => (t.IsClass && t.Namespace == "SurveyMonkey.Containers") || (t.IsEnum && (t.Namespace == "SurveyMonkey.Enums" || t.Namespace == "SurveyMonkey.Containers")));
 
             foreach (var type in types)
             {
@@ -446,22 +446,6 @@ namespace SurveyMonkeyTests
                     Assert.IsNotNull(element, failMessage);
                     Assert.AreEqual(typeof(TolerantJsonConverter), element.ConverterType, failMessage);
                 }
-            }
-        }
-
-        [Test]
-        public void AllEnumsUseTheLaxEnumDeserialiser() //todo combine this with the class test
-        {
-            var types = AppDomain.CurrentDomain.GetAssemblies()
-               .SelectMany(t => t.GetTypes())
-               .Where(t => t.IsEnum && (t.Namespace == "SurveyMonkey.Enums" || t.Namespace == "SurveyMonkey.Containers"));
-
-            foreach (var type in types)
-            {
-                var failMessage = String.Format("{0} needs the [JsonConverter(typeof(CaseTolerantJsonConverter))] attribute", type);
-                var element = (JsonConverterAttribute)Attribute.GetCustomAttributes(type, typeof(JsonConverterAttribute)).FirstOrDefault();
-                Assert.IsNotNull(element, failMessage);
-                Assert.AreEqual(typeof(TolerantJsonConverter), element.ConverterType, failMessage);
             }
         }
 
