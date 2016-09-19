@@ -12,5 +12,6 @@ namespace SurveyMonkey
 
         string DownloadString(string url);
         string UploadString(string url, string verb, string body);
+        void Dispose();
     }
 }

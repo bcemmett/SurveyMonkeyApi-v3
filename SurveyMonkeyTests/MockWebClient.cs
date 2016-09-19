@@ -60,6 +60,10 @@ namespace SurveyMonkeyTests
             return GetNextData();
         }
 
+        public void Dispose()
+        {
+        }
+
         #endregion
     }
 }

@@ -7,7 +7,7 @@ using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkey
 {
-    public partial class SurveyMonkeyApi
+    public partial class SurveyMonkeyApi : IDisposable
     {
         private string _apiKey;
         private string _oAuthToken;
@@ -80,6 +80,21 @@ namespace SurveyMonkey
         {
             _webClient.Headers.Clear();
             _webClient.QueryString.Clear();
+        }
+
+        public void Dispose()
+        {
+            Dispose(true);
+            GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool disposing)
+        {
+            if (_webClient != null)
+            {
+                _webClient.Dispose();
+                _webClient = null;
+            }
         }
     }
 }
