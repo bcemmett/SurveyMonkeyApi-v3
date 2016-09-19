@@ -11,15 +11,17 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi
     {
-        public void GetMissingSurveyInformation(long surveyId)
+        public Survey GetMissingSurveyInformation(long surveyId)
         {
             Survey survey = GetSurveyDetails(surveyId);
-            List<Response> responses = GetResponseDetailList(surveyId, ObjectType.Survey);
+            survey.Responses = GetResponseDetailList(surveyId, ObjectType.Survey);
 
-            foreach (var response in responses)
+            foreach (var response in survey.Responses)
             {
                 MatchResponsesToSurveyStructure(survey, response);
             }
+
+            return survey;
         }
 
         private void MatchResponsesToSurveyStructure(Survey survey, Response response)
