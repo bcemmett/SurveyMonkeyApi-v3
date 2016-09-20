@@ -44,7 +44,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(repeatedResponse);
             client.Responses.Add(repeatedResponse);
 
-            var api = new SurveyMonkeyApi("key", "token", client);
+            var api = new SurveyMonkeyApi("key", "token", client, 500);
 
             //Should be no rate limit first time
             stopwatch.Start();

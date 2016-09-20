@@ -13,22 +13,35 @@ namespace SurveyMonkey
         private string _oAuthToken;
         private IWebClient _webClient;
         private DateTime _lastRequestTime = DateTime.MinValue;
-        private int _rateLimitDelay = 500;
+        private int _rateLimitDelay;
 
         public SurveyMonkeyApi(string apiKey, string oAuthToken)
         {
             _webClient = new LiveWebClient();
-            SetupWebClient(apiKey, oAuthToken);
+            SetupWebClient(apiKey, oAuthToken, 500);
+        }
+
+        public SurveyMonkeyApi(string apiKey, string oAuthToken, int rateLimitDelay)
+        {
+            _webClient = new LiveWebClient();
+            SetupWebClient(apiKey, oAuthToken, rateLimitDelay);
         }
 
         internal SurveyMonkeyApi(string apiKey, string oAuthToken, IWebClient webClient)
         {
             _webClient = webClient;
-            SetupWebClient(apiKey, oAuthToken);
+            SetupWebClient(apiKey, oAuthToken, 0);
         }
 
-        private void SetupWebClient(string apiKey, string oAuthToken)
+        internal SurveyMonkeyApi(string apiKey, string oAuthToken, IWebClient webClient, int rateLimitDelay)
         {
+            _webClient = webClient;
+            SetupWebClient(apiKey, oAuthToken, rateLimitDelay);
+        }
+
+        private void SetupWebClient(string apiKey, string oAuthToken, int rateLimitDelay)
+        {
+            _rateLimitDelay = rateLimitDelay;
             _apiKey = apiKey;
             _oAuthToken = oAuthToken;
             _webClient.Encoding = Encoding.UTF8;
