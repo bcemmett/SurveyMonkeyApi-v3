@@ -191,5 +191,21 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(4, reply2.Rows.First().Value.Columns.Count);
             Assert.AreEqual("other text", reply2.OtherText);
         }
+
+        [Test]
+        public void MatrixRankingAnswerIsMatched()
+        {
+            var replies = GetResponses().Where(r => r.QuestionFamily == QuestionFamily.Matrix && r.QuestionSubtype == QuestionSubtype.Ranking);
+
+            var reply1 = (MatrixRankingAnswer) replies.First().Response;
+            Assert.AreEqual("Second Answer", reply1.Ranking[4]);
+            Assert.AreEqual(5, reply1.Ranking.Count);
+            Assert.IsEmpty(reply1.NotApplicable);
+
+            var reply2 = (MatrixRankingAnswer)replies.Last().Response;
+            Assert.AreEqual("Third Answer", reply2.Ranking[3]);
+            Assert.AreEqual("Not applicable text", reply2.NotApplicable.First());
+            Assert.AreEqual(2, reply2.NotApplicable.Count);
+        }
     }
 }

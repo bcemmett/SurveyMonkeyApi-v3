@@ -94,9 +94,9 @@ namespace SurveyMonkey
                     {
                         case QuestionSubtype.Menu:
                             return MatchMatrixMenuAnswer(question, responseAnswers);
-                        /*case QuestionSubtype.Ranking:
+                        case QuestionSubtype.Ranking:
                             return MatchMatrixRankingAnswer(question, responseAnswers);
-                        case QuestionSubtype.Rating:
+                        /*case QuestionSubtype.Rating:
                             return MatchMatrixRatingAnswer(question, responseAnswers);
                         case QuestionSubtype.Single:
                             return MatchMatrixSingleAnswer(question, responseAnswers);
@@ -266,35 +266,30 @@ namespace SurveyMonkey
             
             return reply;
         }
-/*
+
         private MatrixRankingAnswer MatchMatrixRankingAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new MatrixRankingAnswer
             {
-                Ranking = new List<Tuple<int, string>>(),
+                Ranking = new Dictionary<int, string>(),
                 NotApplicable = new List<string>()
             };
-
+            
             foreach (var responseAnswer in responseAnswers)
             {
-                if (question.AnswersLookup[responseAnswer.Col].Weight == 0)
+                if (question.Answers.Choices.Any(c => c.IsNa.Value && c.Id.Value == responseAnswer.ChoiceId.Value))
                 {
-                    reply.NotApplicable.Add(question.AnswersLookup[responseAnswer.Row].Text);
+                    reply.NotApplicable.Add(question.Answers.Choices.FirstOrDefault(c => c.IsNa.Value && c.Id.Value == responseAnswer.ChoiceId.Value).Text);
                 }
                 else
                 {
-                    reply.Ranking.Add(
-                        new Tuple<int, string>(
-                            question.AnswersLookup[responseAnswer.Col].Weight,
-                            question.AnswersLookup[responseAnswer.Row].Text
-                        )
-                    );
+                    reply.Ranking.Add(Int32.Parse(question.Answers.ItemLookup[responseAnswer.ChoiceId.Value]), question.Answers.ItemLookup[responseAnswer.RowId.Value]);
                 }
             }
 
             return reply;
         }
-
+/*
         private MatrixRatingAnswer MatchMatrixRatingAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new MatrixRatingAnswer

@@ -78,6 +78,7 @@
     <Compile Include="ProcessedAnswers\DemographicAnswer.cs" />
     <Compile Include="ProcessedAnswers\IProcessedResponse.cs" />
     <Compile Include="ProcessedAnswers\MatrixMenuAnswer.cs" />
+    <Compile Include="ProcessedAnswers\MatrixRankingAnswer.cs" />
     <Compile Include="ProcessedAnswers\OpenEndedMultipleAnswer.cs" />
     <Compile Include="ProcessedAnswers\OpenEndedSingleAnswer.cs" />
     <Compile Include="ProcessedAnswers\ProcessedAnswer.cs" />
