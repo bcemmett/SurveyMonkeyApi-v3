@@ -230,7 +230,8 @@ namespace SurveyMonkeyTests
             Assert.IsNull(reply3.Rows.First(r => r.RowName == "Third Answer").OtherText);
             Assert.IsNull(reply3.Rows.First(r => r.RowName == "Second Answer").Choice);
 
-            var reply4 = (MatrixRatingAnswer)replies.Skip(2).First().Response;
+            var reply4 = (MatrixRatingAnswer)replies.Skip(3).First().Response;
+            Assert.AreEqual("not applicable", reply4.Rows.First(r => r.RowName == "Fifth Answer").Choice);
         }
     }
 }
