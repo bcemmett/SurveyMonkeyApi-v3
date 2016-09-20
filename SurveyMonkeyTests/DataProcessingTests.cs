@@ -171,5 +171,25 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(new DateTime(2000, 1, 1, 1, 1, 0, DateTimeKind.Utc), timestamps.Skip(18).First());
             Assert.AreEqual(new DateTime(2000, 12, 30, 13, 1, 0, DateTimeKind.Utc), timestamps.Skip(19).First());
         }
+
+        [Test]
+        public void MatrixMenuAnswerIsMatched()
+        {
+            var replies = GetResponses().Where(r => r.QuestionFamily == QuestionFamily.Matrix && r.QuestionSubtype == QuestionSubtype.Menu);
+
+            var reply1 = (MatrixMenuAnswer) replies.First().Response;
+            Assert.AreEqual("Menu 1 option 1", reply1.Rows["Choice 1"].Columns["Menu 1 heading"]);
+            Assert.AreEqual("Menu 3 option 4", reply1.Rows["Choice 6"].Columns["Menu 3 heading"]);
+            Assert.AreEqual(7, reply1.Rows.Count);
+            Assert.AreEqual(4, reply1.Rows.Last().Value.Columns.Count);
+            Assert.IsNull(reply1.OtherText);
+
+            var reply2 = (MatrixMenuAnswer)replies.Last().Response;
+            Assert.AreEqual("Menu 4 option 6", reply2.Rows["Choice 2"].Columns["Menu 4 heading"]);
+            Assert.AreEqual("Menu 4 option 2", reply2.Rows["Choice 7"].Columns["Menu 4 heading"]);
+            Assert.AreEqual(7, reply2.Rows.Count);
+            Assert.AreEqual(4, reply2.Rows.First().Value.Columns.Count);
+            Assert.AreEqual("other text", reply2.OtherText);
+        }
     }
 }

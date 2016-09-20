@@ -88,22 +88,22 @@ namespace SurveyMonkey
 
                 case QuestionFamily.DateTime:
                     return MatchDateTimeAnswer(question, responseAnswers);
-/*
+
                 case QuestionFamily.Matrix:
                     switch (question.Subtype)
                     {
                         case QuestionSubtype.Menu:
                             return MatchMatrixMenuAnswer(question, responseAnswers);
-                        case QuestionSubtype.Ranking:
+                        /*case QuestionSubtype.Ranking:
                             return MatchMatrixRankingAnswer(question, responseAnswers);
                         case QuestionSubtype.Rating:
                             return MatchMatrixRatingAnswer(question, responseAnswers);
                         case QuestionSubtype.Single:
                             return MatchMatrixSingleAnswer(question, responseAnswers);
                         case QuestionSubtype.Multi:
-                            return MatchMatrixMultiAnswer(question, responseAnswers);
+                            return MatchMatrixMultiAnswer(question, responseAnswers);*/
                     }
-                    break;*/
+                    break;
             }
             return null;
         }
@@ -235,47 +235,38 @@ namespace SurveyMonkey
 
             return reply;
         }
-/*
+
         private MatrixMenuAnswer MatchMatrixMenuAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new MatrixMenuAnswer
             {
-                Rows = new Dictionary<long, MatrixMenuAnswerRow>()
+                Rows = new Dictionary<string, MatrixMenuAnswerRow>()
             };
-            Dictionary<long, string> choicesLookup = question.AnswersLookup
-                .Where(answerItem => answerItem.Value.Items != null)
-                .SelectMany(answerItem => answerItem.Value.Items)
-                .ToDictionary(item => item.AnswerId, item => item.Text);
+            
+            Dictionary<long, string> choicesLookup = question.Answers.Cols //todo would ideally build + cache this once, but profile to see if it matters
+                .Where(answerItem => answerItem.Choices != null)
+                .SelectMany(a => a.Choices)
+                .ToDictionary(item => item.Id.Value, item => item.Text);
 
             foreach (var responseAnswer in responseAnswers)
             {
-                if (responseAnswer.Row == 0)
+                if (!String.IsNullOrEmpty(responseAnswer.Text))
                 {
                     reply.OtherText = responseAnswer.Text;
                 }
-                else
+                else if (responseAnswer.ChoiceId.HasValue)
                 {
-                    if (!reply.Rows.ContainsKey(responseAnswer.Row))
+                    if (!reply.Rows.ContainsKey(question.Answers.ItemLookup[responseAnswer.RowId.Value]))
                     {
-                        reply.Rows.Add(responseAnswer.Row, new MatrixMenuAnswerRow
-                        {
-                            Columns = new Dictionary<long, MatrixMenuAnswerColumn>()
-                        });
+                        reply.Rows.Add(question.Answers.ItemLookup[responseAnswer.RowId.Value], new MatrixMenuAnswerRow {Columns = new Dictionary<string, string>()});
                     }
-                    if (!reply.Rows[responseAnswer.Row].Columns.ContainsKey(responseAnswer.Col))
-                    {
-                        reply.Rows[responseAnswer.Row].Columns.Add(responseAnswer.Col, new MatrixMenuAnswerColumn());
-                    }
-
-                    reply.Rows[responseAnswer.Row].RowName = question.AnswersLookup[responseAnswer.Row].Text;
-                    reply.Rows[responseAnswer.Row].Columns[responseAnswer.Col].ColumnName = question.AnswersLookup[responseAnswer.Col].Text;
-                    reply.Rows[responseAnswer.Row].Columns[responseAnswer.Col].Choice = choicesLookup[responseAnswer.ColChoice];
+                    reply.Rows[question.Answers.ItemLookup[responseAnswer.RowId.Value]].Columns.Add(question.Answers.ItemLookup[responseAnswer.ColId.Value], choicesLookup[responseAnswer.ChoiceId.Value]);
                 }
             }
-
+            
             return reply;
         }
-
+/*
         private MatrixRankingAnswer MatchMatrixRankingAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new MatrixRankingAnswer
