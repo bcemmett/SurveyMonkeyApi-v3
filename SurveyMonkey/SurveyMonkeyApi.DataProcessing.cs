@@ -96,9 +96,9 @@ namespace SurveyMonkey
                             return MatchMatrixMenuAnswer(question, responseAnswers);
                         case QuestionSubtype.Ranking:
                             return MatchMatrixRankingAnswer(question, responseAnswers);
-                        /*case QuestionSubtype.Rating:
+                        case QuestionSubtype.Rating:
                             return MatchMatrixRatingAnswer(question, responseAnswers);
-                        case QuestionSubtype.Single:
+                        /*case QuestionSubtype.Single:
                             return MatchMatrixSingleAnswer(question, responseAnswers);
                         case QuestionSubtype.Multi:
                             return MatchMatrixMultiAnswer(question, responseAnswers);*/
@@ -289,7 +289,7 @@ namespace SurveyMonkey
 
             return reply;
         }
-/*
+
         private MatrixRatingAnswer MatchMatrixRatingAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new MatrixRatingAnswer
@@ -297,35 +297,46 @@ namespace SurveyMonkey
                 Rows = new List<MatrixRatingAnswerRow>()
             };
 
+            var rowDictionary = new Dictionary<long, MatrixRatingAnswerRow>();
+
             foreach (var responseAnswer in responseAnswers)
             {
-                if (responseAnswer.Row == 0)
+                if (!responseAnswer.RowId.HasValue)
                 {
                     reply.OtherText = responseAnswer.Text;
                 }
                 else
                 {
-                    var row = new MatrixRatingAnswerRow
+                    MatrixRatingAnswerRow row;
+                    if (!rowDictionary.ContainsKey(responseAnswer.RowId.Value))
                     {
-                        RowName = question.AnswersLookup[responseAnswer.Row].Text
-                    };
-
-                    if (responseAnswer.Col != 0)
+                        row = new MatrixRatingAnswerRow
+                        {
+                            RowName = question.Answers.ItemLookup[responseAnswer.RowId.Value]
+                        };
+                        rowDictionary.Add(responseAnswer.RowId.Value, row);
+                    }
+                    else
                     {
-                        row.Choice = question.AnswersLookup[responseAnswer.Col].Text;
+                        row = rowDictionary[responseAnswer.RowId.Value];
                     }
 
-                    if (!String.IsNullOrEmpty(responseAnswer.Text))
+                    if (responseAnswer.ChoiceId.HasValue)
+                    {
+                        row.Choice = question.Answers.ItemLookup[responseAnswer.ChoiceId.Value];
+                    }
+
+                    if (responseAnswer.OtherId.HasValue)
                     {
                         row.OtherText = responseAnswer.Text;
                     }
-                    reply.Rows.Add(row);
                 }
             }
+            reply.Rows = rowDictionary.Values.ToList();
 
             return reply;
         }
-
+/*
         private MatrixSingleAnswer MatchMatrixSingleAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new MatrixSingleAnswer

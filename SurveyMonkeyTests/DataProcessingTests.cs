@@ -207,5 +207,30 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Not applicable text", reply2.NotApplicable.First());
             Assert.AreEqual(2, reply2.NotApplicable.Count);
         }
+
+        [Test]
+        public void MatrixRatingAnswerIsMatched()
+        {
+            var replies = GetResponses().Where(r => r.QuestionFamily == QuestionFamily.Matrix && r.QuestionSubtype == QuestionSubtype.Rating);
+            Assert.AreEqual(6, replies.Count());
+
+            var reply1 = (MatrixRatingAnswer) replies.First().Response;
+            Assert.AreEqual("Label 1", reply1.Rows.First(r => r.RowName == "First Answer").Choice);
+            Assert.IsNull(reply1.OtherText);
+            Assert.AreEqual(5, reply1.Rows.Count);
+
+            var reply2 = (MatrixRatingAnswer)replies.Skip(1).First().Response;
+            Assert.AreEqual("Label 3", reply2.Rows.First(r => r.RowName == "Fifth Answer").Choice);
+            Assert.AreEqual("Other text", reply2.OtherText);
+            Assert.AreEqual(5, reply2.Rows.Count);
+
+            var reply3 = (MatrixRatingAnswer)replies.Skip(2).First().Response;
+            Assert.AreEqual("Label 1", reply3.Rows.First(r => r.RowName == "First Answer").Choice);
+            Assert.AreEqual("other", reply3.Rows.First(r => r.RowName == "First Answer").OtherText);
+            Assert.IsNull(reply3.Rows.First(r => r.RowName == "Third Answer").OtherText);
+            Assert.IsNull(reply3.Rows.First(r => r.RowName == "Second Answer").Choice);
+
+            var reply4 = (MatrixRatingAnswer)replies.Skip(2).First().Response;
+        }
     }
 }
