@@ -74,6 +74,7 @@
     <Compile Include="Helpers\RequestSettingsHelper.cs" />
     <Compile Include="LiveWebClient.cs" />
     <Compile Include="IWebClient.cs" />
+    <Compile Include="ProcessedAnswers\DateTimeAnswer.cs" />
     <Compile Include="ProcessedAnswers\DemographicAnswer.cs" />
     <Compile Include="ProcessedAnswers\IProcessedResponse.cs" />
     <Compile Include="ProcessedAnswers\OpenEndedMultipleAnswer.cs" />

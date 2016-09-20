@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using SurveyMonkey;
@@ -127,6 +128,48 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("testing@bla.com", intnl.Email);
 
             Assert.AreEqual(4, replies.Count());
+        }
+
+        [Test]
+        public void DateTimeAnswerIsMatched()
+        {
+            var replies = GetResponses().Where(r => r.QuestionFamily == QuestionFamily.DateTime);
+            var timestamps = new List<DateTime>();
+            for (int i = 0; i <= 4; i++)
+            {
+                for (int j = 0; j <= 3; j++)
+                {
+                    DateTime timestamp = ((DateTimeAnswer) replies.Skip(i).First().Response).Rows.Skip(j).First().TimeStamp;
+                    timestamps.Add(timestamp);
+                    Assert.AreEqual(DateTimeKind.Utc, timestamp.Kind);
+                    Assert.AreEqual(String.Format("Choice {0}", j+1), ((DateTimeAnswer)replies.Skip(i).First().Response).Rows.Skip(j).First().RowName);
+                }
+            }
+
+            Assert.AreEqual(new DateTime(1988, 1, 1),timestamps.First());
+            Assert.AreEqual(new DateTime(1988, 1, 30),timestamps.Skip(1).First());
+            Assert.AreEqual(new DateTime(1988, 1, 13), timestamps.Skip(2).First());
+            Assert.AreEqual(new DateTime(2014, 12, 1), timestamps.Skip(3).First());
+
+            Assert.AreEqual(new DateTime(1988, 1, 1), timestamps.Skip(4).First());
+            Assert.AreEqual(new DateTime(1988, 1, 30), timestamps.Skip(5).First());
+            Assert.AreEqual(new DateTime(1988, 1, 13), timestamps.Skip(6).First());
+            Assert.AreEqual(new DateTime(2014, 12, 1), timestamps.Skip(7).First());
+
+            Assert.AreEqual(DateTime.MinValue.AddHours(1).AddMinutes(51), timestamps.Skip(8).First());
+            Assert.AreEqual(DateTime.MinValue.AddHours(13).AddMinutes(15), timestamps.Skip(9).First());
+            Assert.AreEqual(DateTime.MinValue.AddHours(11), timestamps.Skip(10).First());
+            Assert.AreEqual(DateTime.MinValue.AddHours(23).AddMinutes(01), timestamps.Skip(11).First());
+
+            Assert.AreEqual(new DateTime(2000, 1, 1, 1,1,0, DateTimeKind.Utc), timestamps.Skip(12).First());
+            Assert.AreEqual(new DateTime(2000, 1, 30, 13, 1, 0, DateTimeKind.Utc), timestamps.Skip(13).First());
+            Assert.AreEqual(new DateTime(2000, 1, 1, 1, 1, 0, DateTimeKind.Utc), timestamps.Skip(14).First());
+            Assert.AreEqual(new DateTime(2000, 1, 12, 13, 1, 0, DateTimeKind.Utc), timestamps.Skip(15).First());
+
+            Assert.AreEqual(new DateTime(2000, 1, 1, 1, 1, 0, DateTimeKind.Utc), timestamps.Skip(16).First());
+            Assert.AreEqual(new DateTime(2000, 1, 30, 13, 1, 0, DateTimeKind.Utc), timestamps.Skip(17).First());
+            Assert.AreEqual(new DateTime(2000, 1, 1, 1, 1, 0, DateTimeKind.Utc), timestamps.Skip(18).First());
+            Assert.AreEqual(new DateTime(2000, 12, 30, 13, 1, 0, DateTimeKind.Utc), timestamps.Skip(19).First());
         }
     }
 }

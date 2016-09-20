@@ -85,10 +85,10 @@ namespace SurveyMonkey
 
                 case QuestionFamily.Demographic:
                     return MatchDemographicAnswer(question, responseAnswers);
-/*
+
                 case QuestionFamily.DateTime:
                     return MatchDateTimeAnswer(question, responseAnswers);
-
+/*
                 case QuestionFamily.Matrix:
                     switch (question.Subtype)
                     {
@@ -200,7 +200,7 @@ namespace SurveyMonkey
             }
             return reply;
         }
-/*
+
         private DateTimeAnswer MatchDateTimeAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new DateTimeAnswer
@@ -210,29 +210,32 @@ namespace SurveyMonkey
 
             foreach (var responseAnswer in responseAnswers)
             {
-                var dateTimeAnswerReply = new DateTimeAnswerRow
+                if (responseAnswer.RowId.HasValue)
                 {
-                    RowName = question.AnswersLookup[responseAnswer.Row].Text,
-                    TimeStamp = DateTime.MinValue
-                };
+                    var dateTimeAnswerReply = new DateTimeAnswerRow
+                    {
+                        RowName = question.Answers.ItemLookup[responseAnswer.RowId.Value],
+                        TimeStamp = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc)
+                    };
 
-                DateTime timeStamp = DateTime.Parse(responseAnswer.Text, CultureInfo.CreateSpecificCulture("en-US"));
-                if (question.Type.Subtype == QuestionSubtype.TimeOnly) //Where only a time is given, use date component from DateTime.MinValue
-                {
-                    dateTimeAnswerReply.TimeStamp = dateTimeAnswerReply.TimeStamp.AddHours(timeStamp.Hour);
-                    dateTimeAnswerReply.TimeStamp = dateTimeAnswerReply.TimeStamp.AddMinutes(timeStamp.Minute);
+                    DateTime timeStamp = DateTime.Parse(responseAnswer.Text, CultureInfo.CreateSpecificCulture("en-US"));
+                    DateTime utcTimeStamp = DateTime.SpecifyKind(timeStamp, DateTimeKind.Utc);
+                    if (question.Subtype == QuestionSubtype.TimeOnly) //Where only a time is given, use date component from DateTime.MinValue
+                    {
+                        dateTimeAnswerReply.TimeStamp = dateTimeAnswerReply.TimeStamp.AddHours(utcTimeStamp.Hour);
+                        dateTimeAnswerReply.TimeStamp = dateTimeAnswerReply.TimeStamp.AddMinutes(utcTimeStamp.Minute);
+                    }
+                    else
+                    {
+                        dateTimeAnswerReply.TimeStamp = utcTimeStamp;
+                    }
+                    reply.Rows.Add(dateTimeAnswerReply);
                 }
-                else
-                {
-                    dateTimeAnswerReply.TimeStamp = timeStamp;
-                }
-
-                reply.Rows.Add(dateTimeAnswerReply);
             }
 
             return reply;
         }
-
+/*
         private MatrixMenuAnswer MatchMatrixMenuAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new MatrixMenuAnswer
