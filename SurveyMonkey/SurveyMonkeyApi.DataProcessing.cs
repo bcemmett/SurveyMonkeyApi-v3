@@ -28,7 +28,15 @@ namespace SurveyMonkey
         {
             foreach (var question in survey.Questions)
             {
-                question.Answers?.PopulatedItemLookup();
+                question.Answers?.PopulateItemLookup();
+                if (question.Family == QuestionFamily.Demographic)
+                {
+                    question.Answers?.PopulateDemographicTypeLookup();
+                }
+                if (question.Family == QuestionFamily.Matrix && question.Subtype == QuestionSubtype.Menu)
+                {
+                    question.Answers?.PopulateColChoicesLookup();
+                }
             }
             Dictionary<long, Question> questionsLookup = survey.Questions.Where(q => q.Id.HasValue).ToDictionary(q => q.Id.Value, q => q);
             MatchIndividualResponseToSurveyStructure(response, questionsLookup);
@@ -183,13 +191,11 @@ namespace SurveyMonkey
         {
             var reply = new DemographicAnswer();
 
-            //todo it's a shame to unnecessarily re-generate this dictionary for each response. Could perhaps cache it as per the general ItemLookup
-            Dictionary<long, string> typeLookup = question.Answers.Rows.Where(r => r.Id.HasValue).ToDictionary(r => r.Id.Value, r => r.Type);
             foreach (var responseAnswer in responseAnswers)
             {
                 if (responseAnswer.RowId.HasValue)
                 {
-                    string propertyName = typeLookup[responseAnswer.RowId.Value];
+                    string propertyName = question.Answers.DemographicTypeLookup[responseAnswer.RowId.Value];
 
                     PropertyInfo property = typeof(DemographicAnswer).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                     if (property != null)
@@ -243,11 +249,6 @@ namespace SurveyMonkey
                 Rows = new Dictionary<string, MatrixMenuAnswerRow>()
             };
             
-            Dictionary<long, string> choicesLookup = question.Answers.Cols //todo would ideally build + cache this once, but profile to see if it matters
-                .Where(answerItem => answerItem.Choices != null)
-                .SelectMany(a => a.Choices)
-                .ToDictionary(item => item.Id.Value, item => item.Text);
-
             foreach (var responseAnswer in responseAnswers)
             {
                 if (!String.IsNullOrEmpty(responseAnswer.Text))
@@ -260,7 +261,7 @@ namespace SurveyMonkey
                     {
                         reply.Rows.Add(question.Answers.ItemLookup[responseAnswer.RowId.Value], new MatrixMenuAnswerRow {Columns = new Dictionary<string, string>()});
                     }
-                    reply.Rows[question.Answers.ItemLookup[responseAnswer.RowId.Value]].Columns.Add(question.Answers.ItemLookup[responseAnswer.ColId.Value], choicesLookup[responseAnswer.ChoiceId.Value]);
+                    reply.Rows[question.Answers.ItemLookup[responseAnswer.RowId.Value]].Columns.Add(question.Answers.ItemLookup[responseAnswer.ColId.Value], question.Answers.ColChoicesLookup[responseAnswer.ChoiceId.Value]);
                 }
             }
             

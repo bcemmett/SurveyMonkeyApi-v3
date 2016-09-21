@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json;
 
 namespace SurveyMonkey.Containers
@@ -12,8 +13,10 @@ namespace SurveyMonkey.Containers
         public OtherAnswer Other { get; set; }
 
         internal Dictionary<long, string> ItemLookup { get; set; }
+        internal Dictionary<long, string> ColChoicesLookup { get; set; }
+        internal Dictionary<long, string> DemographicTypeLookup { get; set; }
 
-        internal void PopulatedItemLookup()
+        internal void PopulateItemLookup()
         {
             ItemLookup = new Dictionary<long, string>();
             if (Choices != null)
@@ -32,14 +35,34 @@ namespace SurveyMonkey.Containers
             }
             if (Cols != null)
             {
-                foreach (var item in Cols)
+                foreach (var col in Cols)
                 {
-                    AddItemToDictionary(item.Id, item.Text);
+                    AddItemToDictionary(col.Id, col.Text);
                 }
             }
             if (Other != null)
             {
                 AddItemToDictionary(Other.Id, Other.Text);
+            }
+        }
+
+        internal void PopulateDemographicTypeLookup()
+        {
+            if (Rows != null)
+            {
+                DemographicTypeLookup = Rows.Where(r => r.Id.HasValue).ToDictionary(r => r.Id.Value, r => r.Type);
+            }
+            
+        }
+
+        internal void PopulateColChoicesLookup()
+        {
+            if (Cols != null)
+            {
+                ColChoicesLookup = Cols
+                    .Where(answerItem => answerItem.Choices != null)
+                    .SelectMany(a => a.Choices)
+                    .ToDictionary(item => item.Id.Value, item => item.Text);
             }
         }
 
