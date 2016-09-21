@@ -100,8 +100,8 @@ namespace SurveyMonkey
                             return MatchMatrixRatingAnswer(question, responseAnswers);
                         case QuestionSubtype.Single:
                             return MatchMatrixSingleAnswer(question, responseAnswers);
-                        /*case QuestionSubtype.Multi:
-                            return MatchMatrixMultiAnswer(question, responseAnswers);*/
+                        case QuestionSubtype.Multi:
+                            return MatchMatrixMultiAnswer(question, responseAnswers);
                     }
                     break;
             }
@@ -362,36 +362,36 @@ namespace SurveyMonkey
 
             return reply;
         }
-/*
+
         private MatrixMultiAnswer MatchMatrixMultiAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new MatrixMultiAnswer();
 
-            var rows = new Dictionary<long, MatrixMultiAnswerRow>();
+            var rowDictionary = new Dictionary<long, MatrixMultiAnswerRow>();
 
             foreach (var responseAnswer in responseAnswers)
             {
-                if (responseAnswer.Row == 0)
+                if (!responseAnswer.RowId.HasValue)
                 {
                     reply.OtherText = responseAnswer.Text;
                 }
                 else
                 {
-                    if (!rows.ContainsKey(responseAnswer.Row))
+                    if (!rowDictionary.ContainsKey(responseAnswer.RowId.Value))
                     {
-                        rows.Add(responseAnswer.Row, new MatrixMultiAnswerRow
+                        rowDictionary.Add(responseAnswer.RowId.Value, new MatrixMultiAnswerRow
                         {
-                            RowName = question.AnswersLookup[responseAnswer.Row].Text,
+                            RowName = question.Answers.ItemLookup[responseAnswer.RowId.Value],
                             Choices = new List<string>()
                         });
                     }
-                    rows[responseAnswer.Row].Choices.Add(question.AnswersLookup[responseAnswer.Col].Text);
+                    rowDictionary[responseAnswer.RowId.Value].Choices.Add(question.Answers.ItemLookup[responseAnswer.ChoiceId.Value]);
                 }
             }
 
-            reply.Rows = rows.Values.ToList();
+            reply.Rows = rowDictionary.Values.ToList();
 
             return reply;
-        }*/
+        }
     }
 }
