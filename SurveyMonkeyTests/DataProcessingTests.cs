@@ -233,5 +233,25 @@ namespace SurveyMonkeyTests
             var reply4 = (MatrixRatingAnswer)replies.Skip(3).First().Response;
             Assert.AreEqual("not applicable", reply4.Rows.First(r => r.RowName == "Fifth Answer").Choice);
         }
+
+        [Test]
+        public void MatrixSingleAnswerIsMatched()
+        {
+            var replies = GetResponses().Where(r => r.QuestionFamily == QuestionFamily.Matrix && r.QuestionSubtype == QuestionSubtype.Single);
+            Assert.AreEqual(4, replies.Count());
+
+            var reply1 = (MatrixSingleAnswer)replies.First().Response;
+            Assert.AreEqual(5, reply1.Rows.Count);
+            Assert.AreEqual("First Column", reply1.Rows.First(r => r.RowName == "First Row").Choice);
+            Assert.IsNull(reply1.OtherText);
+
+            var reply2 = (MatrixSingleAnswer)replies.Skip(1).First().Response;
+            Assert.AreEqual(4, reply2.Rows.Count);
+            Assert.AreEqual("Second Column", reply2.Rows.First(r => r.RowName == "Fifth Row").Choice);
+
+            var reply3 = (MatrixSingleAnswer)replies.Skip(2).First().Response;
+            Assert.AreEqual(4, reply3.Rows.Count);
+            Assert.AreEqual("other", reply3.OtherText);
+        }
     }
 }

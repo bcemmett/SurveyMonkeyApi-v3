@@ -98,9 +98,9 @@ namespace SurveyMonkey
                             return MatchMatrixRankingAnswer(question, responseAnswers);
                         case QuestionSubtype.Rating:
                             return MatchMatrixRatingAnswer(question, responseAnswers);
-                        /*case QuestionSubtype.Single:
+                        case QuestionSubtype.Single:
                             return MatchMatrixSingleAnswer(question, responseAnswers);
-                        case QuestionSubtype.Multi:
+                        /*case QuestionSubtype.Multi:
                             return MatchMatrixMultiAnswer(question, responseAnswers);*/
                     }
                     break;
@@ -336,7 +336,7 @@ namespace SurveyMonkey
 
             return reply;
         }
-/*
+
         private MatrixSingleAnswer MatchMatrixSingleAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new MatrixSingleAnswer
@@ -346,7 +346,7 @@ namespace SurveyMonkey
 
             foreach (var responseAnswer in responseAnswers)
             {
-                if (responseAnswer.Row == 0)
+                if (!responseAnswer.RowId.HasValue)
                 {
                     reply.OtherText = responseAnswer.Text;
                 }
@@ -354,15 +354,15 @@ namespace SurveyMonkey
                 {
                     reply.Rows.Add(new MatrixSingleAnswerRow
                     {
-                        RowName = question.AnswersLookup[responseAnswer.Row].Text,
-                        Choice = question.AnswersLookup[responseAnswer.Col].Text
+                        RowName = question.Answers.ItemLookup[responseAnswer.RowId.Value],
+                        Choice = question.Answers.ItemLookup[responseAnswer.ChoiceId.Value]
                     });
                 }
             }
 
             return reply;
         }
-
+/*
         private MatrixMultiAnswer MatchMatrixMultiAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
             var reply = new MatrixMultiAnswer();
