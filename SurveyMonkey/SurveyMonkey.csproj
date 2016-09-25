@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Containers\ButtonsText.cs" />
+    <Compile Include="Containers\IPageable.cs" />
     <Compile Include="Containers\Message.cs" />
     <Compile Include="Containers\OtherAnswer.cs" />
     <Compile Include="Containers\Choice.cs" />
@@ -74,6 +75,7 @@
     <Compile Include="Enums\CollectionMode.cs" />
     <Compile Include="Enums\ResponseStatus.cs" />
     <Compile Include="Enums\QuestionValidationType.cs" />
+    <Compile Include="Helpers\PagingHelper.cs" />
     <Compile Include="Helpers\PropertyCasingHelper.cs" />
     <Compile Include="Helpers\RequestSettingsHelper.cs" />
     <Compile Include="LiveWebClient.cs" />
@@ -91,6 +93,7 @@
     <Compile Include="ProcessedAnswers\ProcessedAnswer.cs" />
     <Compile Include="ProcessedAnswers\MultipleChoiceAnswer.cs" />
     <Compile Include="ProcessedAnswers\SingleChoiceAnswer.cs" />
+    <Compile Include="RequestSettings\IPageableSettings.cs" />
     <Compile Include="SurveyMonkeyApi.DataProcessing.cs" />
     <Compile Include="TolerantJsonConverter.cs" />
     <Compile Include="Enums\QuestionFamily.cs" />

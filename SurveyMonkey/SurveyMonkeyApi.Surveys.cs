@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using SurveyMonkey.Containers;
 using SurveyMonkey.Helpers;
@@ -22,38 +23,10 @@ namespace SurveyMonkey
 
         private List<Survey> GetSurveyListPager(GetSurveyListSettings settings)
         {
-            //Get the specific page & quantity
-            if (settings.Page.HasValue || settings.PerPage.HasValue)
-            {
-                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
-                return GetSurveyListRequest(requestData);
-            }
-
-            //Auto-page
-            const int maxResultsPerPage = 1000;
-            var results = new List<Survey>();
-            bool cont = true;
-            int page = 1;
-            while (cont)
-            {
-                settings.Page = page;
-                settings.PerPage = maxResultsPerPage;
-                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
-                var newResults = GetSurveyListRequest(requestData);
-                if (newResults.Count > 0)
-                {
-                    results.AddRange(newResults);
-                }
-                if (newResults.Count < maxResultsPerPage)
-                {
-                    cont = false;
-                }
-                page++;
-            }
-            return results;
+            return PagingHelper.Page(settings, GetSurveyListRequest, 1000).ToList().ConvertAll(o => (Survey)o);
         }
 
-        private List<Survey> GetSurveyListRequest(RequestData requestData)
+        private IEnumerable<IPageable> GetSurveyListRequest(RequestData requestData)
         {
             string endPoint = "/surveys";
             var verb = Verb.GET;
