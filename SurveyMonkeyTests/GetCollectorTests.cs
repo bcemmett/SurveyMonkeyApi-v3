@@ -3,6 +3,7 @@ using System.Linq;
 using NUnit.Framework;
 using SurveyMonkey;
 using SurveyMonkey.Containers;
+using SurveyMonkey.Enums;
 
 namespace SurveyMonkeyTests
 {
@@ -70,8 +71,8 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("https://api.surveymonkey.net/v3/collectors/85470742/messages/29296390", result.First().Href);
             Assert.AreEqual(29296390, result.First().Id);
-            Assert.AreEqual("sent", result.First().Status);
-            Assert.AreEqual("invite", result.First().Type);
+            Assert.AreEqual(MessageStatus.Sent, result.First().Status);
+            Assert.AreEqual(MessageType.Invite, result.First().Type);
         }
     }
 }
