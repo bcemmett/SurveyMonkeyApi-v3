@@ -5,7 +5,6 @@ namespace SurveyMonkey.Enums
     [JsonConverter(typeof(TolerantJsonConverter))]
     public enum QuestionSubtype
     {
-        NotSet = 0,
         Menu,
         Vertical,
         VerticalTwoCol,
