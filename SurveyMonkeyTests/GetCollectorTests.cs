@@ -74,5 +74,25 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(MessageStatus.Sent, result.First().Status);
             Assert.AreEqual(MessageType.Invite, result.First().Type);
         }
+
+        [Test]
+        public void GetMessageDetailsIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""status"":""sent"",""body"":""Hi,\r\nHere's your survey: [SurveyLink]\r\nUnsubscribe: [OptOutLink]\r\n[FooterLink]"",""recipient_status"":null,""is_branding_enabled"":true,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/messages\/29296390"",""is_scheduled"":true,""scheduled_date"":""2016-05-10T16:28:06+00:00"",""date_created"":""2016-05-10T16:23:04+00:00"",""type"":""invite"",""id"":""29296390"",""subject"":""MySubjectLine""}
+            ");
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var result = api.GetMessageDetails(85470742, 29296390);
+            Assert.AreEqual("Hi,\r\nHere\'s your survey: [SurveyLink]\r\nUnsubscribe: [OptOutLink]\r\n[FooterLink]", result.Body);
+            Assert.AreEqual(new DateTime(2016, 5, 10, 16, 23, 4, DateTimeKind.Utc), result.DateCreated);
+            Assert.AreEqual("https://api.surveymonkey.net/v3/collectors/85470742/messages/29296390", result.Href);
+            Assert.AreEqual(29296390, result.Id);
+            Assert.IsTrue(result.IsBrandingEnabled);
+            Assert.IsTrue(result.IsScheduled);
+            Assert.AreEqual(new DateTime(2016, 5, 10, 16, 28, 6, DateTimeKind.Utc), result.ScheduledDate);
+            Assert.AreEqual(MessageStatus.Sent, result.Status);
+            Assert.AreEqual(MessageType.Invite, result.Type);
+        }
     }
 }

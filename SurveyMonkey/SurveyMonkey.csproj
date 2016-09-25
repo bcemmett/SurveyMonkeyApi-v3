@@ -65,6 +65,7 @@
     <Compile Include="Containers\QuestionSorting.cs" />
     <Compile Include="Containers\SurveyTemplate.cs" />
     <Compile Include="Containers\SurveyCategory.cs" />
+    <Compile Include="Enums\RecipientStatus.cs" />
     <Compile Include="Enums\MessageStatus.cs" />
     <Compile Include="Enums\MessageType.cs" />
     <Compile Include="Enums\QuestionSortingType.cs" />

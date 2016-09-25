@@ -123,5 +123,14 @@ namespace SurveyMonkey
             var messages = result["data"].ToObject<List<Message>>();
             return messages;
         }
+
+        public Message GetMessageDetails(long collectorId, long messageId)
+        {
+            string endPoint = String.Format("/collectors/{0}/messages/{1}", collectorId, messageId);
+            var verb = Verb.GET;
+            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            var message = result.ToObject<Message>();
+            return message;
+        }
     }
 }
