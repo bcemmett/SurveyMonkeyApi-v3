@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Newtonsoft.Json.Linq;
 using SurveyMonkey.Containers;
-using SurveyMonkey.Helpers;
 using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkey
@@ -57,47 +57,13 @@ namespace SurveyMonkey
             return GetResponseListPager(objectId, objectType, settings, true);
         }
 
-        private List<Response> GetResponseListPager(long id, ObjectType objectType, GetResponseListSettings settings, bool details)
-        {
-            //Get the specific page & quantity
-            if (settings.Page.HasValue || settings.PerPage.HasValue)
-            {
-                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
-                return GetResponseListRequest(id, objectType, details, requestData);
-            }
-
-            //Auto-page
-            const int maxResultsPerPage = 100;
-            var results = new List<Response>();
-            bool cont = true;
-            int page = 1;
-            while (cont)
-            {
-                settings.Page = page;
-                settings.PerPage = maxResultsPerPage;
-                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
-                var newResults = GetResponseListRequest(id, objectType, details, requestData);
-                if (newResults.Count > 0)
-                {
-                    results.AddRange(newResults);
-                }
-                if (newResults.Count < maxResultsPerPage)
-                {
-                    cont = false;
-                }
-                page++;
-            }
-            return results;
-        }
-
-        private List<Response> GetResponseListRequest(long id, ObjectType objectType, bool details, RequestData requestData)
+        private List<Response> GetResponseListPager(long id, ObjectType objectType, IPageableSettings settings, bool details)
         {
             var bulk = details ? "/bulk" : String.Empty;
             string endPoint = String.Format("/{0}s/{1}/responses{2}", objectType.ToString().ToLower(), id, bulk);
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, requestData);
-            var responses = result["data"].ToObject<List<Response>>();
-            return responses;
+            const int maxResultsPerPage = 100;
+            var results = Page(settings, endPoint, typeof(List<Response>), maxResultsPerPage);
+            return results.ToList().ConvertAll(o => (Response)o);
         }
     }
 }

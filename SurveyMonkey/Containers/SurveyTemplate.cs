@@ -3,7 +3,7 @@
 namespace SurveyMonkey.Containers
 {
     [JsonConverter(typeof(TolerantJsonConverter))]
-    public class SurveyTemplate
+    public class SurveyTemplate : IPageable
     {
         public string Name { get; set; }
         public long? Id { get; set; }

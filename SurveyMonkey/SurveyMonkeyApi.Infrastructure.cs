@@ -95,7 +95,6 @@ namespace SurveyMonkey
 
         private IEnumerable<IPageable> Page(IPageableSettings settings, string url, Type type, int maxResultsPerPage)
         {
-            //Get the specific page & quantity
             if (settings.Page.HasValue || settings.PerPage.HasValue)
             {
                 var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);

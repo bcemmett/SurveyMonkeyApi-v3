@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace SurveyMonkey.Containers
 {
     [JsonConverter(typeof(TolerantJsonConverter))]
-    public class Collector
+    public class Collector : IPageable
     {
         [JsonConverter(typeof(TolerantJsonConverter))]
         public enum StatusType

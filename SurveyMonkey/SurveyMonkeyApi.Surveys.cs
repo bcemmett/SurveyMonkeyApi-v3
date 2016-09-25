@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using SurveyMonkey.Containers;
-using SurveyMonkey.Helpers;
 using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkey
@@ -21,10 +20,12 @@ namespace SurveyMonkey
             return GetSurveyListPager(settings);
         }
 
-        private List<Survey> GetSurveyListPager(GetSurveyListSettings settings)
+        private List<Survey> GetSurveyListPager(IPageableSettings settings)
         {
-            string endpoint = "/surveys";
-            return Page(settings, endpoint, typeof(List<Survey>), 1000).ToList().ConvertAll(o => (Survey)o);
+            string endPoint = "/surveys";
+            const int maxResultsPerPage = 1000;
+            var results = Page(settings, endPoint, typeof(List<Survey>), maxResultsPerPage);
+            return results.ToList().ConvertAll(o => (Survey)o);
         }
 
         public Survey GetSurveyOverview(long id)
@@ -57,46 +58,12 @@ namespace SurveyMonkey
             return GetSurveyCategoriesPager(settings);
         }
 
-        private List<SurveyCategory> GetSurveyCategoriesPager(GetSurveyCategoriesSettings settings)
-        {
-            //Get the specific page & quantity
-            if (settings.Page.HasValue || settings.PerPage.HasValue)
-            {
-                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
-                return GetSurveyCategoriesRequest(requestData);
-            }
-
-            //Auto-page
-            const int maxResultsPerPage = 1000;
-            var results = new List<SurveyCategory>();
-            bool cont = true;
-            int page = 1;
-            while (cont)
-            {
-                settings.Page = page;
-                settings.PerPage = maxResultsPerPage;
-                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
-                var newResults = GetSurveyCategoriesRequest(requestData);
-                if (newResults.Count > 0)
-                {
-                    results.AddRange(newResults);
-                }
-                if (newResults.Count < maxResultsPerPage)
-                {
-                    cont = false;
-                }
-                page++;
-            }
-            return results;
-        }
-
-        private List<SurveyCategory> GetSurveyCategoriesRequest(RequestData requestData)
+        private List<SurveyCategory> GetSurveyCategoriesPager(IPageableSettings settings)
         {
             string endPoint = "/survey_categories";
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, requestData);
-            var categories = result["data"].ToObject<List<SurveyCategory>>();
-            return categories;
+            const int maxResultsPerPage = 1000;
+            var results = Page(settings, endPoint, typeof(List<SurveyCategory>), maxResultsPerPage);
+            return results.ToList().ConvertAll(o => (SurveyCategory)o);
         }
 
         public List<SurveyTemplate> GetSurveyTemplates()
@@ -110,46 +77,12 @@ namespace SurveyMonkey
             return GetSurveyTemplatesPager(settings);
         }
 
-        private List<SurveyTemplate> GetSurveyTemplatesPager(GetSurveyTemplatesSettings settings)
-        {
-            //Get the specific page & quantity
-            if (settings.Page.HasValue || settings.PerPage.HasValue)
-            {
-                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
-                return GetSurveyTemplatesRequest(requestData);
-            }
-
-            //Auto-page
-            const int maxResultsPerPage = 1000;
-            var results = new List<SurveyTemplate>();
-            bool cont = true;
-            int page = 1;
-            while (cont)
-            {
-                settings.Page = page;
-                settings.PerPage = maxResultsPerPage;
-                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
-                var newResults = GetSurveyTemplatesRequest(requestData);
-                if (newResults.Count > 0)
-                {
-                    results.AddRange(newResults);
-                }
-                if (newResults.Count < maxResultsPerPage)
-                {
-                    cont = false;
-                }
-                page++;
-            }
-            return results;
-        }
-
-        private List<SurveyTemplate> GetSurveyTemplatesRequest(RequestData requestData)
+        private List<SurveyTemplate> GetSurveyTemplatesPager(IPageableSettings settings)
         {
             string endPoint = "/survey_templates";
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, requestData);
-            var templates = result["data"].ToObject<List<SurveyTemplate>>();
-            return templates;
+            const int maxResultsPerPage = 1000;
+            var results = Page(settings, endPoint, typeof(List<SurveyTemplate>), maxResultsPerPage);
+            return results.ToList().ConvertAll(o => (SurveyTemplate)o);
         }
     }
 }
