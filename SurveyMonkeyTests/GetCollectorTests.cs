@@ -57,5 +57,21 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(Collector.CollectorType.Weblink, result.Type);
             Assert.IsNull(result.Url);
         }
+
+        [Test]
+        public void GetMessageListIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""per_page"":1000,""total"":1,""data"":[{""status"":""sent"",""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/messages\/29296390"",""type"":""invite"",""id"":""29296390""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/messages?page=1&per_page=1000""}}
+            ");
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var result = api.GetMessageList(85470742);
+            Assert.AreEqual(1, result.Count);
+            Assert.AreEqual("https://api.surveymonkey.net/v3/collectors/85470742/messages/29296390", result.First().Href);
+            Assert.AreEqual(29296390, result.First().Id);
+            Assert.AreEqual("sent", result.First().Status);
+            Assert.AreEqual("invite", result.First().Type);
+        }
     }
 }
