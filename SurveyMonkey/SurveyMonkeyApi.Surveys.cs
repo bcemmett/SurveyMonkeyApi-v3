@@ -23,16 +23,8 @@ namespace SurveyMonkey
 
         private List<Survey> GetSurveyListPager(GetSurveyListSettings settings)
         {
-            return PagingHelper.Page(settings, GetSurveyListRequest, 1000).ToList().ConvertAll(o => (Survey)o);
-        }
-
-        private IEnumerable<IPageable> GetSurveyListRequest(RequestData requestData)
-        {
-            string endPoint = "/surveys";
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, requestData);
-            var surveys = result["data"].ToObject<List<Survey>>();
-            return surveys;
+            string endpoint = "/surveys";
+            return Page(settings, endpoint, typeof(List<Survey>), 1000).ToList().ConvertAll(o => (Survey)o);
         }
 
         public Survey GetSurveyOverview(long id)
