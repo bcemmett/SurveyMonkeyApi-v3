@@ -20,7 +20,7 @@ namespace SurveyMonkey
 
         public List<Group> GetGroupList()
         {
-            var settings = new GetCollectorListSettings();
+            var settings = new PagingSettings();
             return GetGroupListPager(settings);
         }
 
@@ -44,6 +44,25 @@ namespace SurveyMonkey
             JToken result = MakeApiRequest(endPoint, verb, new RequestData());
             var user = result.ToObject<Group>();
             return user;
+        }
+
+        public List<Member> GetMemberList(long groupId)
+        {
+            var settings = new PagingSettings();
+            return GetMemberListPager(groupId, settings);
+        }
+
+        public List<Member> GetMemberList(long groupId, PagingSettings settings)
+        {
+            return GetMemberListPager(groupId, settings);
+        }
+
+        private List<Member> GetMemberListPager(long groupId, IPageableSettings settings)
+        {
+            string endPoint = String.Format("/groups/{0}/members", groupId);
+            const int maxResultsPerPage = 1000;
+            var results = Page(settings, endPoint, typeof(List<Member>), maxResultsPerPage);
+            return results.ToList().ConvertAll(o => (Member)o);
         }
     }
 }

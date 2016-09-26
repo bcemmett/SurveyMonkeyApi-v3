@@ -61,5 +61,20 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(new DateTime(2015, 10, 6, 12, 56, 55, DateTimeKind.Utc), results.DateCreated);
             Assert.IsNull(results.OwnerEmail);
         }
+
+        [Test]
+        public void GetMemberListIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""per_page"":1,""page"":1,""total"":1,""data"":[{""id"":""1234"",""username"":""test_user"",""href"":""http://api.surveymonkey.com/v3/members/1234""}],""links"":{""self"":""https://api.surveymonkey.net/v3/groups/12345/members?page=1&per_page=1""}}
+            ");
+
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var results = api.GetMemberList(1234);
+            Assert.AreEqual(1234, results.First().Id);
+            Assert.AreEqual("test_user", results.First().Username);
+            Assert.AreEqual("http://api.surveymonkey.com/v3/members/1234", results.First().Href);
+        }
     }
 }
