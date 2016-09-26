@@ -109,8 +109,8 @@
     <Compile Include="RequestSettings\GetCollectorListSettings.cs" />
     <Compile Include="RequestSettings\PagingSettings.cs" />
     <Compile Include="RequestSettings\GetResponseListSettings.cs" />
-    <Compile Include="RequestSettings\GetSurveyTemplatesSettings.cs" />
-    <Compile Include="RequestSettings\GetSurveyCategoriesSettings.cs" />
+    <Compile Include="RequestSettings\GetSurveyTemplateListSettings.cs" />
+    <Compile Include="RequestSettings\GetSurveyCategoryListSettings.cs" />
     <Compile Include="RequestSettings\GetSurveyListSettings.cs" />
     <Compile Include="RequestSettings\RequestData.cs" />
     <Compile Include="SurveyMonkeyApi.Infrastructure.cs" />

@@ -28,37 +28,36 @@ namespace SurveyMonkey
             return results.ToList().ConvertAll(o => (Survey)o);
         }
 
-        public Survey GetSurveyOverview(long id)
+        public Survey GetSurveyOverview(long surveyId)
         {
             var verb = Verb.GET;
-            var endpoint = String.Format("/surveys/{0}", id);
+            var endpoint = String.Format("/surveys/{0}", surveyId);
             JToken result = MakeApiRequest(endpoint, verb, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
         }
 
-        public Survey GetSurveyDetails(long id)
+        public Survey GetSurveyDetails(long surveyId)
         {
-            string endPoint = "/surveys/{0}/details";
+            string endPoint = String.Format("/surveys/{0}/details", surveyId);
             var verb = Verb.GET;
-            var fullEndpoint = String.Format(endPoint, id);
-            JToken result = MakeApiRequest(fullEndpoint, verb, new RequestData());
+            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
         }
 
         public List<SurveyCategory> GetSurveyCategories()
         {
-            var settings = new GetSurveyCategoriesSettings();
-            return GetSurveyCategoriesPager(settings);
+            var settings = new GetSurveyCategoryListSettings();
+            return GetSurveyCategoryListPager(settings);
         }
 
-        public List<SurveyCategory> GetSurveyCategories(GetSurveyCategoriesSettings settings)
+        public List<SurveyCategory> GetSurveyCategories(GetSurveyCategoryListSettings settings)
         {
-            return GetSurveyCategoriesPager(settings);
+            return GetSurveyCategoryListPager(settings);
         }
 
-        private List<SurveyCategory> GetSurveyCategoriesPager(IPageableSettings settings)
+        private List<SurveyCategory> GetSurveyCategoryListPager(IPageableSettings settings)
         {
             string endPoint = "/survey_categories";
             const int maxResultsPerPage = 1000;
@@ -66,18 +65,18 @@ namespace SurveyMonkey
             return results.ToList().ConvertAll(o => (SurveyCategory)o);
         }
 
-        public List<SurveyTemplate> GetSurveyTemplates()
+        public List<SurveyTemplate> GetSurveyTemplateList()
         {
-            var settings = new GetSurveyTemplatesSettings();
-            return GetSurveyTemplatesPager(settings);
+            var settings = new GetSurveyTemplateListSettings();
+            return GetSurveyTemplateListPager(settings);
         }
 
-        public List<SurveyTemplate> GetSurveyTemplates(GetSurveyTemplatesSettings settings)
+        public List<SurveyTemplate> GetSurveyTemplateList(GetSurveyTemplateListSettings settings)
         {
-            return GetSurveyTemplatesPager(settings);
+            return GetSurveyTemplateListPager(settings);
         }
 
-        private List<SurveyTemplate> GetSurveyTemplatesPager(IPageableSettings settings)
+        private List<SurveyTemplate> GetSurveyTemplateListPager(IPageableSettings settings)
         {
             string endPoint = "/survey_templates";
             const int maxResultsPerPage = 1000;
