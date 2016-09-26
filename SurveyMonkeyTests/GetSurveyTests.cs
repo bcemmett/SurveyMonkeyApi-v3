@@ -209,5 +209,22 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Multiple choice 1 answer, choices as buttons 1 col", results.First().Title);
             Assert.IsNull(results.First().QuestionCount);
         }
+
+        [Test]
+        public void GetPageDetailsIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222"",""description"":""Description of page 1"",""title"":""Multiple choice 1 answer, choices as buttons 1 col"",""position"":1,""id"":""171499222"",""question_count"":3}
+            ");
+            var api = new SurveyMonkeyApi("key", "token", client);
+            var results = api.GetPageDetails(53774320, 171499222);
+            Assert.AreEqual("Description of page 1", results.Description);
+            Assert.AreEqual("https://api.surveymonkey.net/v3/surveys/53774320/pages/171499222", results.Href);
+            Assert.AreEqual(171499222, results.Id);
+            Assert.AreEqual(1, results.Position);
+            Assert.AreEqual("Multiple choice 1 answer, choices as buttons 1 col", results.Title);
+            Assert.AreEqual(3, results.QuestionCount);
+        }
     }
 }

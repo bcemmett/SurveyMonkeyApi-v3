@@ -103,5 +103,14 @@ namespace SurveyMonkey
             var results = Page(settings, endPoint, typeof(List<Page>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Page)o);
         }
+
+        public Page GetPageDetails(long surveyId, long pageId)
+        {
+            string endPoint = String.Format("/surveys/{0}/pages/{1}", surveyId, pageId);
+            var verb = Verb.GET;
+            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            var page = result.ToObject<Page>();
+            return page;
+        }
     }
 }
