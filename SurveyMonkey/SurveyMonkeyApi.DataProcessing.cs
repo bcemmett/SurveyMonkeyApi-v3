@@ -11,7 +11,17 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi
     {
-        public Survey GetMissingSurveyInformation(long surveyId)
+        public List<Survey> PopulateMultipleSurveyResponseInformation(List<long> surveyIds)
+        {
+            var result = new List<Survey>();
+            foreach (var surveyId in surveyIds)
+            {
+                result.Add(PopulateSurveyResponseInformation(surveyId));
+            }
+            return result;
+        }
+
+        public Survey PopulateSurveyResponseInformation(long surveyId)
         {
             Survey survey = GetSurveyDetails(surveyId);
             survey.Responses = GetResponseDetailList(surveyId, ObjectType.Survey);
