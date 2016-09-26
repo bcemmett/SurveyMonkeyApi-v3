@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace SurveyMonkey.Containers
 {
     [JsonConverter(typeof(TolerantJsonConverter))]
-    public class Page
+    public class Page : IPageableContainer
     {
         public long? Id { get; set; }
         public string Title { get; set; }
