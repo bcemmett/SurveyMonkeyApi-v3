@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using SurveyMonkey.Containers;
@@ -34,6 +35,15 @@ namespace SurveyMonkey
             const int maxResultsPerPage = 1000;
             var results = Page(settings, endPoint, typeof(List<Group>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Group) o);
+        }
+
+        public Group GetGroupDetails(long groupId)
+        {
+            string endPoint = String.Format("/groups/{0}", groupId);
+            var verb = Verb.GET;
+            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            var user = result.ToObject<Group>();
+            return user;
         }
     }
 }

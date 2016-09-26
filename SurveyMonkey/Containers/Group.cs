@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System;
+using Newtonsoft.Json;
 
 namespace SurveyMonkey.Containers
 {
@@ -8,5 +9,9 @@ namespace SurveyMonkey.Containers
         public long? Id { get; set; }
         public string Name { get; set; }
         public string Href { get; set; }
+        public int? MemberCount { get; set; }
+        public int? MaxInvites { get; set; }
+        public DateTime? DateCreated { get; set; }
+        public string OwnerEmail { get; set; }
     }
 }

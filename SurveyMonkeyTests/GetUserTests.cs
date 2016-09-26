@@ -44,5 +44,22 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Test Group", results.First().Name);
             Assert.AreEqual("https://api.surveymonkey.net/v3/groups/1234", results.First().Href);
         }
+
+        [Test]
+        public void GetGroupDetailsIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""id"":""1234"",""name"":""Test Group"",""member_count"":1,""max_invites"":100,""date_created"":""2015-10-06T12:56:55+00:00""}
+            ");
+
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var results = api.GetGroupDetails(1234);
+            Assert.AreEqual(1234, results.Id);
+            Assert.AreEqual("Test Group", results.Name);
+            Assert.AreEqual(100, results.MaxInvites);
+            Assert.AreEqual(new DateTime(2015, 10, 6, 12, 56, 55, DateTimeKind.Utc), results.DateCreated);
+            Assert.IsNull(results.OwnerEmail);
+        }
     }
 }
