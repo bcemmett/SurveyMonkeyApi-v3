@@ -57,6 +57,20 @@ namespace SurveyMonkeyTests
         }
 
         [Test]
+        public void DateTimeWithMilisecondsInWinterTime()
+        {
+            string input = @"{""Timestamp"":""2016-01-05T12:10:20.397000+00:00""}";
+            DeserializeAndTestDateTime(input, new DateTime(2016, 1, 5, 12, 10, 20, 397, DateTimeKind.Utc));
+        }
+
+        [Test]
+        public void DateTimeWithMilisecondsInSummerTime()
+        {
+            string input = @"{""Timestamp"":""2016-01-05T12:10:20.397000+00:00""}";
+            DeserializeAndTestDateTime(input, new DateTime(2016, 1, 5, 12, 10, 20, 397, DateTimeKind.Utc));
+        }
+
+        [Test]
         public void NullDateTimeIsLeftNull()
         {
             string input = @"{""Timestamp"":null}";
