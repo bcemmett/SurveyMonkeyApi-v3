@@ -64,5 +64,24 @@ namespace SurveyMonkey
             var message = result.ToObject<Message>();
             return message;
         }
+
+        public List<Recipient> GetRecipientList(long collectorId, long messageId)
+        {
+            var settings = new PagingSettings();
+            return GetRecipientListPager(collectorId, messageId, settings);
+        }
+
+        public List<Recipient> GetRecipientList(long collectorId, long messageId, PagingSettings settings)
+        {
+            return GetRecipientListPager(collectorId, messageId, settings);
+        }
+
+        private List<Recipient> GetRecipientListPager(long collectorId, long messageId, IPageableSettings settings)
+        {
+            string endPoint = String.Format("/collectors/{0}/messages/{1}/recipients", collectorId, messageId);
+            const int maxResultsPerPage = 1000;
+            var results = Page(settings, endPoint, typeof(List<Recipient>), maxResultsPerPage);
+            return results.ToList().ConvertAll(o => (Recipient)o);
+        }
     }
 }

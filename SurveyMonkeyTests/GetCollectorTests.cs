@@ -94,5 +94,20 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(MessageStatus.Sent, result.Status);
             Assert.AreEqual(MessageType.Invite, result.Type);
         }
+
+        [Test]
+        public void GetRecipientListIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""per_page"":1000,""total"":2,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/recipients\/2407626836"",""id"":""2407626836"",""email"":""test+12@gmail.com""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/recipients\/2407626837"",""id"":""2407626837"",""email"":""test+13@gmail.com""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/messages\/29296390\/recipients?page=1&per_page=1000""}}
+            ");
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var result = api.GetRecipientList(85470742, 29296390);
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual("https://api.surveymonkey.net/v3/collectors/85470742/recipients/2407626836", result.First().Href);
+            Assert.AreEqual(2407626836, result.First().Id);
+            Assert.AreEqual("test+13@gmail.com", result.Last().Email);
+        }
     }
 }
