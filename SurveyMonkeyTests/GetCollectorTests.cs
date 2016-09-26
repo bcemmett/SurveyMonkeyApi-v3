@@ -108,6 +108,26 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("https://api.surveymonkey.net/v3/collectors/85470742/recipients/2407626836", result.First().Href);
             Assert.AreEqual(2407626836, result.First().Id);
             Assert.AreEqual("test+13@gmail.com", result.Last().Email);
+            Assert.IsNull(result.First().MailStatus);
+        }
+
+        [Test]
+        public void GetRecipientDetailsIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""survey_response_status"":""not_responded"",""mail_status"":""sent"",""id"":""2407626836"",""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/recipients\/2407626836"",""remove_link"":""https:\/\/www.surveymonkey.com\/optout.aspx?sm=blablabla"",""survey_id"":""53774320"",""email"":""test+12@gmail.com"",""survey_link"":""https:\/\/www.surveymonkey.com\/r\/?sm=blabla""}
+            ");
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var result = api.GetRecipientDetails(85470742, 2407626836);
+            Assert.AreEqual("test+12@gmail.com", result.Email);
+            Assert.AreEqual("https://api.surveymonkey.net/v3/collectors/85470742/recipients/2407626836", result.Href);
+            Assert.AreEqual(2407626836, result.Id);
+            Assert.AreEqual(MessageStatus.Sent, result.MailStatus);
+            Assert.AreEqual("https://www.surveymonkey.com/optout.aspx?sm=blablabla", result.RemoveLink);
+            Assert.AreEqual(53774320, result.SurveyId);
+            Assert.AreEqual("https://www.surveymonkey.com/r/?sm=blabla", result.SurveyLink);
+            Assert.AreEqual(RecipientSurveyResponseStatus.NotResponded, result.SurveyResponseStatus);
         }
     }
 }
