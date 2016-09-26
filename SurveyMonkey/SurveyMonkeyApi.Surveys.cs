@@ -112,5 +112,25 @@ namespace SurveyMonkey
             var page = result.ToObject<Page>();
             return page;
         }
+
+
+        public List<Question> GetQuestionList(long surveyId, long pageId)
+        {
+            var settings = new PagingSettings();
+            return GetQuestionListPager(surveyId, pageId, settings);
+        }
+
+        public List<Question> GetQuestionList(long surveyId, long pageId, PagingSettings settings)
+        {
+            return GetQuestionListPager(surveyId, pageId, settings);
+        }
+
+        private List<Question> GetQuestionListPager(long surveyId, long pageId, IPageableSettings settings)
+        {
+            string endPoint = String.Format("/surveys/{0}/pages/{1}/questions", surveyId, pageId);
+            const int maxResultsPerPage = 100;
+            var results = Page(settings, endPoint, typeof(List<Question>), maxResultsPerPage);
+            return results.ToList().ConvertAll(o => (Question)o);
+        }
     }
 }

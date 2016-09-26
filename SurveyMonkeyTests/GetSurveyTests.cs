@@ -226,5 +226,23 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Multiple choice 1 answer, choices as buttons 1 col", results.Title);
             Assert.AreEqual(3, results.QuestionCount);
         }
+
+
+        [Test]
+        public void GetQuestionListIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""per_page"":100,""total"":3,""data"":[{""position"":1,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222\/questions\/673465896"",""heading"":""Text for multiple choice (1 answer), display choices as buttons (1 column), no comment"",""id"":""673465896""},{""position"":2,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222\/questions\/673467411"",""heading"":""Text for multiple choice (1 answer), display choices as buttons (1 column), with comment"",""id"":""673467411""},{""position"":3,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222\/questions\/673467997"",""heading"":""Text for multiple choice (1 answer), display choices as buttons (1 column), with comment as answer choice"",""id"":""673467997""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222\/questions?page=1&per_page=100""}}
+            ");
+            var api = new SurveyMonkeyApi("key", "token", client);
+            var results = api.GetQuestionList(53774320, 171499222);
+            Assert.AreEqual(3, results.Count);
+            Assert.AreEqual("Text for multiple choice (1 answer), display choices as buttons (1 column), no comment", results.First().Heading);
+            Assert.AreEqual("https://api.surveymonkey.net/v3/surveys/53774320/pages/171499222/questions/673465896", results.First().Href);
+            Assert.AreEqual(673465896, results.First().Id);
+            Assert.AreEqual(1, results.First().Position);
+            Assert.IsNull(results.First().Answers);
+        }
     }
 }

@@ -5,7 +5,7 @@ using SurveyMonkey.Enums;
 namespace SurveyMonkey.Containers
 {
     [JsonConverter(typeof(TolerantJsonConverter))]
-    public class Question
+    public class Question : IPageableContainer
     {
         public long? Id { get; set; }
         public QuestionFamily? Family { get; set; }
@@ -15,6 +15,7 @@ namespace SurveyMonkey.Containers
         public QuestionSorting Sorting { get; set; }
         public QuestionValidation Validation { get; set; }
         public List<Headings> Headings { get; set; }
+        public string Heading { get; set; } //todo it's a bit messy that GetSurveyDetails populates the list put GetQuestionDetails populates just the string
         public bool? Visible { get; set; }
         public bool? ForcedRanking { get; set; }
         public string Href { get; set; }
