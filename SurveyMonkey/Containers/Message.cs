@@ -5,7 +5,7 @@ using SurveyMonkey.Enums;
 namespace SurveyMonkey.Containers
 {
     [JsonConverter(typeof(TolerantJsonConverter))]
-    public class Message : IPageable
+    public class Message : IPageableContainer
     {
         public long? Id { get; set; }
         public string Href { get; set; }

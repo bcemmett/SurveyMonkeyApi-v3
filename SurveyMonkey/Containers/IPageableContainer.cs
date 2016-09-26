@@ -1,6 +1,6 @@
 ﻿namespace SurveyMonkey.Containers
 {
-    internal interface IPageable
+    internal interface IPageableContainer
     {
     }
 }

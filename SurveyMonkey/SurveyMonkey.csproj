@@ -46,7 +46,7 @@
   <ItemGroup>
     <Compile Include="Containers\ButtonsText.cs" />
     <Compile Include="Containers\Group.cs" />
-    <Compile Include="Containers\IPageable.cs" />
+    <Compile Include="Containers\IPageableContainer.cs" />
     <Compile Include="Containers\Recipient.cs" />
     <Compile Include="Containers\Message.cs" />
     <Compile Include="Containers\OtherAnswer.cs" />

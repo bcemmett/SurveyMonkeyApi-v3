@@ -93,7 +93,7 @@ namespace SurveyMonkey
             _lastRequestTime = DateTime.UtcNow; //Also setting here as otherwise if an exception is thrown while making the request it wouldn't get set at all
         }
 
-        private IEnumerable<IPageable> Page(IPageableSettings settings, string url, Type type, int maxResultsPerPage)
+        private IEnumerable<IPageableContainer> Page(IPageableSettings settings, string url, Type type, int maxResultsPerPage)
         {
             if (settings.Page.HasValue || settings.PerPage.HasValue)
             {
@@ -101,7 +101,7 @@ namespace SurveyMonkey
                 return PageRequest(url, requestData, type);
             }
             
-            var results = new List<IPageable>();
+            var results = new List<IPageableContainer>();
             bool cont = true;
             int page = 1;
             while (cont)
@@ -123,12 +123,12 @@ namespace SurveyMonkey
             return results;
         }
 
-        private IEnumerable<IPageable> PageRequest(string url, RequestData requestData, Type type)
+        private IEnumerable<IPageableContainer> PageRequest(string url, RequestData requestData, Type type)
         {
             var verb = Verb.GET;
             JToken result = MakeApiRequest(url, verb, requestData);
             var results = result["data"].ToObject(type);
-            return (IEnumerable<IPageable>) results;
+            return (IEnumerable<IPageableContainer>) results;
         }
 
         private void ResetWebClient()
