@@ -64,5 +64,14 @@ namespace SurveyMonkey
             var results = Page(settings, endPoint, typeof(List<Member>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Member)o);
         }
+        
+        public Member GetMemberDetails(long groupId, long memberId)
+        {
+            string endPoint = String.Format("/groups/{0}", groupId);
+            var verb = Verb.GET;
+            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            var member = result.ToObject<Member>();
+            return member;
+        }
     }
 }

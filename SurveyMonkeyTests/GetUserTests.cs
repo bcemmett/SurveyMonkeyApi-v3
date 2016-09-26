@@ -2,6 +2,7 @@
 using System.Linq;
 using NUnit.Framework;
 using SurveyMonkey;
+using SurveyMonkey.Enums;
 
 namespace SurveyMonkeyTests
 {
@@ -75,6 +76,27 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(1234, results.First().Id);
             Assert.AreEqual("test_user", results.First().Username);
             Assert.AreEqual("http://api.surveymonkey.com/v3/members/1234", results.First().Href);
+            Assert.IsNull(results.First().Status);
+        }
+
+        [Test]
+        public void GetMemberDetailsIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""id"":""1234"",""username"":""test_user"",""email"":""test@surveymonkey.com"",""type"":""regular"",""status"":""active"",""user_id"":""1234"",""date_created"":""2015-10-06T12:56:55+00:00""}
+            ");
+
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var results = api.GetMemberDetails(1234, 1234);
+            Assert.AreEqual(1234, results.Id);
+            Assert.AreEqual("test_user", results.Username);
+            Assert.AreEqual("test@surveymonkey.com", results.Email);
+            Assert.AreEqual(MemberStatus.Active, results.Status);
+            Assert.AreEqual(MemberType.Regular, results.Type);
+            Assert.IsNull(results.Href);
+            Assert.AreEqual("1234", results.UserId);
+            Assert.AreEqual(new DateTime(2015, 10, 6, 12, 56, 55, DateTimeKind.Utc), results.DateCreated);
         }
     }
 }
