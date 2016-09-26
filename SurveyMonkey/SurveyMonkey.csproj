@@ -67,6 +67,7 @@
     <Compile Include="Containers\QuestionSorting.cs" />
     <Compile Include="Containers\SurveyTemplate.cs" />
     <Compile Include="Containers\SurveyCategory.cs" />
+    <Compile Include="Containers\User.cs" />
     <Compile Include="Enums\RecipientSurveyResponseStatus.cs" />
     <Compile Include="Enums\RecipientStatus.cs" />
     <Compile Include="Enums\MessageStatus.cs" />
@@ -95,6 +96,7 @@
     <Compile Include="ProcessedAnswers\MultipleChoiceAnswer.cs" />
     <Compile Include="ProcessedAnswers\SingleChoiceAnswer.cs" />
     <Compile Include="RequestSettings\IPageableSettings.cs" />
+    <Compile Include="SurveyMonkeyApi.Users.cs" />
     <Compile Include="SurveyMonkeyApi.DataProcessing.cs" />
     <Compile Include="TolerantJsonConverter.cs" />
     <Compile Include="Enums\QuestionFamily.cs" />
