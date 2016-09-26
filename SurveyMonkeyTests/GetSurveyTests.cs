@@ -227,7 +227,6 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(3, results.QuestionCount);
         }
 
-
         [Test]
         public void GetQuestionListIsDeserialised()
         {
@@ -243,6 +242,23 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(673465896, results.First().Id);
             Assert.AreEqual(1, results.First().Position);
             Assert.IsNull(results.First().Answers);
+        }
+
+        [Test]
+        public void GetQuestionDetailsIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""sorting"":null,""family"":""single_choice"",""subtype"":""vertical"",""required"":null,""answers"":{""choices"":[{""visible"":true,""text"":""First Answer"",""position"":1,""id"":""7761126552""},{""visible"":true,""text"":""Second Answer"",""position"":2,""id"":""7761126553""},{""visible"":true,""text"":""Third Answer"",""position"":3,""id"":""7761126554""},{""visible"":true,""text"":""Fourth Answer"",""position"":4,""id"":""7761126555""},{""visible"":true,""text"":""Fifth Answer"",""position"":5,""id"":""7761126556""}]},""visible"":true,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222\/questions\/673465896"",""headings"":[{""heading"":""Text for multiple choice (1 answer), display choices as buttons (1 column), no comment""}],""position"":1,""validation"":null,""id"":""673465896"",""forced_ranking"":false}
+            ");
+            var api = new SurveyMonkeyApi("key", "token", client);
+            var results = api.GetQuestionDetails(53774320, 171499222, 673465896);
+            Assert.AreEqual("https://api.surveymonkey.net/v3/surveys/53774320/pages/171499222/questions/673465896", results.Href);
+            Assert.AreEqual(673465896, results.Id);
+            Assert.AreEqual(1, results.Position);
+            Assert.AreEqual("Text for multiple choice (1 answer), display choices as buttons (1 column), no comment", results.Headings.First().Heading);
+            Assert.AreEqual(5, results.Answers.Choices.Count);
+            Assert.AreEqual("Fifth Answer", results.Answers.Choices.Last().Text);
         }
     }
 }
