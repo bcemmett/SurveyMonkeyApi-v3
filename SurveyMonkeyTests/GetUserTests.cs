@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using NUnit.Framework;
 using SurveyMonkey;
 
@@ -26,6 +27,22 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("https://api.surveymonkey.net/v3/users/me", results.Href);
             Assert.AreEqual(new DateTime(2006, 6, 28, 12, 48, 0, DateTimeKind.Utc), results.DateCreated);
             Assert.AreEqual(new DateTime(2016, 9, 26, 16, 23, 40, 397, DateTimeKind.Utc), results.DateLastLogin);
+            Assert.AreEqual(123456789, results.Id);
+        }
+
+        [Test]
+        public void GetGroupListIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""per_page"":1,""page"":1,""total"":1,""data"":[{""id"":""1234"",""name"":""Test Group"",""href"":""https://api.surveymonkey.net/v3/groups/1234""}],""links"": {""self"":""https://api.surveymonkey.net/v3/groups?page=1&per_page=1""}}
+            ");
+
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var results = api.GetGroupList();
+            Assert.AreEqual(1234, results.First().Id);
+            Assert.AreEqual("Test Group", results.First().Name);
+            Assert.AreEqual("https://api.surveymonkey.net/v3/groups/1234", results.First().Href);
         }
     }
 }
