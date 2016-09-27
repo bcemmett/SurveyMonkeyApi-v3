@@ -38,6 +38,11 @@ namespace SurveyMonkey.Helpers
 
         internal static string SnakeToCamel(string input)
         {
+            if (input.StartsWith("$"))
+            {
+                input = input.Substring(1);
+            }
+
             if (input == input.ToUpper())
             {
                 return input;

@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace SurveyMonkey.Containers
 {
@@ -12,5 +13,8 @@ namespace SurveyMonkey.Containers
         public bool? Visible { get; set; }
         public string Description { get; set; }
         public bool? IsNa { get; set; }
+        public Dictionary<string, object> Metadata { get; set; }
+        public List<object> Items { get; set; }
+        public string ResourceUrl { get; set; }
     }
 }
