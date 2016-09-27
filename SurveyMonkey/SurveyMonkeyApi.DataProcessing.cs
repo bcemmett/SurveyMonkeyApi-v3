@@ -136,11 +136,10 @@ namespace SurveyMonkey
                 {
                     reply.OtherText = responseAnswer.Text;
                 }
-                else if (responseAnswer.ChoiceId.HasValue)
+                else if (responseAnswer.ChoiceId.HasValue && question.Answers.ItemLookup.ContainsKey(responseAnswer.ChoiceId.Value))
                 {
                     reply.Choice = question.Answers.ItemLookup[responseAnswer.ChoiceId.Value];
                 }
-
             }
             return reply;
         }
@@ -158,7 +157,7 @@ namespace SurveyMonkey
                 {
                     reply.OtherText = responseAnswer.Text;
                 }
-                if (responseAnswer.ChoiceId.HasValue && responseAnswer.ChoiceId != 0)
+                if (responseAnswer.ChoiceId.HasValue && responseAnswer.ChoiceId != 0 && question.Answers.ItemLookup.ContainsKey(responseAnswer.ChoiceId.Value))
                 {
                     reply.Choices.Add(question.Answers.ItemLookup[responseAnswer.ChoiceId.Value]);
                 }
@@ -186,9 +185,10 @@ namespace SurveyMonkey
             {
                 if (responseAnswer.RowId.HasValue)
                 {
+                    var row = question.Answers.ItemLookup.ContainsKey(responseAnswer.RowId.Value) ? question.Answers.ItemLookup[responseAnswer.RowId.Value] : null;
                     reply.Rows.Add(new OpenEndedMultipleAnswerRow
                     {
-                        RowName = question.Answers.ItemLookup[responseAnswer.RowId.Value],
+                        RowName = row,
                         Text = responseAnswer.Text
                     });
                 }
@@ -205,12 +205,14 @@ namespace SurveyMonkey
             {
                 if (responseAnswer.RowId.HasValue)
                 {
-                    string propertyName = question.Answers.DemographicTypeLookup[responseAnswer.RowId.Value];
-
-                    PropertyInfo property = typeof(DemographicAnswer).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
-                    if (property != null)
+                    if (question.Answers.DemographicTypeLookup.ContainsKey(responseAnswer.RowId.Value))
                     {
-                        property.SetValue(reply, responseAnswer.Text);
+                        string propertyName = question.Answers.DemographicTypeLookup[responseAnswer.RowId.Value];
+                        PropertyInfo property = typeof(DemographicAnswer).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
+                        if (property != null)
+                        {
+                            property.SetValue(reply, responseAnswer.Text);
+                        }
                     }
                 }
             }
@@ -228,9 +230,10 @@ namespace SurveyMonkey
             {
                 if (responseAnswer.RowId.HasValue)
                 {
+                    var row = question.Answers.ItemLookup.ContainsKey(responseAnswer.RowId.Value) ? question.Answers.ItemLookup[responseAnswer.RowId.Value] : null;
                     var dateTimeAnswerReply = new DateTimeAnswerRow
                     {
-                        RowName = question.Answers.ItemLookup[responseAnswer.RowId.Value],
+                        RowName = row,
                         TimeStamp = DateTime.SpecifyKind(DateTime.MinValue, DateTimeKind.Utc)
                     };
 
@@ -272,11 +275,17 @@ namespace SurveyMonkey
                 }
                 else if (responseAnswer.ChoiceId.HasValue)
                 {
-                    if (!reply.Rows.ContainsKey(question.Answers.ItemLookup[responseAnswer.RowId.Value]))
+                    if (question.Answers.ItemLookup.ContainsKey(responseAnswer.RowId.Value))
                     {
-                        reply.Rows.Add(question.Answers.ItemLookup[responseAnswer.RowId.Value], new MatrixMenuAnswerRow {Columns = new Dictionary<string, string>()});
+                        if (!reply.Rows.ContainsKey(question.Answers.ItemLookup[responseAnswer.RowId.Value]))
+                        {
+                            reply.Rows.Add(question.Answers.ItemLookup[responseAnswer.RowId.Value], new MatrixMenuAnswerRow { Columns = new Dictionary<string, string>() });
+                        }
+                        if (question.Answers.ItemLookup.ContainsKey(responseAnswer.ColId.Value) && question.Answers.ColChoicesLookup.ContainsKey(responseAnswer.ChoiceId.Value))
+                        {
+                            reply.Rows[question.Answers.ItemLookup[responseAnswer.RowId.Value]].Columns.Add(question.Answers.ItemLookup[responseAnswer.ColId.Value], question.Answers.ColChoicesLookup[responseAnswer.ChoiceId.Value]);
+                        }
                     }
-                    reply.Rows[question.Answers.ItemLookup[responseAnswer.RowId.Value]].Columns.Add(question.Answers.ItemLookup[responseAnswer.ColId.Value], question.Answers.ColChoicesLookup[responseAnswer.ChoiceId.Value]);
                 }
             }
             
@@ -299,7 +308,10 @@ namespace SurveyMonkey
                 }
                 else
                 {
-                    reply.Ranking.Add(Int32.Parse(question.Answers.ItemLookup[responseAnswer.ChoiceId.Value]), question.Answers.ItemLookup[responseAnswer.RowId.Value]);
+                    if (question.Answers.ItemLookup.ContainsKey(responseAnswer.ChoiceId.Value) && question.Answers.ItemLookup.ContainsKey(responseAnswer.RowId.Value))
+                    {
+                        reply.Ranking.Add(Int32.Parse(question.Answers.ItemLookup[responseAnswer.ChoiceId.Value]), question.Answers.ItemLookup[responseAnswer.RowId.Value]);
+                    }
                 }
             }
 
@@ -326,9 +338,10 @@ namespace SurveyMonkey
                     MatrixRatingAnswerRow row;
                     if (!rowDictionary.ContainsKey(responseAnswer.RowId.Value))
                     {
+                        var rowName = question.Answers.ItemLookup.ContainsKey(responseAnswer.RowId.Value) ? question.Answers.ItemLookup[responseAnswer.RowId.Value] : null;
                         row = new MatrixRatingAnswerRow
                         {
-                            RowName = question.Answers.ItemLookup[responseAnswer.RowId.Value]
+                            RowName = rowName
                         };
                         rowDictionary.Add(responseAnswer.RowId.Value, row);
                     }
@@ -339,7 +352,10 @@ namespace SurveyMonkey
 
                     if (responseAnswer.ChoiceId.HasValue)
                     {
-                        row.Choice = question.Answers.ItemLookup[responseAnswer.ChoiceId.Value];
+                        if (question.Answers.ItemLookup.ContainsKey(responseAnswer.ChoiceId.Value))
+                        {
+                            row.Choice = question.Answers.ItemLookup[responseAnswer.ChoiceId.Value];
+                        }
                     }
 
                     if (responseAnswer.OtherId.HasValue)
@@ -368,10 +384,12 @@ namespace SurveyMonkey
                 }
                 else
                 {
+                    var row = question.Answers.ItemLookup.ContainsKey(responseAnswer.RowId.Value) ? question.Answers.ItemLookup[responseAnswer.RowId.Value] : null;
+                    var choice = question.Answers.ItemLookup.ContainsKey(responseAnswer.ChoiceId.Value) ? question.Answers.ItemLookup[responseAnswer.ChoiceId.Value] : null;
                     reply.Rows.Add(new MatrixSingleAnswerRow
                     {
-                        RowName = question.Answers.ItemLookup[responseAnswer.RowId.Value],
-                        Choice = question.Answers.ItemLookup[responseAnswer.ChoiceId.Value]
+                        RowName = row,
+                        Choice = choice
                     });
                 }
             }
@@ -395,13 +413,17 @@ namespace SurveyMonkey
                 {
                     if (!rowDictionary.ContainsKey(responseAnswer.RowId.Value))
                     {
+                        var row = question.Answers.ItemLookup.ContainsKey(responseAnswer.RowId.Value) ? question.Answers.ItemLookup[responseAnswer.RowId.Value] : null;
                         rowDictionary.Add(responseAnswer.RowId.Value, new MatrixMultiAnswerRow
                         {
-                            RowName = question.Answers.ItemLookup[responseAnswer.RowId.Value],
+                            RowName = row,
                             Choices = new List<string>()
                         });
                     }
-                    rowDictionary[responseAnswer.RowId.Value].Choices.Add(question.Answers.ItemLookup[responseAnswer.ChoiceId.Value]);
+                    if (question.Answers.ItemLookup.ContainsKey(responseAnswer.ChoiceId.Value))
+                    {
+                        rowDictionary[responseAnswer.RowId.Value].Choices.Add(question.Answers.ItemLookup[responseAnswer.ChoiceId.Value]);
+                    }
                 }
             }
 
