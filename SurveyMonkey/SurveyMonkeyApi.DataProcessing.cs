@@ -254,6 +254,11 @@ namespace SurveyMonkey
 
         private MatrixMenuAnswer MatchMatrixMenuAnswer(Question question, IEnumerable<ResponseAnswer> responseAnswers)
         {
+            if (question.Answers.Cols.Any(c => c.LegacyChoices != null))
+            {
+                return null;
+            }
+
             var reply = new MatrixMenuAnswer
             {
                 Rows = new Dictionary<string, MatrixMenuAnswerRow>()
