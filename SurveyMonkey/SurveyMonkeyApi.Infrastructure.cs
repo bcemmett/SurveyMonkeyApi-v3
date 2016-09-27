@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using Newtonsoft.Json;
@@ -18,6 +19,7 @@ namespace SurveyMonkey
         private IWebClient _webClient;
         private DateTime _lastRequestTime = DateTime.MinValue;
         private int _rateLimitDelay;
+        public int[] RetrySequence { get; set; } = new[] {5, 30, 300, 900};
 
         public SurveyMonkeyApi(string apiKey, string oAuthToken)
         {
@@ -67,7 +69,7 @@ namespace SurveyMonkey
                 {
                     _webClient.QueryString.Add(item.Key, item.Value.ToString());
                 }
-                result = _webClient.DownloadString(url);
+                result = AttemptWebRequestWithRetry(url);
             }
             else
             {
@@ -79,6 +81,30 @@ namespace SurveyMonkey
 
             var parsed = JObject.Parse(result);
             return parsed;
+        }
+
+        private string AttemptWebRequestWithRetry(string url)
+        {
+            for (int attempt = 0; attempt <= RetrySequence.Length; attempt++)
+            {
+                try
+                {
+                    string result = _webClient.DownloadString(url);
+                    return result;
+                }
+                catch (WebException)
+                {
+                    if (attempt < RetrySequence.Length)
+                    {
+                        Thread.Sleep(RetrySequence[attempt] * 1000);
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+            return String.Empty;
         }
 
         private void RateLimit()
