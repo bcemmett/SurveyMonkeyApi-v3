@@ -308,7 +308,7 @@ namespace SurveyMonkey
                 }
                 else
                 {
-                    if (question.Answers.ItemLookup.ContainsKey(responseAnswer.ChoiceId.Value) && question.Answers.ItemLookup.ContainsKey(responseAnswer.RowId.Value))
+                    if (question.Answers.ItemLookup.ContainsKey(responseAnswer.ChoiceId.Value) && question.Answers.ItemLookup.ContainsKey(responseAnswer.RowId.Value) && !reply.Ranking.ContainsKey(Int32.Parse(question.Answers.ItemLookup[responseAnswer.ChoiceId.Value])))
                     {
                         reply.Ranking.Add(Int32.Parse(question.Answers.ItemLookup[responseAnswer.ChoiceId.Value]), question.Answers.ItemLookup[responseAnswer.RowId.Value]);
                     }
