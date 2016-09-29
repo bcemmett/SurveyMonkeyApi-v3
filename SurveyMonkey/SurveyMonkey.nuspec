@@ -1,0 +1,22 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
+    <metadata>
+        <id>SurveyMonkeyApi</id>
+        <version>$version$</version>
+        <title>Survey Monkey Api</title>
+        <authors>Ben Emmett</authors>
+        <owners>Ben Emmett</owners>
+        <licenseUrl>https://github.com/bcemmett/SurveyMonkeyApi-v3/blob/master/license.md</licenseUrl>
+        <projectUrl>https://github.com/bcemmett/SurveyMonkeyApi-v3</projectUrl>
+        <requireLicenseAcceptance>false</requireLicenseAcceptance>
+        <description>A library for accessing v3 of the Survey Monkey API.</description>
+        <summary />
+        <copyright>Ben Emmett</copyright>
+		<dependencies>
+            <dependency id="Newtonsoft.Json" version="9.0.1" />
+        </dependencies>
+    </metadata>
+    <files>
+        <file src="..\SurveyMonkey\bin\Release\SurveyMonkeyApi.dll" target="lib\SurveyMonkeyApi.dll" />
+    </files>
+</package>
