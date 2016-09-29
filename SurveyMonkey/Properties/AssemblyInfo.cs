@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("SurveyMonkey")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("SurveyMonkeyApi")]
+[assembly: AssemblyDescription("Library for accessing v3 of the Survey Monkey Api")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("SurveyMonkey")]
-[assembly: AssemblyCopyright("Copyright ©  2016")]
+[assembly: AssemblyProduct("SurveyMonkeyApi")]
+[assembly: AssemblyCopyright("Copyright © Ben Emmett")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
