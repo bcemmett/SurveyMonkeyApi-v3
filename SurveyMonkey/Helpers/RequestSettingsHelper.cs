@@ -11,22 +11,22 @@ namespace SurveyMonkey.Helpers
             var output = new RequestData();
             foreach (PropertyInfo property in obj.GetType().GetProperties())
             {
-                if (property.GetValue(obj) != null)
+                if (property.GetValue(obj, null) != null)
                 {
                     Type underlyingType = property.PropertyType.IsGenericType && property.PropertyType.GetGenericTypeDefinition() == typeof(Nullable<>)
                         ? Nullable.GetUnderlyingType(property.PropertyType)
                         : property.PropertyType;
                     if (underlyingType.IsEnum)
                     {
-                        output.Add(PropertyCasingHelper.CamelToSnake(property.Name), PropertyCasingHelper.CamelToSnake(property.GetValue(obj).ToString()));
+                        output.Add(PropertyCasingHelper.CamelToSnake(property.Name), PropertyCasingHelper.CamelToSnake(property.GetValue(obj, null).ToString()));
                     }
                     else if (underlyingType == typeof(DateTime))
                     {
-                        output.Add(PropertyCasingHelper.CamelToSnake(property.Name), ((DateTime)property.GetValue(obj)).ToString("s"));
+                        output.Add(PropertyCasingHelper.CamelToSnake(property.Name), ((DateTime)property.GetValue(obj, null)).ToString("s"));
                     }
                     else
                     {
-                        output.Add(PropertyCasingHelper.CamelToSnake(property.Name), property.GetValue(obj));
+                        output.Add(PropertyCasingHelper.CamelToSnake(property.Name), property.GetValue(obj, null));
                     }
 
                 }
