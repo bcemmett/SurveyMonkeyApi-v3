@@ -8,7 +8,7 @@ namespace SurveyMonkey.Containers
     public class Message : IPageableContainer
     {
         public long? Id { get; set; }
-        public string Href { get; set; }
+        internal string Href { get; set; }
         public MessageStatus? Status { get; set; }
         public MessageType? Type { get; set; }
         public string Body { get; set; }

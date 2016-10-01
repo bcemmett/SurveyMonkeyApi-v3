@@ -9,7 +9,7 @@ namespace SurveyMonkey.Containers
     {
         public long? Id { get; set; }
         public long? SurveyId { get; set; }
-        public string Href { get; set; }
+        internal string Href { get; set; }
         public string Email { get; set; }
         public RecipientSurveyResponseStatus? SurveyResponseStatus { get; set; }
         public MessageStatus? MailStatus { get; set; }

@@ -18,7 +18,7 @@ namespace SurveyMonkey.Containers
         public DateTime? DateCreated { get; set; }
         public DateTime? DateModified { get; set; }
         public ButtonsText ButtonsText { get; set; }
-        public string Href { get; set; }
+        internal string Href { get; set; }
         public string Preview { get; set; }
         public string EditUrl { get; set; }
         public string CollectUrl { get; set; }

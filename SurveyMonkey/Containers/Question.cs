@@ -18,7 +18,7 @@ namespace SurveyMonkey.Containers
         public string Heading { get; set; } //todo it's a bit messy that GetSurveyDetails populates the list put GetQuestionDetails populates just the string
         public bool? Visible { get; set; }
         public bool? ForcedRanking { get; set; }
-        public string Href { get; set; }
+        internal string Href { get; set; }
         public QuestionAnswers Answers { get; set; }
         public string Nickname { get; set; }
     }

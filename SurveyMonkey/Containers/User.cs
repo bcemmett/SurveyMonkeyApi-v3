@@ -15,6 +15,6 @@ namespace SurveyMonkey.Containers
         public string AccountType { get; set; }
         public DateTime? DateCreated { get; set; }
         public DateTime? DateLastLogin { get; set; }
-        public string Href { get; set; }
+        internal string Href { get; set; }
     }
 }

@@ -54,7 +54,7 @@ namespace SurveyMonkey.Containers
         public string Url { get; set; }
         public bool? PasswordEnabled { get; set; }
         public string SenderEmail { get; set; }
-        public string Href { get; set; }
+        internal string Href { get; set; }
         public int? ResponseCount { get; set; }
     }
 }

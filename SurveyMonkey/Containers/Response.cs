@@ -12,7 +12,7 @@ namespace SurveyMonkey.Containers
         public long? Id { get; set; }
         public long? SurveyId { get; set; }
         public long? CollectorId { get; set; }
-        public string Href { get; set; }
+        internal string Href { get; set; }
         public Dictionary<string, string> CustomVariables { get; set; }
         public int? TotalTime { get; set; }
         public string CustomValue { get; set; }
