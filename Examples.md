@@ -107,7 +107,7 @@ using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
 }
 ```
 
-##Question <-> Response matching
+##Question <-> Response mapping
 For most question types, Response objects from the api don't contain the text of respondents' actual selections, but rather provide numeric references to the Rows / Columns / Choices / Other which form part of the Survey's separate structure. These values have to be looked up, which a different mapping approach for each question type.
 
 For any given surveyId, you can do:
@@ -119,7 +119,7 @@ using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
 }
 ```
 
-This automatically retrieves the Survey's structure and all responses, then performs the Question <-> Response matching operation, exposing a new property on every ResponseQuestion called `ProcessedAnswer`. This includes a property `Response` which includes all information available by mapping the response against the Survey structure.
+This automatically retrieves the Survey's structure and all responses, then performs the Question <-> Response mapping operation, exposing a new property on every ResponseQuestion called `ProcessedAnswer`. This includes a property `Response` which includes all information available by mapping the response against the Survey structure.
 
 You can also perform this mapping for multiple Surveys at once. For example, to retrieve fully mapped Surveys and Responses for your entire account, do:
 
@@ -207,7 +207,49 @@ using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
             Console.WriteLine("New response from {0} -  view at {1}", response.IpAddress, response.AnalyzeUrl);
         }
                     
-        //Going again
+        //Go again
     }
 }
 ```
+
+####Response question mapping
+Having retrieved response data, you typically want to map it against the survey's structure to understand its meaning, rather than displaying the integer ids of items a respondent selected. This example shows how that mapping works for two of the simpler question types: open-ended questions, and single-choice questions.
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    long surveyId = 123;
+    long openEndedQuestionId = 456;
+    long singleChoiceQuestionId = 789;
+
+    //Get the survey's structure
+    Survey survey = api.GetSurveyDetails(surveyId);
+
+    //Retrieve any responses
+    List<Response> responses = api.GetSurveyResponseDetailList(surveyId);
+
+    foreach (Response response in responses)
+    {
+        //Open ended questions are easy - a single Answer whose Text property we want
+        string openEnded = response.Questions
+            .FirstOrDefault(q => q.Id == openEndedQuestionId)
+            ?.Answers
+            .FirstOrDefault()
+            ?.Text;
+
+        //Single choice questions are more involved. Much of the null handling is omitted for clarity
+        //First we find the response's question we're interested in
+        ResponseQuestion singleChoiceQuestion = response.Questions
+            .FirstOrDefault(q => q.Id == singleChoiceQuestionId);
+
+        //Next we find the response's answer which is set (there should only be one in this case) 
+        long? choiceId = singleChoiceQuestion?.Answers
+            .FirstOrDefault(a => a.ChoiceId != null)
+            ?.ChoiceId;
+
+        //Now we lookup this choiceId in the survey's structure
+        string singleChoice = survey?.Questions
+            .FirstOrDefault(q => q.Id == singleChoiceQuestionId)
+            .Answers.Choices.First(c => c.Id == choiceId).Text;
+    }
+```
+For other question types, the mapping can become quite complex. It's often worth letting the library handle this mapping by using `PopulateSurveyResponseInformation()` which presents you with mapped objects (details above). Alternatively, the mapping logic is contained within [SurveyMonkeyApi.DataProcessing.cs](https://github.com/bcemmett/SurveyMonkeyApi-v3/blob/master/SurveyMonkey/SurveyMonkeyApi.DataProcessing.cs) and [QuestionAnswers.cs](https://github.com/bcemmett/SurveyMonkeyApi-v3/blob/master/SurveyMonkey/Containers/QuestionAnswers.cs) if you wish to emulate sections of it.
