@@ -19,7 +19,7 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var results = api.GetSurveyResponseDetailList(84672934);
+            var results = api.GetSurveyResponseDetailsList(84672934);
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
@@ -90,7 +90,7 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var results = api.GetCollectorResponseDetailList(91395530);
+            var results = api.GetCollectorResponseDetailsList(91395530);
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
@@ -167,7 +167,7 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var results = api.GetSurveyResponseDetailList(84672934);
+            var results = api.GetSurveyResponseDetailsList(84672934);
             Assert.AreEqual(299, results.Count);
             Assert.AreEqual(299, results.Last().Id);
             Assert.AreEqual(1, results.First().Id);
@@ -218,10 +218,10 @@ namespace SurveyMonkeyTests
             client.Responses.Add(standardIndividualResponse);
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
 
-            api.GetSurveyResponseDetailList(1);
+            api.GetSurveyResponseDetailsList(1);
             Assert.AreEqual(@"https://api.surveymonkey.net/v3/surveys/1/responses/bulk", client.Requests.Last().Url);
 
-            api.GetCollectorResponseDetailList(2);
+            api.GetCollectorResponseDetailsList(2);
             Assert.AreEqual(@"https://api.surveymonkey.net/v3/collectors/2/responses/bulk", client.Requests.Last().Url);
 
             api.GetSurveyResponseOverviewList(3);
@@ -230,10 +230,10 @@ namespace SurveyMonkeyTests
             api.GetCollectorResponseOverviewList(4);
             Assert.AreEqual(@"https://api.surveymonkey.net/v3/collectors/4/responses", client.Requests.Last().Url);
 
-            api.GetSurveyResponseDetailList(5, new GetResponseListSettings());
+            api.GetSurveyResponseDetailsList(5, new GetResponseListSettings());
             Assert.AreEqual(@"https://api.surveymonkey.net/v3/surveys/5/responses/bulk", client.Requests.Last().Url);
 
-            api.GetCollectorResponseDetailList(6, new GetResponseListSettings());
+            api.GetCollectorResponseDetailsList(6, new GetResponseListSettings());
             Assert.AreEqual(@"https://api.surveymonkey.net/v3/collectors/6/responses/bulk", client.Requests.Last().Url);
 
             api.GetSurveyResponseOverviewList(7,new GetResponseListSettings());

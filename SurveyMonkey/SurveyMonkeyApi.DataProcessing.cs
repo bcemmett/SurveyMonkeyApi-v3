@@ -24,7 +24,7 @@ namespace SurveyMonkey
         public Survey PopulateSurveyResponseInformation(long surveyId)
         {
             Survey survey = GetSurveyDetails(surveyId);
-            survey.Responses = GetSurveyResponseDetailList(surveyId);
+            survey.Responses = GetSurveyResponseDetailsList(surveyId);
 
             foreach (var response in survey.Responses)
             {

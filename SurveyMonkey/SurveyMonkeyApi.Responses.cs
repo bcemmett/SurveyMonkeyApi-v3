@@ -51,7 +51,7 @@ namespace SurveyMonkey
             return GetResponseListPager(surveyId, ObjectType.Survey, settings, false);
         }
 
-        public List<Response> GetSurveyResponseDetailList(long surveyId)
+        public List<Response> GetSurveyResponseDetailsList(long surveyId)
         {
             var settings = new GetResponseListSettings();
             return GetResponseListPager(surveyId, ObjectType.Survey, settings, true);
@@ -62,7 +62,7 @@ namespace SurveyMonkey
             return GetResponseListPager(surveyId, ObjectType.Survey, settings, false);
         }
 
-        public List<Response> GetSurveyResponseDetailList(long surveyId, GetResponseListSettings settings)
+        public List<Response> GetSurveyResponseDetailsList(long surveyId, GetResponseListSettings settings)
         {
             return GetResponseListPager(surveyId, ObjectType.Survey, settings, true);
         }
@@ -73,7 +73,7 @@ namespace SurveyMonkey
             return GetResponseListPager(collectorId, ObjectType.Collector, settings, false);
         }
 
-        public List<Response> GetCollectorResponseDetailList(long collectorId)
+        public List<Response> GetCollectorResponseDetailsList(long collectorId)
         {
             var settings = new GetResponseListSettings();
             return GetResponseListPager(collectorId, ObjectType.Collector, settings, true);
@@ -84,7 +84,7 @@ namespace SurveyMonkey
             return GetResponseListPager(collectorId, ObjectType.Collector, settings, false);
         }
 
-        public List<Response> GetCollectorResponseDetailList(long collectorId, GetResponseListSettings settings)
+        public List<Response> GetCollectorResponseDetailsList(long collectorId, GetResponseListSettings settings)
         {
             return GetResponseListPager(collectorId, ObjectType.Collector, settings, true);
         }
