@@ -36,7 +36,7 @@ To retrieve a list of Responses for surveyId 12345:
 ```csharp
 using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
 {
-    List<Response> responses = api.GetSurveyResponseDetailList(12345);
+    List<Response> responses = api.GetSurveyResponseDetailsList(12345);
 }
 ```
 
@@ -44,7 +44,7 @@ Or for collectorId 54321:
 ```csharp
 using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
 {
-    List<Response> responses = api.GetCollectorResponseDetailList(54321);
+    List<Response> responses = api.GetCollectorResponseDetailsList(54321);
 }
 ```
 
@@ -173,3 +173,41 @@ using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken", 250, new [] {60, 12
 
 ####Dates
 All dates returned from the library are in UTC. If you supply a date as part of a request filter, `DateTime` objects which have a `Local` DateTimeKind will be converted into UTC by the library, while any with the `Unspecified` kind will be treated as if they were UTC.
+
+##Worked examples
+####Polling
+A common scenario is to check the api periodically for any new data. In this example we check every hour for any new Responses to a Survey. Note that in this particular example, it might be preferable to use [webhooks](https://developer.surveymonkey.com/api/v3/#webhooks) to provide the notification, but the general principle still applies.
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    //Get the id of our survey (or store this locally to avoid the api call)
+    List<Survey> surveys = api.GetSurveyList();
+    long surveyId = surveys.First(s => s.Title == "Customer Feedback Survey").Id.Value;
+
+    //Remember when we last did a check
+    DateTime lastCheck = DateTime.UtcNow;
+
+    while (true)
+    {
+        //Wait 1 hour
+        Thread.Sleep(60 * 60 * 1000);
+
+        //Create a settings object to get only responses added since our last check
+        var settings = new GetResponseListSettings { StartCreatedAt = lastCheck };
+
+        //Remember the current time for filtering the next run
+        lastCheck = DateTime.UtcNow;
+
+        //Get any new responses
+        List<Response> newResponses = api.GetSurveyResponseDetailsList(surveyId, settings);
+
+        //Do something with any new responses
+        foreach (Response response in newResponses)
+        {
+            Console.WriteLine("New response from {0} -  view at {1}", response.IpAddress, response.AnalyzeUrl);
+        }
+                    
+        //Going again
+    }
+}
+```
