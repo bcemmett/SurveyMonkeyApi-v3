@@ -19,7 +19,7 @@ namespace SurveyMonkey
         private IWebClient _webClient;
         private DateTime _lastRequestTime = DateTime.MinValue;
         private readonly int _rateLimitDelay = 500;
-        private readonly int[] _retrySequence = null;
+        private readonly int[] _retrySequence = { 5, 30, 300, 900 };
 
         public SurveyMonkeyApi(string apiKey, string oAuthToken)
         {
