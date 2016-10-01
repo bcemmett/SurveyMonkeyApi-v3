@@ -71,10 +71,7 @@ namespace SurveyMonkey
                         Response = MatchResponseQuestionToSurveyStructure(questionsLookup[responseQuestion.Id.Value], responseQuestion.Answers)
                     };
                 }
-
-                //todo Try to retrived from custom variables
-                //todo Deleted questions?
-                //If there's still no match (probably because the question's been deleted), leave ProcessedAnswer as null
+                //If there's no match (probably because the question's been deleted), leave ProcessedAnswer as null
             }
         }
 
