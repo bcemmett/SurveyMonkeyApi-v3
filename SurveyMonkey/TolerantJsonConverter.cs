@@ -53,7 +53,7 @@ namespace SurveyMonkey
             }
 
             object instance = objectType.GetConstructor(Type.EmptyTypes).Invoke(null);
-            PropertyInfo[] properties = objectType.GetProperties();
+            PropertyInfo[] properties = objectType.GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public);
 
             IEnumerable<JProperty> jsonProperties = JObject.Load(reader).Properties();
             foreach (JProperty jsonProperty in jsonProperties)
