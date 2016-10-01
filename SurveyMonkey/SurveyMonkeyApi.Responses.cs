@@ -9,20 +9,30 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi
     {
-        public enum ObjectType
+        internal enum ObjectType
         {
             Survey,
             Collector
         }
 
-        public Response GetResponseOverview(long objectId, ObjectType objectType, long responseId)
+        public Response GetSurveyResponseOverview(long surveyId, long responseId)
         {
-            return GetResponseRequest(objectId, objectType, responseId, false);
+            return GetResponseRequest(surveyId, ObjectType.Survey, responseId, false);
         }
 
-        public Response GetResponseDetails(long objectId, ObjectType objectType, long responseId)
+        public Response GetSurveyResponseDetails(long surveyId, long responseId)
         {
-            return GetResponseRequest(objectId, objectType, responseId, true);
+            return GetResponseRequest(surveyId, ObjectType.Survey, responseId, true);
+        }
+
+        public Response GetCollectorResponseOverview(long objectId, long responseId)
+        {
+            return GetResponseRequest(objectId, ObjectType.Collector, responseId, false);
+        }
+
+        public Response GetCollectorResponseDetails(long objectId, long responseId)
+        {
+            return GetResponseRequest(objectId, ObjectType.Collector, responseId, true);
         }
 
         private Response GetResponseRequest(long objectId, ObjectType source, long responseId, bool details)
@@ -35,26 +45,48 @@ namespace SurveyMonkey
             return responses;
         }
 
-        public List<Response> GetResponseOverviewList(long objectId, ObjectType objectType)
+        public List<Response> GetSurveyResponseOverviewList(long surveyId)
         {
             var settings = new GetResponseListSettings();
-            return GetResponseListPager(objectId, objectType, settings, false);
+            return GetResponseListPager(surveyId, ObjectType.Survey, settings, false);
         }
 
-        public List<Response> GetResponseDetailList(long objectId, ObjectType objectType)
+        public List<Response> GetSurveyResponseDetailList(long surveyId)
         {
             var settings = new GetResponseListSettings();
-            return GetResponseListPager(objectId, objectType, settings, true);
+            return GetResponseListPager(surveyId, ObjectType.Survey, settings, true);
         }
 
-        public List<Response> GetResponseOverviewList(long objectId, ObjectType objectType, GetResponseListSettings settings)
+        public List<Response> GetSurveyResponseOverviewList(long surveyId, GetResponseListSettings settings)
         {
-            return GetResponseListPager(objectId, objectType, settings, false);
+            return GetResponseListPager(surveyId, ObjectType.Survey, settings, false);
         }
 
-        public List<Response> GetResponseDetailList(long objectId, ObjectType objectType, GetResponseListSettings settings)
+        public List<Response> GetSurveyResponseDetailList(long surveyId, GetResponseListSettings settings)
         {
-            return GetResponseListPager(objectId, objectType, settings, true);
+            return GetResponseListPager(surveyId, ObjectType.Survey, settings, true);
+        }
+
+        public List<Response> GetCollectorResponseOverviewList(long collectorId)
+        {
+            var settings = new GetResponseListSettings();
+            return GetResponseListPager(collectorId, ObjectType.Collector, settings, false);
+        }
+
+        public List<Response> GetCollectorResponseDetailList(long collectorId)
+        {
+            var settings = new GetResponseListSettings();
+            return GetResponseListPager(collectorId, ObjectType.Collector, settings, true);
+        }
+
+        public List<Response> GetCollectorResponseOverviewList(long collectorId, GetResponseListSettings settings)
+        {
+            return GetResponseListPager(collectorId, ObjectType.Collector, settings, false);
+        }
+
+        public List<Response> GetCollectorResponseDetailList(long collectorId, GetResponseListSettings settings)
+        {
+            return GetResponseListPager(collectorId, ObjectType.Collector, settings, true);
         }
 
         private List<Response> GetResponseListPager(long id, ObjectType objectType, IPagingSettings settings, bool details)
