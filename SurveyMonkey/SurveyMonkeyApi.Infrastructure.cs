@@ -12,7 +12,7 @@ using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkey
 {
-    public partial class SurveyMonkeyApi : IDisposable
+    public partial class SurveyMonkeyApi : IDisposable, ISurveyMonkeyApi
     {
         private string _apiKey;
         private string _oAuthToken;

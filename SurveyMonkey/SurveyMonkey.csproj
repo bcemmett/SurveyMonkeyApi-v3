@@ -117,6 +117,7 @@
     <Compile Include="Enums\QuestionValidationType.cs" />
     <Compile Include="Helpers\PropertyCasingHelper.cs" />
     <Compile Include="Helpers\RequestSettingsHelper.cs" />
+    <Compile Include="ISurveyMonkeyApi.cs" />
     <Compile Include="LiveWebClient.cs" />
     <Compile Include="IWebClient.cs" />
     <Compile Include="ProcessedAnswers\DateTimeAnswer.cs" />
