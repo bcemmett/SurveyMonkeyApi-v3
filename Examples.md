@@ -128,7 +128,7 @@ using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
 {
     List<Survey> surveys = api.GetSurveyList();
     List<long> surveyIds = surveys.Select(s => s.Id.Value).OrderBy(s => s).ToList();
-    List<Survey> populatedSurveys = api.PopulateMultipleSurveyResponseInformation(surveyIds);
+    List<Survey> populatedSurveys = api.PopulateSurveyResponseInformationBulk(surveyIds);
 }
 ```
 
