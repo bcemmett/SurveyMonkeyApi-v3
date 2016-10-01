@@ -166,7 +166,7 @@ namespace SurveyMonkeyTests
                 {""per_page"":1000,""total"":20,""data"":[{""name"":""Academic\/Research"",""id"":""academic\/research""},{""name"":""General Business"",""id"":""general_business""},{""name"":""Marketing"",""id"":""marketing""},{""name"":""Satisfaction"",""id"":""satisfaction""},{""name"":""Services"",""id"":""services""},{""name"":""Social and Political"",""id"":""social_and_political""},{""name"":""Most Popular"",""id"":""most_popular""},{""name"":""Benchmarkable"",""id"":""benchmarkable""},{""name"":""Community"",""id"":""community""},{""name"":""Customer Feedback"",""id"":""customer_feedback""},{""name"":""Demographics"",""id"":""demographics""},{""name"":""Education"",""id"":""education""},{""name"":""Events"",""id"":""events""},{""name"":""Healthcare"",""id"":""healthcare""},{""name"":""Human Resources"",""id"":""human_resources""},{""name"":""Industry Specific"",""id"":""industry_specific""},{""name"":""Just for Fun"",""id"":""just_for_fun""},{""name"":""Market Research"",""id"":""market_research""},{""name"":""Nonprofit "",""id"":""nonprofit_""},{""name"":""Political"",""id"":""political""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/survey_categories\/?page=1&per_page=1000""}}
             ");
             var api = new SurveyMonkeyApi("key", "token", client);
-            var results = api.GetSurveyCategories();
+            var results = api.GetSurveyCategoryList();
             Assert.AreEqual(20, results.Count);
             Assert.AreEqual("Academic/Research", results.First().Name);
             Assert.AreEqual("political", results.Last().Id);

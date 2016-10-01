@@ -46,13 +46,13 @@ namespace SurveyMonkey
             return survey;
         }
 
-        public List<SurveyCategory> GetSurveyCategories()
+        public List<SurveyCategory> GetSurveyCategoryList()
         {
             var settings = new GetSurveyCategoryListSettings();
             return GetSurveyCategoryListPager(settings);
         }
 
-        public List<SurveyCategory> GetSurveyCategories(GetSurveyCategoryListSettings settings)
+        public List<SurveyCategory> GetSurveyCategoryList(GetSurveyCategoryListSettings settings)
         {
             return GetSurveyCategoryListPager(settings);
         }

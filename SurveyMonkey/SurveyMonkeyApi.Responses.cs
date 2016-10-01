@@ -20,7 +20,7 @@ namespace SurveyMonkey
             return GetResponseRequest(objectId, objectType, responseId, false);
         }
 
-        public Response GetResponseDetail(long objectId, ObjectType objectType, long responseId)
+        public Response GetResponseDetails(long objectId, ObjectType objectType, long responseId)
         {
             return GetResponseRequest(objectId, objectType, responseId, true);
         }
