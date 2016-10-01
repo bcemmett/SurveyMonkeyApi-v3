@@ -11,7 +11,7 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi
     {
-        public List<Survey> PopulateMultipleSurveyResponseInformation(List<long> surveyIds)
+        public List<Survey> PopulateSurveyResponseInformationBulk(List<long> surveyIds)
         {
             var result = new List<Survey>();
             foreach (var surveyId in surveyIds)

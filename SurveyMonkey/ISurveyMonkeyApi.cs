@@ -22,7 +22,7 @@ namespace SurveyMonkey
         Response GetSurveyResponseDetails(long surveyId, long responseId);
         Response GetCollectorResponseOverview(long objectId, long responseId);
         Response GetCollectorResponseDetails(long objectId, long responseId);
-        List<Survey> PopulateMultipleSurveyResponseInformation(List<long> surveyIds);
+        List<Survey> PopulateSurveyResponseInformationBulk(List<long> surveyIds);
         Survey PopulateSurveyResponseInformation(long surveyId);
         List<Collector> GetCollectorList(long surveyId);
         List<Collector> GetCollectorList(long surveyId, GetCollectorListSettings settings);
