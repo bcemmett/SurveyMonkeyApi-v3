@@ -29,6 +29,8 @@ namespace SurveyMonkeyTests
             var replies = GetResponses().Where(r => r.QuestionFamily == QuestionFamily.SingleChoice);
             SingleChoiceAnswer reply;
 
+            Assert.AreEqual("Text for multiple choice (1 answer), display choices as buttons (1 column), no comment", replies.First().QuestionHeading);
+
             reply = (SingleChoiceAnswer)replies.First().Response;
             Assert.AreEqual("First Answer", reply.Choice);
             Assert.IsNull(reply.OtherText);

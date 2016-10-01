@@ -65,10 +65,10 @@ namespace SurveyMonkey
                 {
                     responseQuestion.ProcessedAnswer = new ProcessedAnswer
                     {
+                        QuestionHeading = questionsLookup[responseQuestion.Id.Value].Headings.FirstOrDefault()?.Heading,
                         QuestionFamily = questionsLookup[responseQuestion.Id.Value].Family,
                         QuestionSubtype = questionsLookup[responseQuestion.Id.Value].Subtype,
                         Response = MatchResponseQuestionToSurveyStructure(questionsLookup[responseQuestion.Id.Value], responseQuestion.Answers)
-                        //todo original version stored QuestionHeading
                     };
                 }
 
