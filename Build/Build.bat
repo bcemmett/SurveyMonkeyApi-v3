@@ -1,4 +1,0 @@
-msbuild "..\SurveyMonkey.sln" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration="Release 4.0"
-msbuild "..\SurveyMonkey.sln" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration="Release 4.5"
-msbuild "..\SurveyMonkey.sln" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration="Release 4.5.1"
-msbuild "..\SurveyMonkey.sln" /verbosity:minimal /logger:"C:\Program Files\AppVeyor\BuildAgent\Appveyor.MSBuildLogger.dll" /p:Configuration="Release 4.5.2"
