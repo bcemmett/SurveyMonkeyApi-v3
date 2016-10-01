@@ -3,13 +3,13 @@
     <metadata>
         <id>SurveyMonkeyApi</id>
         <version>$version$</version>
-        <title>Survey Monkey Api</title>
+        <title>SurveyMonkeyApi</title>
         <authors>Ben Emmett</authors>
         <owners>Ben Emmett</owners>
-        <licenseUrl>https://github.com/bcemmett/SurveyMonkeyApi-v3/blob/master/license.md</licenseUrl>
+        <licenseUrl>https://github.com/bcemmett/SurveyMonkeyApi-v3/blob/master/License.md</licenseUrl>
         <projectUrl>https://github.com/bcemmett/SurveyMonkeyApi-v3</projectUrl>
         <requireLicenseAcceptance>false</requireLicenseAcceptance>
-        <description>A library for accessing v3 of the Survey Monkey API.</description>
+        <description>A .NET library for querying SurveyMonkey's v3 api.</description>
         <summary />
         <copyright>Ben Emmett</copyright>
 		<dependencies>
