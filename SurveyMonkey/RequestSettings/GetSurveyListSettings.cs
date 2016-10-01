@@ -2,7 +2,7 @@
 
 namespace SurveyMonkey.RequestSettings
 {
-    public class GetSurveyListSettings : PagingSettings
+    public class GetSurveyListSettings : IPagingSettings
     {
         public enum SortByOption
         {
@@ -17,6 +17,8 @@ namespace SurveyMonkey.RequestSettings
             DESC
         }
 
+        public int? Page { get; set; }
+        public int? PerPage { get; set; }
         public SortByOption? SortBy { get; set; }
         public SortOrderOption? SortOrder { get; set; }
         public DateTime? StartModifiedAt { get; set; }

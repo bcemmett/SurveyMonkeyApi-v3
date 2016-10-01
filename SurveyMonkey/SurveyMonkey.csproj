@@ -132,7 +132,7 @@
     <Compile Include="ProcessedAnswers\ProcessedAnswer.cs" />
     <Compile Include="ProcessedAnswers\MultipleChoiceAnswer.cs" />
     <Compile Include="ProcessedAnswers\SingleChoiceAnswer.cs" />
-    <Compile Include="RequestSettings\IPageableSettings.cs" />
+    <Compile Include="RequestSettings\IPagingSettings.cs" />
     <Compile Include="SurveyMonkeyApi.Users.cs" />
     <Compile Include="SurveyMonkeyApi.DataProcessing.cs" />
     <Compile Include="TolerantJsonConverter.cs" />

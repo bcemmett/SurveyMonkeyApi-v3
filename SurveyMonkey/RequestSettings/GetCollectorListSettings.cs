@@ -3,7 +3,7 @@ using SurveyMonkey.Enums;
 
 namespace SurveyMonkey.RequestSettings
 {
-    public class GetCollectorListSettings : PagingSettings
+    public class GetCollectorListSettings : IPagingSettings
     {
         public enum SortOrderOption
         {
@@ -20,6 +20,8 @@ namespace SurveyMonkey.RequestSettings
             Name
         }
 
+        public int? Page { get; set; }
+        public int? PerPage { get; set; }
         public DateTime? StartDate { get; set; }
         public DateTime? EndDate { get; set; }
         public SortOrderOption? SortOrder { get; set; }

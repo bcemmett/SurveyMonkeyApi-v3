@@ -20,7 +20,7 @@ namespace SurveyMonkey
             return GetCollectorListPager(surveyId, settings);
         }
 
-        private List<Collector> GetCollectorListPager(long surveyId, IPageableSettings settings)
+        private List<Collector> GetCollectorListPager(long surveyId, IPagingSettings settings)
         {
             string endPoint = String.Format("/surveys/{0}/collectors", surveyId);
             const int maxResultsPerPage = 1000;
@@ -48,7 +48,7 @@ namespace SurveyMonkey
             return GetMessageListPager(collectorId, settings);
         }
 
-        private List<Message> GetMessageListPager(long collectorId, IPageableSettings settings)
+        private List<Message> GetMessageListPager(long collectorId, IPagingSettings settings)
         {
             string endPoint = String.Format("/collectors/{0}/messages", collectorId);
             const int maxResultsPerPage = 1000;
@@ -76,7 +76,7 @@ namespace SurveyMonkey
             return GetRecipientListPager(collectorId, messageId, settings);
         }
 
-        private List<Recipient> GetRecipientListPager(long collectorId, long messageId, IPageableSettings settings)
+        private List<Recipient> GetRecipientListPager(long collectorId, long messageId, IPagingSettings settings)
         {
             string endPoint = String.Format("/collectors/{0}/messages/{1}/recipients", collectorId, messageId);
             const int maxResultsPerPage = 1000;

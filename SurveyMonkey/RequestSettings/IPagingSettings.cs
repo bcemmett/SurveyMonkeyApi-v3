@@ -1,6 +1,6 @@
 ﻿namespace SurveyMonkey.RequestSettings
 {
-    internal interface IPageableSettings
+    internal interface IPagingSettings
     {
         int? Page { get; set; }
         int? PerPage { get; set; }

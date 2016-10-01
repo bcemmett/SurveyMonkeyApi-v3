@@ -20,7 +20,7 @@ namespace SurveyMonkey
             return GetSurveyListPager(settings);
         }
 
-        private List<Survey> GetSurveyListPager(IPageableSettings settings)
+        private List<Survey> GetSurveyListPager(IPagingSettings settings)
         {
             string endPoint = "/surveys";
             const int maxResultsPerPage = 1000;
@@ -57,7 +57,7 @@ namespace SurveyMonkey
             return GetSurveyCategoryListPager(settings);
         }
 
-        private List<SurveyCategory> GetSurveyCategoryListPager(IPageableSettings settings)
+        private List<SurveyCategory> GetSurveyCategoryListPager(IPagingSettings settings)
         {
             string endPoint = "/survey_categories";
             const int maxResultsPerPage = 1000;
@@ -76,7 +76,7 @@ namespace SurveyMonkey
             return GetSurveyTemplateListPager(settings);
         }
 
-        private List<SurveyTemplate> GetSurveyTemplateListPager(IPageableSettings settings)
+        private List<SurveyTemplate> GetSurveyTemplateListPager(IPagingSettings settings)
         {
             string endPoint = "/survey_templates";
             const int maxResultsPerPage = 1000;
@@ -95,7 +95,7 @@ namespace SurveyMonkey
             return GetPageListPager(surveyId, settings);
         }
 
-        private List<Page> GetPageListPager(long surveyId, IPageableSettings settings)
+        private List<Page> GetPageListPager(long surveyId, IPagingSettings settings)
         {
             string endPoint = String.Format("/surveys/{0}/pages", surveyId);
             const int maxResultsPerPage = 100;
@@ -123,7 +123,7 @@ namespace SurveyMonkey
             return GetQuestionListPager(surveyId, pageId, settings);
         }
 
-        private List<Question> GetQuestionListPager(long surveyId, long pageId, IPageableSettings settings)
+        private List<Question> GetQuestionListPager(long surveyId, long pageId, IPagingSettings settings)
         {
             string endPoint = String.Format("/surveys/{0}/pages/{1}/questions", surveyId, pageId);
             const int maxResultsPerPage = 100;

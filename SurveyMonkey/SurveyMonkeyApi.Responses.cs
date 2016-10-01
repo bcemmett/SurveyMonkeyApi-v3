@@ -57,7 +57,7 @@ namespace SurveyMonkey
             return GetResponseListPager(objectId, objectType, settings, true);
         }
 
-        private List<Response> GetResponseListPager(long id, ObjectType objectType, IPageableSettings settings, bool details)
+        private List<Response> GetResponseListPager(long id, ObjectType objectType, IPagingSettings settings, bool details)
         {
             var bulk = details ? "/bulk" : String.Empty;
             string endPoint = String.Format("/{0}s/{1}/responses{2}", objectType.ToString().ToLower(), id, bulk);

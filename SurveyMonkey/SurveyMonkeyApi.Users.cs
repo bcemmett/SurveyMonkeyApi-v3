@@ -29,7 +29,7 @@ namespace SurveyMonkey
             return GetGroupListPager(settings);
         }
 
-        private List<Group> GetGroupListPager(IPageableSettings settings)
+        private List<Group> GetGroupListPager(IPagingSettings settings)
         {
             string endPoint = "/groups";
             const int maxResultsPerPage = 1000;
@@ -57,7 +57,7 @@ namespace SurveyMonkey
             return GetMemberListPager(groupId, settings);
         }
 
-        private List<Member> GetMemberListPager(long groupId, IPageableSettings settings)
+        private List<Member> GetMemberListPager(long groupId, IPagingSettings settings)
         {
             string endPoint = String.Format("/groups/{0}/members", groupId);
             const int maxResultsPerPage = 1000;
