@@ -1,0 +1,175 @@
+#Examples
+##Basic usage
+####Setup
+These examples assume you've added the library to your project with nuget:
+```
+PM> Install-Package SurveyMonkeyApi
+```
+As a minimum, you should add the following declarations:
+```csharp
+using SurveyMonkey;
+using SurveyMonkey.Containers;
+```
+
+####Surveys
+To retrieve a list of Surveys, do:
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    List<Survey> surveys = api.GetSurveyList();
+}
+```
+The `Id` and `Title` properties will be populated - other properties will be `null`.
+
+To retrieve details of a Survey's structure given its Id (eg 12345), do:
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    Survey survey = api.GetSurveyDetails(12345);
+}
+```
+
+The Survey object's complete structure is now populated, including Pages and Questions.
+
+####Responses
+To retrieve a list of Responses for surveyId 12345:
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    List<Response> responses = api.GetSurveyResponseDetailList(12345);
+}
+```
+
+Or for collectorId 54321:
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    List<Response> responses = api.GetCollectorResponseDetailList(54321);
+}
+```
+
+You can also see just an individual responseId 6789 for surveyId 12345:
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    Response response = api.GetSurveyResponseDetails(12345, 6789);
+}
+```
+
+For any of these methods, you can replace `Details` with `Overview` to return less data, eg `GetSurveyResponseOverviewList(surveyId)`.
+
+####Collectors
+To retrieve a list of Collectors for surveyId 12345, do:
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    List<Collector> collectors = api.GetCollectorList(12345);
+}
+```
+
+As with retrieving Surveys, only the `Id` and `Title` properties will be populated.
+
+To retrieve the Collector's details given its collectorId (eg 54321), do:
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    Collector collector = api.GetCollectorDetails(54321);
+}
+```
+
+####Other
+The are many other object types which can be retrieved with similarly-named methods, including Groups, Members, Survey Categories, Survey Templates, Users, Pages, and Questions.
+
+##Configuring requests
+Many api requests can be configured by providing additional settings. In these cases, the method will take an optional Settings object, the type of which is dependent on the endpoint. For example, when retrieving a list of responses, to look only at responses for the past 7 days where the ip address was 123.123.123.123, do:
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    var settings = new GetResponseListSettings()
+    {
+        Ip = "123.123.123.123",
+        StartModifiedAt = DateTime.UtcNow.AddDays(-7)
+    };
+    List<Response> responses = api.GetSurveyResponseDetailList(12345, settings);
+}
+```
+####Paging
+When retrieving lists of objects, SurveyMonkey breaks the data up into pages with a maximum of either 100 or 1000 objects. By default when you call one of these methods, the library will automatically make multiple api requests for you to retrieve the entire dataset. All these methods take an optional settings object which inherits from `IPagingSettings`, so will have two nullable int properties - Page and PerPage. If you pass in a settings object that has either of these objects set, the library's automatic paging will be disabled, and your manual choice of pages will be retrieved. Eg:
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    var settings = new GetSurveyListSettings()
+    {
+        Page = 3,
+        PerPage = 50
+    };
+    List<Survey> surveys = api.GetSurveyList(settings);
+}
+```
+
+##Question <-> Response matching
+For most question types, Response objects from the api don't contain the text of respondents' actual selections, but rather provide numeric references to the Rows / Columns / Choices / Other which form part of the Survey's separate structure. These values have to be looked up, which a different mapping approach for each question type.
+
+For any given surveyId, you can do:
+
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    Survey survey = api.PopulateSurveyResponseInformation(12345);
+}
+```
+
+This automatically retrieves the Survey's structure and all responses, then performs the Question <-> Response matching operation, exposing a new property on every ResponseQuestion called `ProcessedAnswer`. This includes a property `Response` which includes all information available by mapping the response against the Survey structure.
+
+You can also perform this mapping for multiple Surveys at once. For example, to retrieve fully mapped Surveys and Responses for your entire account, do:
+
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken"))
+{
+    List<Survey> surveys = api.GetSurveyList();
+    List<long> surveyIds = surveys.Select(s => s.Id.Value).OrderBy(s => s).ToList();
+    List<Survey> populatedSurveys = api.PopulateMultipleSurveyResponseInformation(surveyIds);
+}
+```
+
+##Other notes
+####Rate limiting
+SurveyMonkey has a default rate limit of 2 requests per second, so the library will wait a minimum of 500ms between making requests.
+
+If you're entitled to make requests more frequently, you can pass a different delay length into the constructor. For example, to make 10 requests per second:
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken", 100))
+{
+    //Do stuff
+}
+```
+
+####Retry logic
+By default, if there is a problem communicating with the api, the library will automatically retry after 5, 30, 300 and 900 seconds. To override this behaviour, pass an array of ints into the constructor representing the sequence of delays (in seconds) betewen each attempy. To disable retry behaviour entirely, pass in `null` or an empty array.
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken", new [] {10, 60, 300}))
+{
+    //Will wait 10 seconds, then 1 minute, then 5 minutes (4 attempts in total)
+}
+```
+
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken", null))
+{
+    //No retry behaviour - a WebException will be thrown if there is any error reaching the api
+}
+```
+
+You can combine a custom retry sequence with a custom rate limit using:
+```csharp
+using (var api = new SurveyMonkeyApi("apiKey", "oAuthToken", 250, new [] {60, 120}))
+{
+    //Makes up to 4 requests per second, and retries after 1 then 2 minutes in case of failure
+}
+```
+
+####Disposing
+`SurveyMonkeyApi` implements IDisposable. You should wrap it in a `using` block (as per the examples on this page), or call `Dispose()` on it once you are finished with it.
+
+####Dates
+All dates returned from the library are in UTC. If you supply a date as part of a request filter, `DateTime` objects which have a `Local` DateTimeKind will be converted into UTC by the library, while any with the `Unspecified` kind will be treated as if they were UTC.
