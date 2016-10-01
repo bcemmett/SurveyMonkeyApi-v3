@@ -54,13 +54,13 @@ namespace SurveyMonkey
 
         private void MatchIndividualResponseToSurveyStructure(Response response, Dictionary<long, Question> questionsLookup)
         {
-            if (response.Questions == null) //In rare cases there can be a respondent with no responses to questions //todo is this still true?
+            if (response.Questions == null) //In rare cases there can be a respondent with no responses to questions
             {
                 return;
             }
             foreach (var responseQuestion in response.Questions)
             {
-                //First try to match the ResponseQuestion with the survey structure
+                //Try to match the ResponseQuestion with the survey structure
                 if (questionsLookup.ContainsKey(responseQuestion.Id.Value))
                 {
                     responseQuestion.ProcessedAnswer = new ProcessedAnswer
