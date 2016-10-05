@@ -114,9 +114,9 @@ namespace SurveyMonkey
                     string result = _webClient.DownloadString(url);
                     return result;
                 }
-                catch (WebException)
+                catch (WebException ex)
                 {
-                    if (attempt < _retrySequence.Length)
+                    if (attempt < _retrySequence.Length && (ex.Response == null || ((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.ServiceUnavailable))
                     {
                         Thread.Sleep(_retrySequence[attempt] * 1000);
                     }
