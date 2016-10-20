@@ -20,8 +20,8 @@ namespace SurveyMonkey
         List<Response> GetCollectorResponseDetailsList(long collectorId, GetResponseListSettings settings);
         Response GetSurveyResponseOverview(long surveyId, long responseId);
         Response GetSurveyResponseDetails(long surveyId, long responseId);
-        Response GetCollectorResponseOverview(long objectId, long responseId);
-        Response GetCollectorResponseDetails(long objectId, long responseId);
+        Response GetCollectorResponseOverview(long collectorId, long responseId);
+        Response GetCollectorResponseDetails(long collectorId, long responseId);
         List<Survey> PopulateSurveyResponseInformationBulk(List<long> surveyIds);
         Survey PopulateSurveyResponseInformation(long surveyId);
         List<Collector> GetCollectorList(long surveyId);
