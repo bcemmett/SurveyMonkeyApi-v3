@@ -24,6 +24,6 @@ namespace SurveyMonkey.RequestSettings
         public DateTime? StartModifiedAt { get; set; }
         public DateTime? EndModifiedAt { get; set; }
         public string Title { get; set; }
-        public string Include { get { return "response_count,date_created,date_modified,language,question_count,analyze_url,preview"; } }
+        internal string Include { get { return "response_count,date_created,date_modified,language,question_count,analyze_url,preview"; } }
     }
 }
