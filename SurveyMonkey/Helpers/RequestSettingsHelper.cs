@@ -9,7 +9,7 @@ namespace SurveyMonkey.Helpers
         internal static RequestData GetPopulatedProperties(object obj)
         {
             var output = new RequestData();
-            foreach (PropertyInfo property in obj.GetType().GetProperties())
+            foreach (PropertyInfo property in obj.GetType().GetProperties(BindingFlags.Instance | BindingFlags.NonPublic | BindingFlags.Public))
             {
                 if (property.GetValue(obj, null) != null)
                 {
