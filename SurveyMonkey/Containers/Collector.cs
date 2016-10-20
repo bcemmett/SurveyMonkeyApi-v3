@@ -9,6 +9,7 @@ namespace SurveyMonkey.Containers
         [JsonConverter(typeof(TolerantJsonConverter))]
         public enum StatusType
         {
+            New,
             Open,
             Closed
         }

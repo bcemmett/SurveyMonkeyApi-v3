@@ -14,14 +14,14 @@ namespace SurveyMonkeyTests
         {
             var client = new MockWebClient();
             client.Responses.Add(@"
-                {""per_page"":50,""total"":2,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/55249163"",""id"":""55249163"",""title"":""All Question Types Test""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934"",""id"":""84672934"",""title"":""Two Question Survey""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/?page=1&per_page=50""}}
+                {""per_page"":1000,""total"":3,""data"":[{""language"":""en"",""date_modified"":""2016-09-13T21:27:00"",""title"":""Two page survey"",""response_count"":0,""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/AdWVZnUbwxtN65VGmI7A6PwvGUomM4FqZh394SA9Q9s_3D"",""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84718275"",""date_created"":""2016-09-13T21:25:00"",""preview"":""http:\/\/www.surveymonkey.com\/r\/Preview\/?sm=p2hLUoVMWDiMHvAyMM54c0dgHj5dMXyps4vu30ofkoE_3D"",""id"":""84718275"",""question_count"":2},{""language"":""en"",""date_modified"":""2016-09-13T08:09:00"",""title"":""All Question Types Test"",""response_count"":99,""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/wVRR9v7eb0uNr8G_2FiIJOwktJ62RFdKz74T_2Fbue0HFBw_3D"",""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/55249163"",""date_created"":""2014-08-26T11:13:00"",""preview"":""http:\/\/www.surveymonkey.com\/r\/Preview\/?sm=ttlTX5Kc5zANvspJO6f_2Fh5kVYj9zX_2FOirhZ8E91hvXk_3D"",""id"":""55249163"",""question_count"":1},{""language"":""en"",""date_modified"":""2016-09-13T07:30:00"",""title"":""Two Question Survey"",""response_count"":3,""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D"",""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934"",""date_created"":""2016-09-13T07:25:00"",""preview"":""http:\/\/www.surveymonkey.com\/r\/Preview\/?sm=5D7q7s9Ip1l2yW2UWuInqzCAAX34ti6xYe_2F8M_2FE1CvU_3D"",""id"":""84672934"",""question_count"":2}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/?page=1&per_page=1000""}}
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
             var results = api.GetSurveyList();
             Assert.AreEqual(1, client.Requests.Count);
-            Assert.AreEqual(55249163, results.First().Id);
-            Assert.AreEqual(@"https://api.surveymonkey.net/v3/surveys/55249163", results.First().Href);
+            Assert.AreEqual(84718275, results.First().Id);
+            Assert.AreEqual(@"https://api.surveymonkey.net/v3/surveys/84718275", results.First().Href);
             Assert.AreEqual("Two Question Survey", results.Last().Title);
         }
 

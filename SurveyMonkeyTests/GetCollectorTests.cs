@@ -15,7 +15,7 @@ namespace SurveyMonkeyTests
         {
             var client = new MockWebClient();
             client.Responses.Add(@"
-                {""per_page"":1000,""total"":3,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91664733"",""name"":""Email Invitation 1"",""id"":""91664733""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/57184593"",""name"":""Web Link 1"",""id"":""57184593""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/57185230"",""name"":""Web Link 2"",""id"":""57185230""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/55249163\/collectors?page=1&per_page=1000""}}
+                {""per_page"":1000,""total"":3,""data"":[{""status"":""new"",""name"":""Email Invitation 1"",""date_modified"":""2016-09-17T21:36:00+00:00"",""response_count"":0,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91664733"",""date_created"":""2016-09-17T21:36:00+00:00"",""type"":""email"",""id"":""91664733""},{""status"":""closed"",""name"":""Web Link 1"",""date_modified"":""2014-08-26T12:50:00+00:00"",""url"":""https:\/\/www.surveymonkey.com\/r\/9QBY7BQ"",""response_count"":1,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/57184593"",""date_created"":""2014-08-26T11:14:00+00:00"",""type"":""weblink"",""id"":""57184593""},{""status"":""closed"",""name"":""Web Link 2"",""date_modified"":""2014-08-26T12:50:00+00:00"",""url"":""https:\/\/www.surveymonkey.com\/r\/9TWKVDN"",""response_count"":98,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/57185230"",""date_created"":""2014-08-26T11:42:00+00:00"",""type"":""weblink"",""id"":""57185230""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/55249163\/collectors?page=1&per_page=1000""}}
             ");
 
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
@@ -25,6 +25,8 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(91664733, results.First().Id);
             Assert.AreEqual(@"https://api.surveymonkey.net/v3/collectors/91664733", results.First().Href);
             Assert.AreEqual("Web Link 2", results.Last().Name);
+            Assert.AreEqual(Collector.StatusType.New, results.First().Status);
+            Assert.AreEqual(0, results.First().ResponseCount);
             Assert.IsNull(results.First().AllowMultipleResponses);
         }
 

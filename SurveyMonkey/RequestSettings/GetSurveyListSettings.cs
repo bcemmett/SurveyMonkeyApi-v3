@@ -23,5 +23,7 @@ namespace SurveyMonkey.RequestSettings
         public SortOrderOption? SortOrder { get; set; }
         public DateTime? StartModifiedAt { get; set; }
         public DateTime? EndModifiedAt { get; set; }
+        public string Title { get; set; }
+        internal string Include => "response_count,date_created,date_modified,language,question_count,analyze_url,preview";
     }
 }
