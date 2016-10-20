@@ -25,14 +25,14 @@ namespace SurveyMonkey
             return GetResponseRequest(surveyId, ObjectType.Survey, responseId, true);
         }
 
-        public Response GetCollectorResponseOverview(long objectId, long responseId)
+        public Response GetCollectorResponseOverview(long collectorId, long responseId)
         {
-            return GetResponseRequest(objectId, ObjectType.Collector, responseId, false);
+            return GetResponseRequest(collectorId, ObjectType.Collector, responseId, false);
         }
 
-        public Response GetCollectorResponseDetails(long objectId, long responseId)
+        public Response GetCollectorResponseDetails(long collectorId, long responseId)
         {
-            return GetResponseRequest(objectId, ObjectType.Collector, responseId, true);
+            return GetResponseRequest(collectorId, ObjectType.Collector, responseId, true);
         }
 
         private Response GetResponseRequest(long objectId, ObjectType source, long responseId, bool details)
