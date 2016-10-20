@@ -27,5 +27,6 @@ namespace SurveyMonkey.RequestSettings
         public SortOrderOption? SortOrder { get; set; }
         public SortByOption? SortBy { get; set; }
         public string Name { get; set; }
+        internal string Include => "type,status,response_count,date_created,date_modified,url";
     }
 }
