@@ -14,6 +14,7 @@ namespace SurveyMonkey.Containers
         public QuestionRequired Required { get; set; }
         public QuestionSorting Sorting { get; set; }
         public QuestionValidation Validation { get; set; }
+        public QuestionDisplayOptions DisplayOptions { get; set; }
         public List<Headings> Headings { get; set; }
         public string Heading { get; set; } //todo it's a bit messy that GetSurveyDetails populates the list put GetQuestionDetails populates just the string
         public bool? Visible { get; set; }
