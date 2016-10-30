@@ -11,7 +11,8 @@ namespace SurveyMonkey.Containers
         {
             New,
             Open,
-            Closed
+            Closed,
+            New
         }
 
         [JsonConverter(typeof(TolerantJsonConverter))]
