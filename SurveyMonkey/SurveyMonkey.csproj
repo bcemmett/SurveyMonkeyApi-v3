@@ -11,6 +11,10 @@
     <AssemblyName>SurveyMonkeyApi</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <SccProjectName>SAK</SccProjectName>
+    <SccLocalPath>SAK</SccLocalPath>
+    <SccAuxPath>SAK</SccAuxPath>
+    <SccProvider>SAK</SccProvider>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -81,6 +85,8 @@
     <Compile Include="Containers\Member.cs" />
     <Compile Include="Containers\Group.cs" />
     <Compile Include="Containers\IPageableContainer.cs" />
+    <Compile Include="Containers\QuestionDisplayOptions.cs" />
+    <Compile Include="Containers\QuestionDisplayOptionsCustomOptions.cs" />
     <Compile Include="Containers\Recipient.cs" />
     <Compile Include="Containers\Message.cs" />
     <Compile Include="Containers\OtherAnswer.cs" />
@@ -133,6 +139,7 @@
     <Compile Include="ProcessedAnswers\ProcessedAnswer.cs" />
     <Compile Include="ProcessedAnswers\MultipleChoiceAnswer.cs" />
     <Compile Include="ProcessedAnswers\SingleChoiceAnswer.cs" />
+    <Compile Include="RequestSettings\CreateCollectorSettings.cs" />
     <Compile Include="RequestSettings\IPagingSettings.cs" />
     <Compile Include="SurveyMonkeyApi.Users.cs" />
     <Compile Include="SurveyMonkeyApi.DataProcessing.cs" />

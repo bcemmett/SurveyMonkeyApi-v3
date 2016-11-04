@@ -79,7 +79,10 @@ namespace SurveyMonkey
             var url = "https://api.surveymonkey.net/v3" + endpoint;
             _webClient.Headers.Add("Content-Type", "application/json");
             _webClient.Headers.Add("Authorization", "bearer " + _oAuthToken);
-            _webClient.QueryString.Add("api_key", _apiKey);
+            if (!string.IsNullOrEmpty(_apiKey))
+            {
+                _webClient.QueryString.Add("api_key", _apiKey);
+            }
             if (verb == Verb.GET)
             {
                 foreach (var item in data)

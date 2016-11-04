@@ -9,6 +9,16 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi
     {
+        public Collector CreateCollector(long surveyId, CreateCollectorSettings settings)
+        {
+            string endPoint = String.Format("/surveys/{0}/collectors", surveyId);
+            var verb = Verb.POST;
+            var requestData = SurveyMonkey.Helpers.RequestSettingsHelper.GetPopulatedProperties(settings);
+            JToken result = MakeApiRequest(endPoint, verb, requestData);
+            var collector = result.ToObject<Collector>();
+            return collector;
+        }
+
         public List<Collector> GetCollectorList(long surveyId)
         {
             var settings = new GetCollectorListSettings();
