@@ -13,7 +13,7 @@ namespace SurveyMonkey.Containers
         public string Nickname { get; set; }
         public string Category { get; set; }
         public string Language { get; set; }
-        public bool IsOwner { get; set; }
+        public bool? IsOwner { get; set; }
         public int? PageCount { get; set; }
         public int? QuestionCount { get; set; }
         public int? ResponseCount { get; set; }
