@@ -12,7 +12,7 @@ namespace SurveyMonkey.Containers
     public class QuestionDisplayOptions : IPageableContainer
     {
         public string MiddleLabel { get; set; }
-        public bool ShowDisplayNumber { get; set; }
+        public bool? ShowDisplayNumber { get; set; }
         public string DisplaySubtype { get; set; }
         public string RightLabel { get; set; }
         public string DisplayType { get; set; }
