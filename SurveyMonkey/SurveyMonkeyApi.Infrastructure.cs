@@ -49,6 +49,35 @@ namespace SurveyMonkey
             SetupWebClient(apiKey, oAuthToken);
         }
 
+        public SurveyMonkeyApi(string oAuthToken)
+        {
+            _webClient = new LiveWebClient();
+            SetupWebClient(oAuthToken);
+        }
+
+        public SurveyMonkeyApi(string oAuthToken, int rateLimitDelay)
+        {
+            _webClient = new LiveWebClient();
+            _rateLimitDelay = rateLimitDelay;
+            SetupWebClient(oAuthToken);
+        }
+
+        public SurveyMonkeyApi(string oAuthToken, int[] retrySequence)
+        {
+            _webClient = new LiveWebClient();
+            _retrySequence = retrySequence;
+            SetupWebClient(oAuthToken);
+        }
+
+        public SurveyMonkeyApi(string oAuthToken, int rateLimitDelay, int[] retrySequence)
+        {
+            _webClient = new LiveWebClient();
+            _rateLimitDelay = rateLimitDelay;
+            _retrySequence = retrySequence;
+            SetupWebClient(oAuthToken);
+        }
+
+
         internal SurveyMonkeyApi(string apiKey, string oAuthToken, IWebClient webClient)
         {
             _webClient = webClient;
@@ -70,6 +99,13 @@ namespace SurveyMonkey
             _webClient.Encoding = Encoding.UTF8;
         }
 
+        private void SetupWebClient(string oAuthToken)
+        {
+            _apiKey = string.Empty;
+            _oAuthToken = oAuthToken;
+            _webClient.Encoding = Encoding.UTF8;
+        }
+
         private JToken MakeApiRequest(string endpoint, Verb verb, RequestData data)
         {
             RateLimit();
@@ -79,7 +115,10 @@ namespace SurveyMonkey
             var url = "https://api.surveymonkey.net/v3" + endpoint;
             _webClient.Headers.Add("Content-Type", "application/json");
             _webClient.Headers.Add("Authorization", "bearer " + _oAuthToken);
-            _webClient.QueryString.Add("api_key", _apiKey);
+            if (_apiKey != string.Empty)
+            {
+                _webClient.QueryString.Add("api_key", _apiKey);
+            }
             if (verb == Verb.GET)
             {
                 foreach (var item in data)
