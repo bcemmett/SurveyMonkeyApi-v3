@@ -101,9 +101,7 @@ namespace SurveyMonkey
 
         private void SetupWebClient(string oAuthToken)
         {
-            _apiKey = string.Empty;
-            _oAuthToken = oAuthToken;
-            _webClient.Encoding = Encoding.UTF8;
+            this.SetupWebClient(string.Empty, oAuthToken);
         }
 
         private JToken MakeApiRequest(string endpoint, Verb verb, RequestData data)
@@ -115,10 +113,8 @@ namespace SurveyMonkey
             var url = "https://api.surveymonkey.net/v3" + endpoint;
             _webClient.Headers.Add("Content-Type", "application/json");
             _webClient.Headers.Add("Authorization", "bearer " + _oAuthToken);
-            if (_apiKey != string.Empty)
-            {
-                _webClient.QueryString.Add("api_key", _apiKey);
-            }
+            _webClient.QueryString.Add("api_key", _apiKey);
+            
             if (verb == Verb.GET)
             {
                 foreach (var item in data)
