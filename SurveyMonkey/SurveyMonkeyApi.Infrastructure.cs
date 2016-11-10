@@ -49,6 +49,35 @@ namespace SurveyMonkey
             SetupWebClient(apiKey, oAuthToken);
         }
 
+        public SurveyMonkeyApi(string oAuthToken)
+        {
+            _webClient = new LiveWebClient();
+            SetupWebClient(oAuthToken);
+        }
+
+        public SurveyMonkeyApi(string oAuthToken, int rateLimitDelay)
+        {
+            _webClient = new LiveWebClient();
+            _rateLimitDelay = rateLimitDelay;
+            SetupWebClient(oAuthToken);
+        }
+
+        public SurveyMonkeyApi(string oAuthToken, int[] retrySequence)
+        {
+            _webClient = new LiveWebClient();
+            _retrySequence = retrySequence;
+            SetupWebClient(oAuthToken);
+        }
+
+        public SurveyMonkeyApi(string oAuthToken, int rateLimitDelay, int[] retrySequence)
+        {
+            _webClient = new LiveWebClient();
+            _rateLimitDelay = rateLimitDelay;
+            _retrySequence = retrySequence;
+            SetupWebClient(oAuthToken);
+        }
+
+
         internal SurveyMonkeyApi(string apiKey, string oAuthToken, IWebClient webClient)
         {
             _webClient = webClient;
@@ -70,6 +99,13 @@ namespace SurveyMonkey
             _webClient.Encoding = Encoding.UTF8;
         }
 
+        private void SetupWebClient(string oAuthToken)
+        {
+            _apiKey = string.Empty;
+            _oAuthToken = oAuthToken;
+            _webClient.Encoding = Encoding.UTF8;
+        }
+
         private JToken MakeApiRequest(string endpoint, Verb verb, RequestData data)
         {
             RateLimit();
@@ -80,7 +116,7 @@ namespace SurveyMonkey
             _webClient.Headers.Add("Authorization", "bearer " + _oAuthToken);
             if (!string.IsNullOrEmpty(_apiKey))
             {
-                _webClient.QueryString.Add("api_key", _apiKey);
+            _webClient.QueryString.Add("api_key", _apiKey);
             }
             if (verb == Verb.GET)
             {
@@ -90,7 +126,7 @@ namespace SurveyMonkey
                 }
             }
             string result = AttemptApiRequestWithRetry(url, verb, data);
-
+                
             _lastRequestTime = DateTime.UtcNow;
 
             var parsed = JObject.Parse(result);
