@@ -9,5 +9,6 @@ namespace SurveyMonkey.Containers
         public List<string> OptionSet { get; set; }
         public int StartingPosition { get; set; }
         public int StepSize { get; set; }
+        public string Color { get; set; }
     }
 }
