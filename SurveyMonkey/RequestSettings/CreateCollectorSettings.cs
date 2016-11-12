@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace SurveyMonkey.RequestSettings
+﻿namespace SurveyMonkey.RequestSettings
 {
     public class CreateCollectorSettings
     {
         public enum TypeOption
         {
-            weblink,
-            email
+            Weblink,
+            Email
         }
 
-        public TypeOption type { get; set; }
-        public string name { get; set; }
-
+        public TypeOption Type { get; set; }
+        public string Name { get; set; }
     }
 }
