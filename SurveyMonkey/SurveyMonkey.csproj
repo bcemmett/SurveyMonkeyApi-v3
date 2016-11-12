@@ -81,6 +81,8 @@
     <Compile Include="Containers\Member.cs" />
     <Compile Include="Containers\Group.cs" />
     <Compile Include="Containers\IPageableContainer.cs" />
+    <Compile Include="Containers\QuestionDisplayOptions.cs" />
+    <Compile Include="Containers\QuestionDisplayOptionsCustomOptions.cs" />
     <Compile Include="Containers\Recipient.cs" />
     <Compile Include="Containers\Message.cs" />
     <Compile Include="Containers\OtherAnswer.cs" />
@@ -133,6 +135,7 @@
     <Compile Include="ProcessedAnswers\ProcessedAnswer.cs" />
     <Compile Include="ProcessedAnswers\MultipleChoiceAnswer.cs" />
     <Compile Include="ProcessedAnswers\SingleChoiceAnswer.cs" />
+    <Compile Include="RequestSettings\CreateCollectorSettings.cs" />
     <Compile Include="RequestSettings\IPagingSettings.cs" />
     <Compile Include="SurveyMonkeyApi.Users.cs" />
     <Compile Include="SurveyMonkeyApi.DataProcessing.cs" />

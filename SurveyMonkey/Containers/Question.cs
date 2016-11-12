@@ -21,5 +21,6 @@ namespace SurveyMonkey.Containers
         internal string Href { get; set; }
         public QuestionAnswers Answers { get; set; }
         public string Nickname { get; set; }
+        public QuestionDisplayOptions DisplayOptions { get; set; }
     }
 }
