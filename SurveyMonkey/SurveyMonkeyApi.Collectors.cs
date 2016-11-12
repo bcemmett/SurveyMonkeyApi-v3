@@ -13,7 +13,7 @@ namespace SurveyMonkey
         {
             string endPoint = String.Format("/surveys/{0}/collectors", surveyId);
             var verb = Verb.POST;
-            var requestData = SurveyMonkey.Helpers.RequestSettingsHelper.GetPopulatedProperties(settings);
+            var requestData = Helpers.RequestSettingsHelper.GetPopulatedProperties(settings);
             JToken result = MakeApiRequest(endPoint, verb, requestData);
             var collector = result.ToObject<Collector>();
             return collector;
