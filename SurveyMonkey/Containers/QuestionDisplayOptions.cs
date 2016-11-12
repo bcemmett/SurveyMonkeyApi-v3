@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Newtonsoft.Json;
-using SurveyMonkey.Enums;
+﻿using Newtonsoft.Json;
 
 namespace SurveyMonkey.Containers
 {
     [JsonConverter(typeof(TolerantJsonConverter))]
-    public class QuestionDisplayOptions : IPageableContainer
+    public class QuestionDisplayOptions
     {
         public string MiddleLabel { get; set; }
         public bool? ShowDisplayNumber { get; set; }
@@ -17,8 +11,6 @@ namespace SurveyMonkey.Containers
         public string RightLabel { get; set; }
         public string DisplayType { get; set; }
         public string LeftLabel { get; set; }
-
         public QuestionDisplayOptionsCustomOptions CustomOptions { get; set; }
-
     }
 }
