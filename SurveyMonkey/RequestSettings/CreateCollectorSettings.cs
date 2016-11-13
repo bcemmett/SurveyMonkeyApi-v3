@@ -9,7 +9,8 @@ namespace SurveyMonkey.RequestSettings
         public string Name { get; set; }
         public string ThankYouMessage { get; set; }
         public string DisqualificationMessage { get; set; }
-        public DateTime? CloseDate { get; set; }
+        //The api's datetime formating treats this property differently to everything else, so omitting until SM's support team respond
+        //public DateTime? CloseDate { get; set; }
         public string ClosedPageMessage { get; set; }
         public string RedirectUrl { get; set; }
         public bool? DisplaySurveyResults { get; set; }
