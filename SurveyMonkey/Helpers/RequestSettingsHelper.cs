@@ -22,7 +22,7 @@ namespace SurveyMonkey.Helpers
                     }
                     else if (underlyingType == typeof(DateTime))
                     {
-                        output.Add(PropertyCasingHelper.CamelToSnake(property.Name), ((DateTime)property.GetValue(obj, null)).ToString("s"));
+                        output.Add(PropertyCasingHelper.CamelToSnake(property.Name), ((DateTime)property.GetValue(obj, null)).ToString("s") + "+00:00");
                     }
                     else
                     {
