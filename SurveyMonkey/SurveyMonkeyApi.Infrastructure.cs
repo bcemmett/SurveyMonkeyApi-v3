@@ -74,7 +74,6 @@ namespace SurveyMonkey
         {
             RateLimit();
             ResetWebClient();
-            string result;
 
             var url = "https://api.surveymonkey.net/v3" + endpoint;
             _webClient.Headers.Add("Content-Type", "application/json");
@@ -89,33 +88,26 @@ namespace SurveyMonkey
                 {
                     _webClient.QueryString.Add(item.Key, item.Value.ToString());
                 }
-                result = AttemptWebRequestWithRetry(url);
             }
-            else
-            {
-                var settings = JsonConvert.SerializeObject(data);
-                result = _webClient.UploadString(url, verb.ToString(), settings);
-            }
-                
+            string result = AttemptApiRequestWithRetry(url, verb, data);
+
             _lastRequestTime = DateTime.UtcNow;
 
             var parsed = JObject.Parse(result);
             return parsed;
         }
 
-        private string AttemptWebRequestWithRetry(string url)
+        private string AttemptApiRequestWithRetry(string url, Verb verb, RequestData data)
         {
             if (_retrySequence == null || _retrySequence.Length == 0)
             {
-                string result = _webClient.DownloadString(url);
-                return result;
+                return AttemptApiRequest(url, verb, data);
             }
             for (int attempt = 0; attempt <= _retrySequence.Length; attempt++)
             {
                 try
                 {
-                    string result = _webClient.DownloadString(url);
-                    return result;
+                    return AttemptApiRequest(url, verb, data);
                 }
                 catch (WebException ex)
                 {
@@ -130,6 +122,15 @@ namespace SurveyMonkey
                 }
             }
             return String.Empty;
+        }
+
+        private string AttemptApiRequest(string url, Verb verb, RequestData data)
+        {
+            if (verb == Verb.GET)
+            {
+                return _webClient.DownloadString(url);
+            }
+            return _webClient.UploadString(url, verb.ToString(), JsonConvert.SerializeObject(data));
         }
 
         private void RateLimit()
