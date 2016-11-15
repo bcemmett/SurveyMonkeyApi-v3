@@ -109,14 +109,34 @@ namespace SurveyMonkey
                 {
                     return AttemptApiRequest(url, verb, data);
                 }
-                catch (WebException ex)
+                catch (WebException webEx)
                 {
-                    if (attempt < _retrySequence.Length && (ex.Response == null || ((HttpWebResponse)ex.Response).StatusCode == HttpStatusCode.ServiceUnavailable))
+                    if (attempt < _retrySequence.Length && (webEx.Response == null || ((HttpWebResponse)webEx.Response).StatusCode == HttpStatusCode.ServiceUnavailable))
                     {
                         Thread.Sleep(_retrySequence[attempt] * 1000);
                     }
                     else
                     {
+                        try
+                        {
+                            var response = new System.IO.StreamReader(webEx.Response.GetResponseStream()).ReadToEnd();
+                            var parsedError = JObject.Parse(response);
+                            var error = parsedError["error"].ToObject<Error>();
+                            string message = String.Format("Http status: {0}, error code {1}. {2}: {3}. See {4} for more information.", error.HttpStatusCode, error.Id, error.Name, error.Message, error.Docs);
+                            if (error.Id == "1014")
+                            {
+                                message += " Ensure your app has sufficient scopes granted to make this request: https://developer.surveymonkey.net/api/v3/#scopes";
+                            }
+                            throw new WebException(message, webEx);
+                        }
+                        catch (Exception e)
+                        {
+                            if(e is WebException)
+                            {
+                                throw;
+                            }
+                            //For anything other than our new WebException, swallow so that the original raw WebException is thrown
+                        }
                         throw;
                     }
                 }
