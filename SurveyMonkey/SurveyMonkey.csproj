@@ -78,6 +78,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Containers\ButtonsText.cs" />
+    <Compile Include="Containers\Error.cs" />
     <Compile Include="Containers\Member.cs" />
     <Compile Include="Containers\Group.cs" />
     <Compile Include="Containers\IPageableContainer.cs" />
