@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace SurveyMonkey.Helpers
 {
-    internal class PropertyCasingHelper
+    internal static class PropertyCasingHelper
     {
         internal static string CamelToSnake(string input)
         {

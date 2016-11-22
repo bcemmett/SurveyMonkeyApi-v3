@@ -4,7 +4,7 @@ using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkey.Helpers
 {
-    internal class RequestSettingsHelper
+    internal static class RequestSettingsHelper
     {
         internal static RequestData GetPopulatedProperties(object obj)
         {
