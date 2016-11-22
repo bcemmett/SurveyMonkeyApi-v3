@@ -21,47 +21,61 @@ namespace SurveyMonkey
         private readonly int _rateLimitDelay = 500;
         private readonly int[] _retrySequence = { 5, 30, 300, 900 };
 
-        public SurveyMonkeyApi(string apiKey, string oAuthToken)
+        public SurveyMonkeyApi(string oAuthToken)
+        : this(string.Empty, oAuthToken, null, null)
         {
-            _webClient = new LiveWebClient();
-            SetupWebClient(apiKey, oAuthToken);
+
+        }
+
+        public SurveyMonkeyApi(string oAuthToken, int rateLimitDelay)
+            : this(string.Empty, oAuthToken, rateLimitDelay, null)
+        {
+        }
+
+        public SurveyMonkeyApi(string oAuthToken, int[] retrySequence)
+            : this(string.Empty, oAuthToken, null, retrySequence)
+        {
+
+        }
+
+        public SurveyMonkeyApi(string apiKey, string oAuthToken)
+        : this(apiKey, oAuthToken, null, null)
+        {
+            
         }
 
         public SurveyMonkeyApi(string apiKey, string oAuthToken, int rateLimitDelay)
-        {
-            _webClient = new LiveWebClient();
-            _rateLimitDelay = rateLimitDelay;
-            SetupWebClient(apiKey, oAuthToken);
+            : this(apiKey, oAuthToken, rateLimitDelay, null)
+        {            
         }
 
         public SurveyMonkeyApi(string apiKey, string oAuthToken, int[] retrySequence)
+            : this(apiKey, oAuthToken, null, retrySequence)
         {
-            _webClient = new LiveWebClient();
-            _retrySequence = retrySequence;
-            SetupWebClient(apiKey, oAuthToken);
+            
         }
 
-        public SurveyMonkeyApi(string apiKey, string oAuthToken, int rateLimitDelay, int[] retrySequence)
+        public SurveyMonkeyApi(string apiKey, string oAuthToken, int? rateLimitDelay, int[] retrySequence)
         {
             _webClient = new LiveWebClient();
-            _rateLimitDelay = rateLimitDelay;
-            _retrySequence = retrySequence;
+            if(rateLimitDelay.HasValue)
+                _rateLimitDelay = (int)rateLimitDelay;
+            if(_retrySequence != null)            
+                _retrySequence = retrySequence;
             SetupWebClient(apiKey, oAuthToken);
         }
 
         internal SurveyMonkeyApi(string apiKey, string oAuthToken, IWebClient webClient)
+            : this(apiKey, oAuthToken, 0, null)
         {
             _webClient = webClient;
-            _rateLimitDelay = 0;
-            SetupWebClient(apiKey, oAuthToken);
         }
 
         internal SurveyMonkeyApi(string apiKey, string oAuthToken, IWebClient webClient, int rateLimitDelay)
+        : this(apiKey, oAuthToken, rateLimitDelay, null)
         {
             _webClient = webClient;
-            _rateLimitDelay = rateLimitDelay;
-            SetupWebClient(apiKey, oAuthToken);
-        }
+        }        
 
         private void SetupWebClient(string apiKey, string oAuthToken)
         {
@@ -172,7 +186,7 @@ namespace SurveyMonkey
                 var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
                 return PageRequest(url, requestData, type);
             }
-            
+
             var results = new List<IPageableContainer>();
             bool cont = true;
             int page = 1;
@@ -200,7 +214,7 @@ namespace SurveyMonkey
             var verb = Verb.GET;
             JToken result = MakeApiRequest(url, verb, requestData);
             var results = result["data"].ToObject(type);
-            return (IEnumerable<IPageableContainer>) results;
+            return (IEnumerable<IPageableContainer>)results;
         }
 
         private void ResetWebClient()
