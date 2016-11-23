@@ -93,7 +93,7 @@ namespace SurveyMonkey
         {
             var bulk = details ? "/bulk" : String.Empty;
             string endPoint = String.Format("/{0}s/{1}/responses{2}", objectType.ToString().ToLower(), id, bulk);
-            const int maxResultsPerPage = 100;
+            int maxResultsPerPage = details ? 100 : 1000;
             var results = Page(settings, endPoint, typeof(List<Response>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Response)o);
         }
