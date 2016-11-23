@@ -50,6 +50,7 @@ namespace SurveyMonkey
         List<Member> GetMemberList(long groupId);
         List<Member> GetMemberList(long groupId, PagingSettings settings);
         Member GetMemberDetails(long groupId, long memberId);
+        Collector CreateCollector(long surveyId, CreateCollectorSettings settings);
         void Dispose();
     }
 }
