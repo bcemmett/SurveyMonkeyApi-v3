@@ -14,8 +14,8 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi : IDisposable, ISurveyMonkeyApi
     {
-        private string _apiKey;
-        private string _accessToken;
+        private readonly string _apiKey;
+        private readonly string _accessToken;
         private IWebClient _webClient;
         private DateTime _lastRequestTime = DateTime.MinValue;
         private readonly int _rateLimitDelay = 500;
