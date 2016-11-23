@@ -191,7 +191,7 @@ namespace SurveyMonkeyTests
                 {""per_page"":100,""total"":300,""data"":[],""page"":4,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/?page=4&per_page=100""}}
             ");
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var results = api.GetCollectorResponseOverviewList(91395530, new GetResponseListSettings {Custom = "asdf"});
+            var results = api.GetCollectorResponseDetailsList(91395530, new GetResponseListSettings {Custom = "asdf"});
             Assert.AreEqual(300, results.Count);
             Assert.AreEqual(300, results.Last().Id);
             Assert.AreEqual(1, results.First().Id);
