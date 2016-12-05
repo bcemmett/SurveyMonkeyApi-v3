@@ -75,6 +75,18 @@ namespace SurveyMonkey
             return message;
         }
 
+        [Obsolete("GetRecipientList() is obsolete. Either use GetMessageRecipientList() or GetCollectorRecipientList().", true)]
+        public List<Recipient> GetRecipientList(long collectorId, long messageId)
+        {
+            return GetMessageRecipientList(collectorId, messageId);
+        }
+
+        [Obsolete("GetRecipientList() is obsolete. Either use GetMessageRecipientList() or GetCollectorRecipientList().", true)]
+        public List<Recipient> GetRecipientList(long collectorId, long messageId, PagingSettings settings)
+        {
+            return GetMessageRecipientList(collectorId, messageId, settings);
+        }
+
         public List<Recipient> GetCollectorRecipientList(long collectorId)
         {
             var settings = new PagingSettings();
