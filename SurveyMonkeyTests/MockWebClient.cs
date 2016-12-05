@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
@@ -11,7 +13,9 @@ namespace SurveyMonkeyTests
     {
         public List<MockWebClientRequest> Requests { get; set; }
         public List<string> Responses { get; set; }
+        public List<Exception> Exceptions { get; set; }
         private int _nextResponseSequence;
+        private Stopwatch _stopwatch = Stopwatch.StartNew();
 
         public MockWebClient()
         {
@@ -19,12 +23,14 @@ namespace SurveyMonkeyTests
             QueryString = new NameValueCollection();
             Requests = new List<MockWebClientRequest>();
             Responses = new List<string>();
+            Exceptions = new List<Exception>();
         }
 
         private void RecordRequest(string url, string verb, string body)
         {
             Requests.Add(new MockWebClientRequest
             {
+                TimeSinceInitialisation = _stopwatch.ElapsedMilliseconds,
                 Encoding = Encoding,
                 Headers = Headers,
                 QueryString = QueryString,
@@ -36,11 +42,15 @@ namespace SurveyMonkeyTests
 
         private string GetNextData()
         {
-            var response = Responses.Skip(_nextResponseSequence).First();
+            var response = Responses.Skip(_nextResponseSequence).FirstOrDefault();
+            var exception = Exceptions.Skip(_nextResponseSequence).FirstOrDefault();
             _nextResponseSequence++;
+            if (exception != null)
+            {
+                throw exception;
+            }
             return response;
         }
-
 
         #region Interface
 
