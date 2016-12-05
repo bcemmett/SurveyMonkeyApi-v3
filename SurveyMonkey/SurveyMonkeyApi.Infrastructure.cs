@@ -21,6 +21,12 @@ namespace SurveyMonkey
         private readonly int _rateLimitDelay = 500;
         private readonly int[] _retrySequence = { 5, 30, 300, 900 };
 
+        public IWebProxy Proxy
+        {
+            get { return _webClient.Proxy; }
+            set { _webClient.Proxy = value; }
+        }
+
         public SurveyMonkeyApi(string accessToken)
             : this(null, accessToken, null, null, null)
         {

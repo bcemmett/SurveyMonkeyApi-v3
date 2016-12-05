@@ -47,6 +47,7 @@ namespace SurveyMonkeyTests
         public WebHeaderCollection Headers { get; set; }
         public NameValueCollection QueryString { get; set; }
         public Encoding Encoding { get; set; }
+        public IWebProxy Proxy { get; set; }
 
         public string DownloadString(string url)
         {
