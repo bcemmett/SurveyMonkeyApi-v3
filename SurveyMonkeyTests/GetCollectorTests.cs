@@ -98,18 +98,33 @@ namespace SurveyMonkeyTests
         }
 
         [Test]
-        public void GetRecipientListIsDeserialised()
+        public void GetMessageRecipientListIsDeserialised()
         {
             var client = new MockWebClient();
             client.Responses.Add(@"
                 {""per_page"":1000,""total"":2,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/recipients\/2407626836"",""id"":""2407626836"",""email"":""test+12@gmail.com""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/recipients\/2407626837"",""id"":""2407626837"",""email"":""test+13@gmail.com""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/messages\/29296390\/recipients?page=1&per_page=1000""}}
             ");
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
-            var result = api.GetRecipientList(85470742, 29296390);
+            var result = api.GetMessageRecipientList(85470742, 29296390);
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual("https://api.surveymonkey.net/v3/collectors/85470742/recipients/2407626836", result.First().Href);
             Assert.AreEqual(2407626836, result.First().Id);
             Assert.AreEqual("test+13@gmail.com", result.Last().Email);
+            Assert.IsNull(result.First().MailStatus);
+        }
+
+        [Test]
+        public void GetCollectorRecipientListIsDeserialised()
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(@"
+                {""per_page"":1000,""total"":2,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/94732812\/recipients\/2751878525"",""id"":""2751878525"",""email"":""test1@test123456789.com""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/94732812\/recipients\/2751878526"",""id"":""2751878526"",""email"":""test2@test123456789.com""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/94732812\/recipients?page=1&per_page=1000""}}
+            ");
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var result = api.GetCollectorRecipientList(94732812);
+            Assert.AreEqual(2, result.Count);
+            Assert.AreEqual(2751878525, result.First().Id);
+            Assert.AreEqual("test2@test123456789.com", result.Last().Email);
             Assert.IsNull(result.First().MailStatus);
         }
 
