@@ -94,18 +94,18 @@ namespace SurveyMonkey
             return results.ToList().ConvertAll(o => (Recipient)o);
         }
 
-        public List<Recipient> GetRecipientList(long collectorId, long messageId)
+        public List<Recipient> GetMessageRecipientList(long collectorId, long messageId)
         {
             var settings = new PagingSettings();
-            return GetRecipientListPager(collectorId, messageId, settings);
+            return GetMessageRecipientListPager(collectorId, messageId, settings);
         }
 
-        public List<Recipient> GetRecipientList(long collectorId, long messageId, PagingSettings settings)
+        public List<Recipient> GetMessageRecipientList(long collectorId, long messageId, PagingSettings settings)
         {
-            return GetRecipientListPager(collectorId, messageId, settings);
+            return GetMessageRecipientListPager(collectorId, messageId, settings);
         }
 
-        private List<Recipient> GetRecipientListPager(long collectorId, long messageId, IPagingSettings settings)
+        private List<Recipient> GetMessageRecipientListPager(long collectorId, long messageId, IPagingSettings settings)
         {
             string endPoint = String.Format("/collectors/{0}/messages/{1}/recipients", collectorId, messageId);
             const int maxResultsPerPage = 1000;
