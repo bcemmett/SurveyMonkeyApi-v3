@@ -90,7 +90,7 @@ namespace SurveyMonkey
                 _rateLimitDelay = rateLimitDelay.Value;
             }
 
-            if (_retrySequence != null)
+            if (retrySequence != null)
             {
                 _retrySequence = retrySequence;
             }
