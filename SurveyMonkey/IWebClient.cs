@@ -9,6 +9,7 @@ namespace SurveyMonkey
         WebHeaderCollection Headers { get; set; }
         NameValueCollection QueryString { get; set; }
         Encoding Encoding { get; set; }
+        IWebProxy Proxy { get; set; }
 
         string DownloadString(string url);
         string UploadString(string url, string verb, string body);
