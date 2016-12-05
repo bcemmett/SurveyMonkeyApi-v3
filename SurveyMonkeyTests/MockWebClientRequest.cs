@@ -12,5 +12,6 @@ namespace SurveyMonkeyTests
         public string Verb { get; set; }
         public string Body { get; set; }
         public Encoding Encoding { get; set; }
+        public long TimeSinceInitialisation { get; set; }
     }
 }

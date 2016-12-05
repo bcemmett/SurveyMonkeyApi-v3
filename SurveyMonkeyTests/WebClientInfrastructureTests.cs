@@ -3,6 +3,7 @@ using NUnit.Framework;
 using SurveyMonkey;
 using System.Diagnostics;
 using System.Linq;
+using System.Net;
 using System.Threading;
 
 namespace SurveyMonkeyTests
@@ -31,7 +32,7 @@ namespace SurveyMonkeyTests
         [Test]
         public void RateLimitIsRespected()
         {
-            var toleranceMilliseconds = 50;
+            var toleranceMilliseconds = 80;
             var defaultRateLimitMilliseconds = 500;
 
             var stopwatch = new Stopwatch();
@@ -68,6 +69,34 @@ namespace SurveyMonkeyTests
             stopwatch.Restart();
             api.GetSurveyList();
             Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, toleranceMilliseconds);
+        }
+
+        [Test]
+        public void RetrySequenceIsRespected()
+        {
+            var toleranceMilliseconds = 80;
+
+            var response = @"{""id"":""1234"",""name"":""Test Group"",""member_count"":1,""max_invites"":100,""date_created"":""2015-10-06T12:56:55+00:00""}";
+            var client = new MockWebClient();
+            client.Responses.Add(response);
+            client.Responses.Add(response);
+            client.Responses.Add(response);
+            client.Exceptions.Add(new WebException("1"));
+            client.Exceptions.Add(new WebException("2"));
+            client.Exceptions.Add(new WebException("3"));
+            var api = new SurveyMonkeyApi("key", "token", client, new [] { 1, 2 });
+
+            var exception = Assert.Throws<WebException>(delegate { api.GetGroupDetails(1234); });
+            Assert.AreEqual("3", exception.Message);
+            Assert.AreEqual(3, client.Requests.Count);
+
+            Assert.GreaterOrEqual(toleranceMilliseconds, client.Requests.First().TimeSinceInitialisation);
+
+            Assert.LessOrEqual(1000 - toleranceMilliseconds, client.Requests.Skip(1).First().TimeSinceInitialisation);
+            Assert.GreaterOrEqual(1000 + toleranceMilliseconds, client.Requests.Skip(1).First().TimeSinceInitialisation);
+
+            Assert.LessOrEqual(3000 - toleranceMilliseconds, client.Requests.Skip(2).First().TimeSinceInitialisation);
+            Assert.GreaterOrEqual(3000 + toleranceMilliseconds, client.Requests.Skip(2).First().TimeSinceInitialisation);
         }
     }
 }

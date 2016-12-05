@@ -78,6 +78,11 @@ namespace SurveyMonkey
         {
         }
 
+        internal SurveyMonkeyApi(string apiKey, string accessToken, IWebClient webClient, int[] retrySequence)
+            : this(apiKey, accessToken, null, retrySequence, webClient)
+        {
+        }
+
         private SurveyMonkeyApi(string apiKey, string accessToken, int? rateLimitDelay, int[] retrySequence, IWebClient webClient)
         {
             _webClient = webClient ?? new LiveWebClient();
@@ -90,7 +95,7 @@ namespace SurveyMonkey
                 _rateLimitDelay = rateLimitDelay.Value;
             }
 
-            if (_retrySequence != null)
+            if (retrySequence != null)
             {
                 _retrySequence = retrySequence;
             }
