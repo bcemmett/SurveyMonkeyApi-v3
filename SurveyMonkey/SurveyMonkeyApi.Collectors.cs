@@ -90,36 +90,30 @@ namespace SurveyMonkey
         public List<Recipient> GetCollectorRecipientList(long collectorId)
         {
             var settings = new PagingSettings();
-            return GetCollectorRecipientListPager(collectorId, settings);
+            return GetRecipientListPager(collectorId, null, settings);
         }
 
         public List<Recipient> GetCollectorRecipientList(long collectorId, PagingSettings settings)
         {
-            return GetCollectorRecipientListPager(collectorId, settings);
+            return GetRecipientListPager(collectorId, null, settings);
         }
-
-        private List<Recipient> GetCollectorRecipientListPager(long collectorId, IPagingSettings settings)
-        {
-            string endPoint = String.Format("/collectors/{0}/recipients", collectorId);
-            const int maxResultsPerPage = 1000;
-            var results = Page(settings, endPoint, typeof(List<Recipient>), maxResultsPerPage);
-            return results.ToList().ConvertAll(o => (Recipient)o);
-        }
-
+        
         public List<Recipient> GetMessageRecipientList(long collectorId, long messageId)
         {
             var settings = new PagingSettings();
-            return GetMessageRecipientListPager(collectorId, messageId, settings);
+            return GetRecipientListPager(collectorId, messageId, settings);
         }
 
         public List<Recipient> GetMessageRecipientList(long collectorId, long messageId, PagingSettings settings)
         {
-            return GetMessageRecipientListPager(collectorId, messageId, settings);
+            return GetRecipientListPager(collectorId, messageId, settings);
         }
 
-        private List<Recipient> GetMessageRecipientListPager(long collectorId, long messageId, IPagingSettings settings)
+        private List<Recipient> GetRecipientListPager(long collectorId, long? messageId, IPagingSettings settings)
         {
-            string endPoint = String.Format("/collectors/{0}/messages/{1}/recipients", collectorId, messageId);
+            string endPoint = messageId.HasValue ?
+                String.Format("/collectors/{0}/messages/{1}/recipients", collectorId, messageId) :
+                String.Format("/collectors/{0}/recipients", collectorId);
             const int maxResultsPerPage = 1000;
             var results = Page(settings, endPoint, typeof(List<Recipient>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Recipient)o);
