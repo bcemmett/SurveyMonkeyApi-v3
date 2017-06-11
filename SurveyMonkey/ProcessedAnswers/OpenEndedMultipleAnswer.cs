@@ -12,15 +12,15 @@ namespace SurveyMonkey.ProcessedAnswers
         {
             get
             {
-                if (Rows == null)
-                {
-                    return null;
-                }
                 var sb = new StringBuilder();
-                foreach (var row in Rows)
+                if (Rows != null)
                 {
-                    sb.Append($"{row.RowName}: {row.Text}{Environment.NewLine}");
+                    foreach (var row in Rows)
+                    {
+                        sb.Append($"{row.RowName}: {row.Text}{Environment.NewLine}");
+                    }
                 }
+
                 return sb.ToString().TrimEnd();
             }
         }

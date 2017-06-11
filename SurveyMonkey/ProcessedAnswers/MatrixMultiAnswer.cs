@@ -14,12 +14,8 @@ namespace SurveyMonkey.ProcessedAnswers
         {
             get
             {
-                if ((Rows == null || !Rows.Any()) && OtherText == null)
-                {
-                    return null;
-                }
                 var sb = new StringBuilder();
-                if (Rows != null && Rows.Any())
+                if (Rows != null)
                 {
                     foreach (var row in Rows)
                     {

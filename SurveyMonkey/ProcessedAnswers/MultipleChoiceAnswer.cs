@@ -14,10 +14,6 @@ namespace SurveyMonkey.ProcessedAnswers
         {
             get
             {
-                if (OtherText == null && (Choices == null || !Choices.Any()))
-                {
-                    return null;
-                }
                 var sb = new StringBuilder();
                 if (Choices != null)
                 {

@@ -3,6 +3,6 @@
     public class OpenEndedSingleAnswer : IProcessedResponse
     {
         public string Text { get; set; }
-        public string Printable => Text;
+        public string Printable => Text.Trim();
     }
 }

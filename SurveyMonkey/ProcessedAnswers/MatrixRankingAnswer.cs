@@ -14,10 +14,6 @@ namespace SurveyMonkey.ProcessedAnswers
         {
             get
             {
-                if ((Ranking == null || !Ranking.Any()) && (NotApplicable == null || !NotApplicable.Any()))
-                {
-                    return null;
-                }
                 var sb = new StringBuilder();
                 if (Ranking != null)
                 {
