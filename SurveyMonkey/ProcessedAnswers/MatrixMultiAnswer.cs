@@ -30,7 +30,6 @@ namespace SurveyMonkey.ProcessedAnswers
                                     sb.Append(choice);
                                     sb.Append(Environment.NewLine);
                                 }
-                                sb.Append(Environment.NewLine);
                             }
                         }
                     }

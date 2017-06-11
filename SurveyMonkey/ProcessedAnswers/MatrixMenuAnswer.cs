@@ -20,15 +20,13 @@ namespace SurveyMonkey.ProcessedAnswers
                 {
                     foreach (var row in Rows)
                     {
-                        sb.Append(row.Key);
-                        sb.Append(Environment.NewLine);
+                        sb.Append($"{row.Key}:{Environment.NewLine}");
                         if (row.Value.Columns != null)
                         {
                             foreach (var col in row.Value.Columns)
                             {
                                 sb.Append($"{col.Key}: {col.Value}{Environment.NewLine}");
                             }
-                            sb.Append(Environment.NewLine);
                         }
                     }
                 }
