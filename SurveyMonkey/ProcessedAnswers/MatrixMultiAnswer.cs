@@ -11,7 +11,7 @@ namespace SurveyMonkey.ProcessedAnswers
         public List<MatrixMultiAnswerRow> Rows { get; set; }
         public string OtherText { get; set; }
 
-        public string Printable
+        public string PrettyPrint
         {
             get
             {

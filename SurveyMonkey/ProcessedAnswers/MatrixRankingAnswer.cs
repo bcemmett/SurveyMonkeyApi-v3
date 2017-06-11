@@ -12,7 +12,7 @@ namespace SurveyMonkey.ProcessedAnswers
         public List<string> NotApplicable { get; set; }
         public string NotApplicableText { get; set; }
 
-        public string Printable
+        public string PrettyPrint
         {
             get
             {

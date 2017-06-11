@@ -9,7 +9,7 @@ namespace SurveyMonkey.ProcessedAnswers
     {
         public List<DateTimeAnswerRow> Rows { get; set; }
 
-        public string Printable
+        public string PrettyPrint
         {
             get
             {

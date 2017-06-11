@@ -17,7 +17,7 @@ namespace SurveyMonkey.ProcessedAnswers
         public string Email { get; set; }
         public string Phone { get; set; }
 
-        public string Printable
+        public string PrettyPrint
         {
             get
             {

@@ -9,7 +9,7 @@ namespace SurveyMonkey.ProcessedAnswers
         public string Choice { get; set; }
         public string OtherText { get; set; }
 
-        public string Printable
+        public string PrettyPrint
         {
             get
             {
