@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Text;
+using SurveyMonkey.Helpers;
 
 namespace SurveyMonkey.ProcessedAnswers
 {
@@ -22,7 +23,7 @@ namespace SurveyMonkey.ProcessedAnswers
                 {
                     sb.Append(OtherText);
                 }
-                return sb.ToString().TrimEnd();
+                return ProcessedAnswerFormatHelper.Trim(sb);
             }
         }
     }
