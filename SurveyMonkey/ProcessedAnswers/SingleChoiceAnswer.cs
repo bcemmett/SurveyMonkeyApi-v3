@@ -21,7 +21,7 @@ namespace SurveyMonkey.ProcessedAnswers
                 }
                 if (OtherText != null)
                 {
-                    sb.Append(OtherText);
+                    sb.Append($"Other: {OtherText}");
                 }
                 return ProcessedAnswerFormatHelper.Trim(sb);
             }
