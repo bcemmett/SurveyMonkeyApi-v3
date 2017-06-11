@@ -1,4 +1,8 @@
-﻿namespace SurveyMonkey.ProcessedAnswers
+﻿using System;
+using System.Text;
+using SurveyMonkey.Helpers;
+
+namespace SurveyMonkey.ProcessedAnswers
 {
     public class DemographicAnswer : IProcessedResponse
     {
@@ -12,5 +16,58 @@
         public string Country { get; set; }
         public string Email { get; set; }
         public string Phone { get; set; }
+
+        public string PrettyPrint
+        {
+            get
+            {
+                var sb = new StringBuilder();
+                if (Name != null)
+                {
+                    sb.Append($"{nameof(Name)}: {Name}{Environment.NewLine}");
+                }
+                if (Company != null)
+                {
+                    sb.Append($"{nameof(Company)}: {Company}{Environment.NewLine}");
+                }
+                if (Address != null)
+                {
+                    sb.Append($"{nameof(Address)}: {Address}{Environment.NewLine}");
+                }
+                if (Address2 != null)
+                {
+                    sb.Append($"{nameof(Address2)}: {Address2}{Environment.NewLine}");
+                }
+                if (City != null)
+                {
+                    sb.Append($"{nameof(City)}: {City}{Environment.NewLine}");
+                }
+                if (State != null)
+                {
+                    sb.Append($"{nameof(State)}: {State}{Environment.NewLine}");
+                }
+                if (Zip != null)
+                {
+                    sb.Append($"{nameof(Zip)}: {Zip}{Environment.NewLine}");
+                }
+                if (Country != null)
+                {
+                    sb.Append($"{nameof(Country)}: {Country}{Environment.NewLine}");
+                }
+                if (Email != null)
+                {
+                    sb.Append($"{nameof(Email)}: {Email}{Environment.NewLine}");
+                }
+                if (Phone != null)
+                {
+                    sb.Append($"{nameof(Phone)}: {Phone}{Environment.NewLine}");
+                }
+                if (sb.Length == 0)
+                {
+                    return null;
+                }
+                return ProcessedAnswerFormatHelper.Trim(sb);
+            }
+        }
     }
 }

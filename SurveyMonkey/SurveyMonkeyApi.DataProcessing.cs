@@ -302,7 +302,8 @@ namespace SurveyMonkey
             {
                 if (question.Answers.Choices.Any(c => c.IsNa.Value && c.Id.Value == responseAnswer.ChoiceId.Value))
                 {
-                    reply.NotApplicable.Add(question.Answers.Choices.FirstOrDefault(c => c.IsNa.Value && c.Id.Value == responseAnswer.ChoiceId.Value).Text);
+                    reply.NotApplicable.Add(question.Answers.ItemLookup[responseAnswer.RowId.Value]);
+                    reply.NotApplicableText = question.Answers.Choices.FirstOrDefault(c => c.IsNa.Value && c.Id.Value == responseAnswer.ChoiceId.Value).Text;
                 }
                 else
                 {

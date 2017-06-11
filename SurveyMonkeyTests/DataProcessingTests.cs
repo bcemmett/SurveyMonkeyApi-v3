@@ -203,12 +203,14 @@ namespace SurveyMonkeyTests
 
             var reply1 = (MatrixRankingAnswer) replies.First().Response;
             Assert.AreEqual("Second Answer", reply1.Ranking[4]);
+            Assert.IsNull(reply1.NotApplicableText);
             Assert.AreEqual(5, reply1.Ranking.Count);
             Assert.IsEmpty(reply1.NotApplicable);
 
             var reply2 = (MatrixRankingAnswer)replies.Last().Response;
             Assert.AreEqual("Third Answer", reply2.Ranking[3]);
-            Assert.AreEqual("Not applicable text", reply2.NotApplicable.First());
+            Assert.AreEqual("First Answer", reply2.NotApplicable.First());
+            Assert.AreEqual("Not applicable text", reply2.NotApplicableText);
             Assert.AreEqual(2, reply2.NotApplicable.Count);
         }
 

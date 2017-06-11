@@ -2,5 +2,6 @@
 {
     public interface IProcessedResponse
     {
+        string PrettyPrint { get; }
     }
 }

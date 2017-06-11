@@ -1,4 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using SurveyMonkey.Helpers;
 
 namespace SurveyMonkey.ProcessedAnswers
 {
@@ -6,6 +10,30 @@ namespace SurveyMonkey.ProcessedAnswers
     {
         public List<MatrixSingleAnswerRow> Rows { get; set; }
         public string OtherText { get; set; }
+
+        public string PrettyPrint
+        {
+            get
+            {
+                var sb = new StringBuilder();
+                if (Rows != null)
+                {
+                    foreach (var row in Rows)
+                    {
+                        if (row != null)
+                        {
+                            sb.Append($"{row.RowName}: {row.Choice}{Environment.NewLine}");
+                        }
+                    }
+                }
+                if (OtherText != null)
+                {
+                    sb.Append("Other: ");
+                    sb.Append(OtherText);
+                }
+                return ProcessedAnswerFormatHelper.Trim(sb);
+            }
+        }
     }
 
     public class MatrixSingleAnswerRow
