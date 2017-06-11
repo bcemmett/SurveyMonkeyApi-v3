@@ -26,6 +26,7 @@ namespace SurveyMonkey.Containers
         public string CollectUrl { get; set; }
         public string AnalyzeUrl { get; set; }
         public string SummaryUrl { get; set; }
+        public bool? Footer { get; set; }
         public Dictionary<string, string> CustomVariables { get; set; }
         public List<Page> Pages { get; set; }
         public List<Collector> Collectors { get; set; }
