@@ -10,6 +10,7 @@ namespace SurveyMonkey.ProcessedAnswers
     {
         public Dictionary<int, string> Ranking { get; set; }
         public List<string> NotApplicable { get; set; }
+        public string NotApplicableText { get; set; }
 
         public string Printable
         {
@@ -27,7 +28,8 @@ namespace SurveyMonkey.ProcessedAnswers
                 }
                 if (NotApplicable != null && NotApplicable.Any())
                 {
-                    sb.Append("Not applicable:");
+                    sb.Append(NotApplicableText);
+                    sb.Append(":");
                     sb.Append(Environment.NewLine);
                     foreach (var item in NotApplicable)
                     {
