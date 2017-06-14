@@ -20,6 +20,9 @@ namespace SurveyMonkey
         private DateTime _lastRequestTime = DateTime.MinValue;
         private readonly int _rateLimitDelay = 500;
         private readonly int[] _retrySequence = { 5, 30, 300, 900 };
+        private int _requestsMade;
+
+        public int ApiRequestsMade => _requestsMade;
 
         public IWebProxy Proxy
         {
@@ -177,6 +180,8 @@ namespace SurveyMonkey
 
         private string AttemptApiRequest(string url, Verb verb, RequestData data)
         {
+            _requestsMade++;
+
             if (verb == Verb.GET)
             {
                 return _webClient.DownloadString(url);

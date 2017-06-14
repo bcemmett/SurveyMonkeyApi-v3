@@ -53,6 +53,7 @@ namespace SurveyMonkey
         List<Member> GetMemberList(long groupId, PagingSettings settings);
         Member GetMemberDetails(long groupId, long memberId);
         Collector CreateCollector(long surveyId, CreateCollectorSettings settings);
+        int ApiRequestsMade { get; }
         void Dispose();
     }
 }
