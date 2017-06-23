@@ -37,6 +37,14 @@ namespace SurveyMonkey.Containers
             FullyAnonymous
         }
 
+        [JsonConverter(typeof(TolerantJsonConverter))]
+        public enum RedirectOption
+        {
+            Url,
+            Close,
+            Loop
+        }
+
         public StatusType? Status { get; set; }
         public long? Id { get; set; }
         public string Name { get; set; }
@@ -49,6 +57,8 @@ namespace SurveyMonkey.Containers
         public bool? DisplaySurveyResults { get; set; }
         public EditResponseOption? EditResponseType { get; set; }
         public AnonymousOption? AnonymousType { get; set; }
+        public RedirectOption? RedirectType { get; set; }
+        public int? ResponseLimit { get; set; }
         public bool? AllowMultipleResponses { get; set; }
         public DateTime? DateModified { get; set; }
         public DateTime? DateCreated { get; set; }
