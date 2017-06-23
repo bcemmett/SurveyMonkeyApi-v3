@@ -35,7 +35,7 @@ namespace SurveyMonkeyTests
         {
             var client = new MockWebClient();
             client.Responses.Add(@"
-                {""status"":""closed"",""redirect_url"":""https:\/\/www.surveymonkey.com"",""thank_you_message"":""Thank you for completing our survey!"",""response_count"":1,""closed_page_message"":""closed"",""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/57184593"",""close_date"":null,""display_survey_results"":false,""allow_multiple_responses"":true,""anonymous_type"":""not_anonymous"",""id"":""57184593"",""password_enabled"":false,""name"":""Web Link 1"",""date_modified"":""2014-08-26T12:50:00+00:00"",""url"":null,""edit_response_type"":""until_complete"",""sender_email"":null,""date_created"":""2014-08-26T11:14:00+00:00"",""disqualification_message"":""Thank you for completing our survey!"",""type"":""weblink""}
+                {""status"":""closed"",""redirect_url"":""https:\/\/www.surveymonkey.com"",""thank_you_message"":""Thank you for completing our survey!"",""response_count"":1,""closed_page_message"":""closed"",""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/57184593"",""close_date"":null,""display_survey_results"":false,""allow_multiple_responses"":true,""anonymous_type"":""not_anonymous"",""id"":""57184593"",""password_enabled"":false,""name"":""Web Link 1"",""date_modified"":""2014-08-26T12:50:00+00:00"",""url"":null,""edit_response_type"":""until_complete"",""sender_email"":null,""date_created"":""2014-08-26T11:14:00+00:00"",""disqualification_message"":""Thank you for completing our survey!"",""type"":""weblink"",""response_limit"":3,""redirect_type"":""url""}
             ");
             var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
             var result = api.GetCollectorDetails(57184593);
@@ -58,6 +58,8 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(Collector.StatusType.Closed, result.Status);
             Assert.AreEqual("Thank you for completing our survey!", result.ThankYouMessage);
             Assert.AreEqual(Collector.CollectorType.Weblink, result.Type);
+            Assert.AreEqual(3, result.ResponseLimit);
+            Assert.AreEqual(Collector.RedirectOption.Url, result.RedirectType);
             Assert.IsNull(result.Url);
         }
 
