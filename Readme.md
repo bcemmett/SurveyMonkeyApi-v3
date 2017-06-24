@@ -14,4 +14,4 @@ PM>Install-Package SurveyMonkeyApi
 * [SurveyMonkey api documentation](https://developer.surveymonkey.com/api/v3/)
 
 # Building an Importer?
-Building an importer's a pretty common need, but can be very time-consuming to get right. Before you begin, you might consider licensing one which I've already built. It's written in C#, built on this library, and lets you easily store all your survey information in SQL Server. You'll get full source code access, and can modify it as you wish to meet your needs. There's more information at [benemmett.co.uk/SurveyMonkey](http://www.benemmett.co.uk/SurveyMonkey).
+Building an importer's a pretty common need, but can be very time-consuming to get right. Before you begin, you might consider licensing one which I've already built. It's written in C#, built on this library, and lets you easily store all your survey information in SQL Server. You'll get full source code access, and can modify it as you wish to meet your needs. There's more information at [benemmett.co.uk/SurveyMonkey](http://www.benemmett.co.uk/SurveyMonkey/).
