@@ -24,6 +24,7 @@ namespace SurveyMonkey
         Response GetCollectorResponseDetails(long collectorId, long responseId);
         List<Survey> PopulateSurveyResponseInformationBulk(List<long> surveyIds);
         Survey PopulateSurveyResponseInformation(long surveyId);
+        void MatchResponseToSurveyStructure(Survey survey, Response response);
         List<Collector> GetCollectorList(long surveyId);
         List<Collector> GetCollectorList(long surveyId, GetCollectorListSettings settings);
         Collector GetCollectorDetails(long collectorId);
@@ -61,6 +62,5 @@ namespace SurveyMonkey
         Webhook ModifyWebhook(long webhookId, Webhook webhook);
         Webhook DeleteWebhook(long webhookId);
         int ApiRequestsMade { get; }
-        void Dispose();
     }
 }
