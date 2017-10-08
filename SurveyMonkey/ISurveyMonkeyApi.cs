@@ -31,9 +31,9 @@ namespace SurveyMonkey
         List<Message> GetMessageList(long collectorId, PagingSettings settings);
         Message GetMessageDetails(long collectorId, long messageId);
         List<Recipient> GetCollectorRecipientList(long collectorId);
-        List<Recipient> GetCollectorRecipientList(long collectorId, PagingSettings settings);
+        List<Recipient> GetCollectorRecipientList(long collectorId, GetRecipientListSettings settings);
         List<Recipient> GetMessageRecipientList(long collectorId, long messageId);
-        List<Recipient> GetMessageRecipientList(long collectorId, long messageId, PagingSettings settings);
+        List<Recipient> GetMessageRecipientList(long collectorId, long messageId, GetRecipientListSettings settings);
         Recipient GetRecipientDetails(long collectorId, long recipientId);
         List<SurveyCategory> GetSurveyCategoryList();
         List<SurveyCategory> GetSurveyCategoryList(GetSurveyCategoryListSettings settings);

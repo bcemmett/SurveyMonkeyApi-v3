@@ -138,6 +138,7 @@
     <Compile Include="ProcessedAnswers\MultipleChoiceAnswer.cs" />
     <Compile Include="ProcessedAnswers\SingleChoiceAnswer.cs" />
     <Compile Include="RequestSettings\CreateCollectorSettings.cs" />
+    <Compile Include="RequestSettings\GetRecipientListSettings.cs" />
     <Compile Include="RequestSettings\IPagingSettings.cs" />
     <Compile Include="SurveyMonkeyApi.Users.cs" />
     <Compile Include="SurveyMonkeyApi.DataProcessing.cs" />
