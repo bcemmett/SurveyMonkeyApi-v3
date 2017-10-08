@@ -53,6 +53,9 @@ namespace SurveyMonkey
         List<Member> GetMemberList(long groupId, PagingSettings settings);
         Member GetMemberDetails(long groupId, long memberId);
         Collector CreateCollector(long surveyId, CreateCollectorSettings settings);
+        List<Webhook> GetWebhookList();
+        List<Webhook> GetWebhookList(PagingSettings settings);
+        Webhook GetWebhookDetails(long webhookId);
         int ApiRequestsMade { get; }
         void Dispose();
     }
