@@ -36,13 +36,13 @@ namespace SurveyMonkey
 
             foreach (var response in survey.Responses)
             {
-                MatchResponsesToSurveyStructure(survey, response);
+                MatchResponseToSurveyStructure(survey, response);
             }
 
             return survey;
         }
 
-        private void MatchResponsesToSurveyStructure(Survey survey, Response response)
+        public void MatchResponseToSurveyStructure(Survey survey, Response response)
         {
             foreach (var question in survey.Questions)
             {
