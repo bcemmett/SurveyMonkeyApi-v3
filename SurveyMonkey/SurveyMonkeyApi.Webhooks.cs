@@ -41,11 +41,49 @@ namespace SurveyMonkey
         {
             if (webhook.Id.HasValue)
             {
-                throw new ArgumentException("An id can't be supplied when creating a webhook.");
+                throw new ArgumentException("An id can't be supplied as part of the webhook.");
             }
             string endPoint = "/webhooks";
             var verb = Verb.POST;
             var requestData = Helpers.RequestSettingsHelper.GetPopulatedProperties(webhook);
+            JToken result = MakeApiRequest(endPoint, verb, requestData);
+            var createdWebhook = result.ToObject<Webhook>();
+            return createdWebhook;
+        }
+
+        public Webhook ReplaceWebhook(long webhookId, Webhook webhook)
+        {
+            if (webhook.Id.HasValue)
+            {
+                throw new ArgumentException("An id can't be supplied as part of the webhook.");
+            }
+            string endPoint = $"/webhooks/{webhookId}";
+            var verb = Verb.PUT;
+            var requestData = Helpers.RequestSettingsHelper.GetPopulatedProperties(webhook);
+            JToken result = MakeApiRequest(endPoint, verb, requestData);
+            var replacedWebhook = result.ToObject<Webhook>();
+            return replacedWebhook;
+        }
+
+        public Webhook ModifyWebhook(long webhookId, Webhook webhook)
+        {
+            if (webhook.Id.HasValue)
+            {
+                throw new ArgumentException("An id can't be supplied as part of the webhook.");
+            }
+            string endPoint = $"/webhooks/{webhookId}";
+            var verb = Verb.PATCH;
+            var requestData = Helpers.RequestSettingsHelper.GetPopulatedProperties(webhook);
+            JToken result = MakeApiRequest(endPoint, verb, requestData);
+            var modifiedWebhook = result.ToObject<Webhook>();
+            return modifiedWebhook;
+        }
+
+        public Webhook DeleteWebhook(long webhookId)
+        {
+            string endPoint = $"/webhooks/{webhookId}";
+            var verb = Verb.DELETE;
+            var requestData = new RequestData();
             JToken result = MakeApiRequest(endPoint, verb, requestData);
             var createdWebhook = result.ToObject<Webhook>();
             return createdWebhook;
