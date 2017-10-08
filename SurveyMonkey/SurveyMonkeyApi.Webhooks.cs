@@ -36,5 +36,19 @@ namespace SurveyMonkey
             var webhook = result.ToObject<Webhook>();
             return webhook;
         }
+
+        public Webhook CreateWebhook(Webhook webhook)
+        {
+            if (webhook.Id.HasValue)
+            {
+                throw new ArgumentException("An id can't be supplied when creating a webhook.");
+            }
+            string endPoint = "/webhooks";
+            var verb = Verb.POST;
+            var requestData = Helpers.RequestSettingsHelper.GetPopulatedProperties(webhook);
+            JToken result = MakeApiRequest(endPoint, verb, requestData);
+            var createdWebhook = result.ToObject<Webhook>();
+            return createdWebhook;
+        }
     }
 }

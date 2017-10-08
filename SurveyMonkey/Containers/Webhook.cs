@@ -13,6 +13,7 @@ namespace SurveyMonkey.Containers
         public WebhookObjectType? ObjectType { get; set; }
         public List<long> ObjectIds { get; set; }
         public string SubscriptionUrl { get; set; }
+        public string Authorization { get; set; }
         internal string Href { get; set; }
     }
 }
