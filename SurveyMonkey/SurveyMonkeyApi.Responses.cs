@@ -9,7 +9,7 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi
     {
-        internal enum ObjectType
+        private enum ObjectType
         {
             Survey,
             Collector
