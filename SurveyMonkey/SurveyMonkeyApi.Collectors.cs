@@ -82,34 +82,34 @@ namespace SurveyMonkey
         }
 
         [Obsolete("GetRecipientList() is obsolete. Either use GetMessageRecipientList() or GetCollectorRecipientList().", true)]
-        public List<Recipient> GetRecipientList(long collectorId, long messageId, PagingSettings settings)
+        public List<Recipient> GetRecipientList(long collectorId, long messageId, GetRecipientListSettings settings)
         {
             return GetMessageRecipientList(collectorId, messageId, settings);
         }
 
         public List<Recipient> GetCollectorRecipientList(long collectorId)
         {
-            var settings = new PagingSettings();
+            var settings = new GetRecipientListSettings();
             return GetRecipientListPager(collectorId, null, settings);
         }
 
-        public List<Recipient> GetCollectorRecipientList(long collectorId, PagingSettings settings)
+        public List<Recipient> GetCollectorRecipientList(long collectorId, GetRecipientListSettings settings)
         {
             return GetRecipientListPager(collectorId, null, settings);
         }
         
         public List<Recipient> GetMessageRecipientList(long collectorId, long messageId)
         {
-            var settings = new PagingSettings();
+            var settings = new GetRecipientListSettings();
             return GetRecipientListPager(collectorId, messageId, settings);
         }
 
-        public List<Recipient> GetMessageRecipientList(long collectorId, long messageId, PagingSettings settings)
+        public List<Recipient> GetMessageRecipientList(long collectorId, long messageId, GetRecipientListSettings settings)
         {
             return GetRecipientListPager(collectorId, messageId, settings);
         }
 
-        private List<Recipient> GetRecipientListPager(long collectorId, long? messageId, IPagingSettings settings)
+        private List<Recipient> GetRecipientListPager(long collectorId, long? messageId, GetRecipientListSettings settings)
         {
             string endPoint = messageId.HasValue ?
                 String.Format("/collectors/{0}/messages/{1}/recipients", collectorId, messageId) :
