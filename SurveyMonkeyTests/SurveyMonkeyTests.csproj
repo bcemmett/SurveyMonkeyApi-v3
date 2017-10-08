@@ -94,6 +94,7 @@
     <Compile Include="PropertyCasingHelperTests.cs" />
     <Compile Include="RequestSettingsHelperTests.cs" />
     <Compile Include="WebClientInfrastructureTests.cs" />
+    <Compile Include="WebhookTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

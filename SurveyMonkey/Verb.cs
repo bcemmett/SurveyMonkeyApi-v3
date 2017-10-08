@@ -3,6 +3,9 @@
     internal enum Verb
     {
         GET,
-        POST
+        POST,
+        PUT,
+        PATCH,
+        DELETE
     }
 }

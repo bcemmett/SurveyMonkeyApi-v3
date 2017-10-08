@@ -106,6 +106,7 @@
     <Compile Include="Containers\SurveyTemplate.cs" />
     <Compile Include="Containers\SurveyCategory.cs" />
     <Compile Include="Containers\User.cs" />
+    <Compile Include="Containers\Webhook.cs" />
     <Compile Include="Enums\MemberStatus.cs" />
     <Compile Include="Enums\MemberType.cs" />
     <Compile Include="Enums\RecipientSurveyResponseStatus.cs" />
@@ -118,6 +119,8 @@
     <Compile Include="Enums\CollectionMode.cs" />
     <Compile Include="Enums\ResponseStatus.cs" />
     <Compile Include="Enums\QuestionValidationType.cs" />
+    <Compile Include="Enums\WebhookObjectType.cs" />
+    <Compile Include="Enums\WebhookEventType.cs" />
     <Compile Include="Helpers\ProcessedAnswerFormatHelper.cs" />
     <Compile Include="Helpers\PropertyCasingHelper.cs" />
     <Compile Include="Helpers\RequestSettingsHelper.cs" />
@@ -140,6 +143,7 @@
     <Compile Include="RequestSettings\CreateCollectorSettings.cs" />
     <Compile Include="RequestSettings\GetRecipientListSettings.cs" />
     <Compile Include="RequestSettings\IPagingSettings.cs" />
+    <Compile Include="SurveyMonkeyApi.Webhooks.cs" />
     <Compile Include="SurveyMonkeyApi.Users.cs" />
     <Compile Include="SurveyMonkeyApi.DataProcessing.cs" />
     <Compile Include="TolerantJsonConverter.cs" />
