@@ -30,7 +30,7 @@ namespace SurveyMonkey
 
         public Webhook GetWebhookDetails(long webhookId)
         {
-            string endPoint = String.Format("/webhooks/{0}", webhookId);
+            string endPoint = $"/webhooks/{webhookId}";
             var verb = Verb.GET;
             JToken result = MakeApiRequest(endPoint, verb, new RequestData());
             var webhook = result.ToObject<Webhook>();
