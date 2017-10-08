@@ -9,7 +9,7 @@ namespace SurveyMonkey.Containers
     {
         public long? Id { get; set; }
         public string Name { get; set; }
-        public WebhookEventType EventType { get; set; }
+        public WebhookEventType? EventType { get; set; }
         public WebhookObjectType? ObjectType { get; set; }
         public List<long> ObjectIds { get; set; }
         public string SubscriptionUrl { get; set; }
