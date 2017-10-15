@@ -62,5 +62,6 @@ namespace SurveyMonkey
         Webhook ModifyWebhook(long webhookId, Webhook webhook);
         Webhook DeleteWebhook(long webhookId);
         int ApiRequestsMade { get; }
+        void Dispose();
     }
 }
