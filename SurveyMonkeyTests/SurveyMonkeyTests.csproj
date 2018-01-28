@@ -2,7 +2,6 @@
   <PropertyGroup>
     <TargetFrameworks>net40;net45;net451;net451;net452;net46;net461;net462;net47;net471;netcoreapp2.0;netstandard2.0</TargetFrameworks>
     <Company>Walnut Tree Software</Company>
-    <Configuration>Release</Configuration>
     <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
     <AssemblyInformationalVersion>1.0.0.0</AssemblyInformationalVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
