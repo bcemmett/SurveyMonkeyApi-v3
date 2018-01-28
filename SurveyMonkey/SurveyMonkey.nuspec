@@ -13,7 +13,7 @@
         <summary />
         <copyright>Ben Emmett</copyright>
 		<dependencies>
-            <dependency id="Newtonsoft.Json" version="9.0.1" />
+            <dependency id="Newtonsoft.Json" version="10.0.3" />
         </dependencies>
     </metadata>
     <files>
