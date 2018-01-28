@@ -1,20 +1,20 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <TargetFramework>net452</TargetFramework>
-	<Company>Walnut Tree Software</Company>
-	<Configuration>Debug</Configuration>
-	<AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-	<AssemblyInformationalVersion>1.0.0.0</AssemblyInformationalVersion>
-	<AssemblyVersion>1.0.0.0</AssemblyVersion>
-	<Product>SurveyMonkeyApi</Product>
-	<Title>SurveyMonkeyApi</Title>
-	<Authors>Ben Emmett</Authors>
-	<Copyright>Copyright © Ben Emmett</Copyright>
-	<Description>Library for accessing v3 of the Survey Monkey Api</Description>
-	<LangVersion>Latest</LangVersion>
-	<SignAssembly>true</SignAssembly>
-	<AssemblyOriginatorKeyFile>SurveyMonkeyApi.snk</AssemblyOriginatorKeyFile>
-	<DelaySign>false</DelaySign>
+    <TargetFrameworks>net40;net45;net451;net451;net452;net46;net461;net462;net47;net471;netcoreapp2.0;netstandard2.0</TargetFrameworks>
+    <Company>Walnut Tree Software</Company>
+    <Configuration>Debug</Configuration>
+    <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
+    <AssemblyInformationalVersion>1.0.0.0</AssemblyInformationalVersion>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <Product>SurveyMonkeyApi</Product>
+    <Title>SurveyMonkeyApi</Title>
+    <Authors>Ben Emmett</Authors>
+    <Copyright>Copyright © Ben Emmett</Copyright>
+    <Description>Library for accessing v3 of the Survey Monkey Api</Description>
+    <LangVersion>Latest</LangVersion>
+    <SignAssembly>true</SignAssembly>
+    <AssemblyOriginatorKeyFile>SurveyMonkeyApi.snk</AssemblyOriginatorKeyFile>
+    <DelaySign>false</DelaySign>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
