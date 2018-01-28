@@ -6,7 +6,8 @@
     <AssemblyInformationalVersion>1.0.0.0</AssemblyInformationalVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Product>SurveyMonkeyApi</Product>
-    <Title>SurveyMonkeyApiTests</Title>
+    <Title>SurveyMonkeyTests</Title>
+    <AssemblyName>SurveyMonkey</AssemblyName>
     <Authors>Ben Emmett</Authors>
     <Copyright>Copyright © Ben Emmett</Copyright>
     <Description>Tests for the SurveyMonkeyApi SDK</Description>
