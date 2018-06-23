@@ -145,6 +145,12 @@ namespace SurveyMonkey
                 }
                 catch (WebException webEx)
                 {
+                    if (webEx.Status == WebExceptionStatus.SecureChannelFailure)
+                    {
+                        throw new WebException("SSL/TLS error. SurveyMonkey requires TLS 1.2, as of 13 June 2018. "
+                            + "Configure this globally with \"ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;\" anywhere before using this library. "
+                            + "See https://github.com/bcemmett/SurveyMonkeyApi-v3/issues/66 for details.", webEx);
+                    }
                     if (attempt < _retrySequence.Length && (webEx.Response == null || ((HttpWebResponse)webEx.Response).StatusCode == HttpStatusCode.ServiceUnavailable))
                     {
                         Thread.Sleep(_retrySequence[attempt] * 1000);
