@@ -22,5 +22,6 @@ namespace SurveyMonkey.Containers
         public QuestionAnswers Answers { get; set; }
         public string Nickname { get; set; }
         public QuestionDisplayOptions DisplayOptions { get; set; }
+        public QuizOptions QuizOptions { get; set; }
     }
 }

@@ -28,6 +28,7 @@ namespace SurveyMonkey.Containers
         public string IpAddress { get; set; }
         public long? RecipientId { get; set; }
         public List<ResponsePage> Pages { get; set; }
+        public QuizResults QuizResults { get; set; }
 
         public List<ResponseQuestion> Questions
         {
