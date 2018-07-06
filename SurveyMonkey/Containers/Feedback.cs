@@ -11,6 +11,6 @@ namespace SurveyMonkey.Containers
         public string IncorrectText { get; set; }
         public string PartialText { get; set; }
         public List<Range> Ranges { get; set; }
-        public RangesType RangesType { get; set; }
+        public RangesType? RangesType { get; set; }
     }
 }
