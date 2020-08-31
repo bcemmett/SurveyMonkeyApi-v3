@@ -47,10 +47,13 @@ namespace SurveyMonkey.Containers
 
         public StatusType? Status { get; set; }
         public long? Id { get; set; }
+        public long? SurveyId { get; set; }
         public string Name { get; set; }
         public CollectorType? Type { get; set; }
         public string ThankYouMessage { get; set; }
+        public string DisqualificationType { get; set; }
         public string DisqualificationMessage { get; set; }
+        public string DisqualificationUrl { get; set; }
         public DateTime? CloseDate { get; set; }
         public string ClosedPageMessage { get; set; }
         public string RedirectUrl { get; set; }
