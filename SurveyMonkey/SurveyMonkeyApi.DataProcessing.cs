@@ -216,7 +216,7 @@ namespace SurveyMonkey
                         PropertyInfo property = typeof(DemographicAnswer).GetProperty(propertyName, BindingFlags.IgnoreCase | BindingFlags.Public | BindingFlags.Instance);
                         if (property != null)
                         {
-                            property.SetValue(reply, responseAnswer.Text, null);
+                            property.SetValue(reply, responseAnswer.Text);
                         }
                     }
                 }
