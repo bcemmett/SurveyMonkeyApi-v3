@@ -16,7 +16,7 @@
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
-    <TargetFrameworks>net40;net45;net451;net451;net452;net46;net461;net462;net47;net471;netcoreapp2.1;net5.0</TargetFrameworks>
+    <TargetFrameworks>net45;net451;net451;net452;net46;net461;net462;net47;net471;netcoreapp2.1;net5.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
     <TargetFramework>net5.0</TargetFramework>
@@ -29,7 +29,7 @@
   <ItemGroup>
     <ProjectReference Include="..\SurveyMonkey\SurveyMonkey.csproj" />
   </ItemGroup>
-  <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
+  <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk">
       <Version>16.11.0</Version>
     </PackageReference>

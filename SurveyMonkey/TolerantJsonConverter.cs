@@ -82,18 +82,18 @@ namespace SurveyMonkey
                                     convertedDate = rawDate;
                                     break;
                             }
-                            property.SetValue(instance, convertedDate, null);
+                            property.SetValue(instance, convertedDate);
                         }
                         else
                         {
                             if (property.Name == "Choices" && jsonProperty.Value.Type != JTokenType.Array)
                             {
                                 var legacyProperty = properties.FirstOrDefault(pi => String.Equals("LegacyChoices", pi.Name, StringComparison.OrdinalIgnoreCase));
-                                legacyProperty.SetValue(instance, jsonProperty.Value.ToObject(legacyProperty.PropertyType, serializer), null);
+                                legacyProperty.SetValue(instance, jsonProperty.Value.ToObject(legacyProperty.PropertyType, serializer));
                             }
                             else
                             {
-                                property.SetValue(instance, jsonProperty.Value.ToObject(property.PropertyType, serializer), null);
+                                property.SetValue(instance, jsonProperty.Value.ToObject(property.PropertyType, serializer));
                             }
                         }
                     }
