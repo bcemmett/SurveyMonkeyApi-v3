@@ -198,7 +198,7 @@ namespace SurveyMonkeyTests
         {
             string input = @"{""AnInt"":2134515487945}";
             var parsed = JObject.Parse(input);
-            Assert.Throws<OverflowException>(delegate { parsed.ToObject<JsonDeserializationTestsContainer>(); });
+            Assert.Throws<JsonReaderException>(delegate { parsed.ToObject<JsonDeserializationTestsContainer>(); });
         }
 
         [Test]
