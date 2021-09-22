@@ -13,7 +13,7 @@
         <summary />
         <copyright>Ben Emmett</copyright>
         <dependencies>
-            <dependency id="Newtonsoft.Json" version="10.0.3" />
+            <dependency id="Newtonsoft.Json" version="13.0.1" />
         </dependencies>
     </metadata>
     <files>
@@ -27,5 +27,6 @@
         <file src="bin\Release\net47\SurveyMonkeyApi.dll" target="lib\net47\SurveyMonkeyApi.dll" />
         <file src="bin\Release\net471\SurveyMonkeyApi.dll" target="lib\net471\SurveyMonkeyApi.dll" />
         <file src="bin\Release\netcoreapp2.0\SurveyMonkeyApi.dll" target="lib\netcoreapp2.0\SurveyMonkeyApi.dll" />
+        <file src="bin\Release\net5.0\SurveyMonkeyApi.dll" target="lib\net5.0\SurveyMonkeyApi.dll" />
     </files>
 </package>
