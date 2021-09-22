@@ -16,5 +16,6 @@ namespace SurveyMonkey.Containers
         public Dictionary<string, object> Metadata { get; set; }
         public List<object> Items { get; set; }
         public string ResourceUrl { get; set; }
+        public QuizOptions QuizOptions { get; set; }
     }
 }
