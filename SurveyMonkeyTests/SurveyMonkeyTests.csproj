@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Company>Walnut Tree Software</Company>
-    <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-    <AssemblyInformationalVersion>1.0.0.0</AssemblyInformationalVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <InformationalVersion>1.0.0.0</InformationalVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Product>SurveyMonkeyApi</Product>
     <Title>SurveyMonkeyTests</Title>
@@ -25,13 +25,9 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
     <PackageReference Include="NUnit" Version="3.13.2" />
     <PackageReference Include="NUnit3TestAdapter" Version="4.0.0" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.11.0" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SurveyMonkey\SurveyMonkey.csproj" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="Microsoft.NET.Test.Sdk">
-      <Version>16.11.0</Version>
-    </PackageReference>
   </ItemGroup>
 </Project>
