@@ -17,8 +17,16 @@ namespace SurveyMonkey.Containers
         [JsonConverter(typeof(TolerantJsonConverter))]
         public enum CollectorType
         {
-            Weblink,
-            Email
+            Weblink,            // Get Web Link - Share a web link via email, on your website, or post to social media. You can also schedule a recurring web link.
+            Email,              // Send by Email - Create custom email invitations and track who responds. Send follow up reminders to those who haven’t responded.
+            Audience,           // Buy Responses - Get real-time feedback from our panel of global respondents. See results in minutes.
+            EmbeddedSurvey,     // Embed on Website - Embed your survey on your website or a link to your survey in a popup window.
+            Popup,              // Embed on Website - Embed your survey on your website or a link to your survey in a popup window.
+            PopupInvitation,    // Embed on Website - Embed your survey on your website or a link to your survey in a popup window.
+            Facebook,           // Post on Social Media - Post your survey on Facebook, LinkedIn, or Twitter.
+            FacebookMessenger,  // Share in Messenger - Let others to take your survey directly in Facebook Messenger.
+            MobileSdk,          // MOBILE SDK - Integrate SurveyMonkey surveys and responses directly into your mobile app to collect user feedback about their in-app experience.
+            OfflineKiosk        // Kiosk Survey - Turn your device into a survey station and collect responses anywhere you go.
         }
 
         [JsonConverter(typeof(TolerantJsonConverter))]
@@ -67,5 +75,20 @@ namespace SurveyMonkey.Containers
         public string SenderEmail { get; set; }
         internal string Href { get; set; }
         public int? ResponseCount { get; set; }
+
+        //Embedded Web Collector
+        public string BorderColor { get; set; }
+        public string Headline { get; set; }
+        public int? Height { get; set; }
+        public int? Width { get; set; }
+        public PrimaryButton PrimaryButton { get; set; }
+        public SecondaryButton SecondaryButton { get; set; }
+        public string Message { get; set; }
+        public bool? IsBrandingEnabled { get; set; }
+        public int? SampleRate { get; set; }
+
+        //Mobile SDK
+        public string Hash { get; set; }
+        
     }
 }
