@@ -63,7 +63,10 @@ namespace SurveyMonkey
 
                 if (property != null)
                 {
-                    if (jsonProperty.Value.Type != JTokenType.Null && !IsUnparseableNumeric(property, jsonProperty))
+                    if (
+                        !Attribute.IsDefined(property, typeof(JsonIgnoreAttribute))
+                        && jsonProperty.Value.Type != JTokenType.Null
+                        && !IsUnparseableNumeric(property, jsonProperty))
                     {
                         if (property.PropertyType == typeof(DateTime?))
                         {
