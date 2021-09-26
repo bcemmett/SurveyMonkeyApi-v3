@@ -13,6 +13,9 @@ namespace SurveyMonkey.Enums
         ResponseOverquota,
         CollectorCreated,
         CollectorUpdated,
-        CollectorDeleted
+        CollectorDeleted,
+        SurveyCreated,
+        SurveyUpdated,
+        SurveyDeleted
     }
 }

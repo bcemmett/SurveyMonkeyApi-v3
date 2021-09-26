@@ -18,7 +18,11 @@ namespace SurveyMonkey.Containers
         public enum CollectorType
         {
             Weblink,
-            Email
+            Email,
+            Sms,
+            PopupInvitation,
+            PopupSurvey,
+            EmbeddedSurvey
         }
 
         [JsonConverter(typeof(TolerantJsonConverter))]
@@ -51,6 +55,8 @@ namespace SurveyMonkey.Containers
         public CollectorType? Type { get; set; }
         public string ThankYouMessage { get; set; }
         public string DisqualificationMessage { get; set; }
+        public string DisqualificationUrl { get; set; }
+        public string DisqualificationType { get; set; }
         public DateTime? CloseDate { get; set; }
         public string ClosedPageMessage { get; set; }
         public string RedirectUrl { get; set; }
@@ -67,5 +73,15 @@ namespace SurveyMonkey.Containers
         public string SenderEmail { get; set; }
         internal string Href { get; set; }
         public int? ResponseCount { get; set; }
+        public int? Width { get; set; }
+        public int? Height { get; set; }
+        public string BorderColor { get; set; }
+        public bool? IsBrandingEnabled { get; set; }
+        public string Headline { get; set; }
+        public string Message { get; set; }
+        public int? SampleRate { get; set; }
+        public Button PrimaryButton { get; set; }
+        public Button SecondaryButton { get; set; }
+        public long? SurveyId { get; set; }
     }
 }

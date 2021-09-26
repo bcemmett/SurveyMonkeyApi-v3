@@ -23,5 +23,7 @@ namespace SurveyMonkey.Containers
         public string Nickname { get; set; }
         public QuestionDisplayOptions DisplayOptions { get; set; }
         public QuizOptions QuizOptions { get; set; }
+        [JsonIgnore]
+        internal object Layout { get; set; }
     }
 }
