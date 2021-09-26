@@ -19,7 +19,10 @@ namespace SurveyMonkey.Containers
         {
             Weblink,
             Email,
-            Sms
+            Sms,
+            PopupInvitation,
+            PopupSurvey,
+            EmbeddedSurvey
         }
 
         [JsonConverter(typeof(TolerantJsonConverter))]
