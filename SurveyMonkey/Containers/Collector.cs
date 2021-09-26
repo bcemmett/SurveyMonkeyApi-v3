@@ -79,7 +79,7 @@ namespace SurveyMonkey.Containers
         public bool? IsBrandingEnabled { get; set; }
         public string Headline { get; set; }
         public string Message { get; set; }
-        public string SampleRate { get; set; }
+        public int? SampleRate { get; set; }
         public Button PrimaryButton { get; set; }
         public Button SecondaryButton { get; set; }
         public long? SurveyId { get; set; }
