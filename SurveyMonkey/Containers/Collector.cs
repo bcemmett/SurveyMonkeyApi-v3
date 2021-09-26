@@ -18,7 +18,8 @@ namespace SurveyMonkey.Containers
         public enum CollectorType
         {
             Weblink,
-            Email
+            Email,
+            Sms
         }
 
         [JsonConverter(typeof(TolerantJsonConverter))]
