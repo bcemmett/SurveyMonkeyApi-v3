@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 using SurveyMonkey.Helpers;
 
@@ -20,17 +19,17 @@ namespace SurveyMonkey.ProcessedAnswers
                 {
                     foreach (var row in Rows)
                     {
-                        sb.Append($"{row.Key}:{Environment.NewLine}");
+                        sb.Append($"{row.Key}{(!String.IsNullOrWhiteSpace(row.Key) ? ":" : String.Empty)}{Environment.NewLine}");
                         if (row.Value.Columns != null)
                         {
                             foreach (var col in row.Value.Columns)
                             {
-                                sb.Append($"{col.Key}: {col.Value}{Environment.NewLine}");
+                                sb.Append($"{col.Key}{(!String.IsNullOrWhiteSpace(col.Key) ? ": " : String.Empty)}{col.Value}{Environment.NewLine}");
                             }
                         }
                     }
                 }
-                if (OtherText != null)
+                if (!String.IsNullOrWhiteSpace(OtherText))
                 {
                     sb.Append("Other: ");
                     sb.Append(OtherText);

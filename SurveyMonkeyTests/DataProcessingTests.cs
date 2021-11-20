@@ -40,16 +40,23 @@ namespace SurveyMonkeyTests
             reply = (SingleChoiceAnswer)replies.First().Response;
             Assert.AreEqual("First Answer", reply.Choice);
             Assert.IsNull(reply.OtherText);
+            Assert.AreEqual("First Answer", reply.PrettyPrint);
 
             reply = (SingleChoiceAnswer)replies.Skip(1).First().Response;
             Assert.AreEqual("Second Answer", reply.Choice);
             Assert.AreEqual("Bla bla other", reply.OtherText);
+            Assert.AreEqual("Second Answer\r\nOther: Bla bla other", reply.PrettyPrint);
 
             reply = (SingleChoiceAnswer)replies.Skip(2).First().Response;
             Assert.IsNull(reply.Choice);
             Assert.AreEqual("Bla bla other", reply.OtherText);
+            Assert.AreEqual("Other: Bla bla other", reply.PrettyPrint);
 
             Assert.AreEqual(15, replies.Count());
+
+            //Console.WriteLine(replies.First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(1).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(2).First().Response.PrettyPrint);
         }
 
         [Test]
@@ -63,18 +70,25 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Fourth Answer", reply.Choices.Last());
             Assert.AreEqual(2, reply.Choices.Count);
             Assert.IsNull(reply.OtherText);
+            Assert.AreEqual("Second Answer\r\nFourth Answer", reply.PrettyPrint);
 
             reply = (MultipleChoiceAnswer)replies.Skip(5).First().Response;
             Assert.AreEqual("Second Answer", reply.Choices.First());
             Assert.AreEqual("Third Answer", reply.Choices.Last());
             Assert.AreEqual(2, reply.Choices.Count);
             Assert.AreEqual("Bla bla other", reply.OtherText);
+            Assert.AreEqual("Second Answer\r\nThird Answer\r\nOther: Bla bla other", reply.PrettyPrint);
 
             reply = (MultipleChoiceAnswer)replies.Skip(11).First().Response;
             Assert.IsEmpty(reply.Choices);
             Assert.AreEqual("Bla bla other", reply.OtherText);
+            Assert.AreEqual("Other: Bla bla other", reply.PrettyPrint);
 
             Assert.AreEqual(12, replies.Count());
+
+            //Console.WriteLine(replies.First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(5).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(11).First().Response.PrettyPrint);
         }
 
         [Test]
@@ -85,6 +99,11 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(2, replies.Count());
             Assert.AreEqual("Some text for my essay Bacon ipsum dolor sit amet pork belly short loin shank ribeye fatback t-bone kevin. Shankle short ribs venison, short loin bresaola beef ribs pork. Pork loin boudin jowl, frankfurter pork belly meatloaf", ((OpenEndedSingleAnswer)replies.First().Response).Text);
             Assert.AreEqual("Single box", ((OpenEndedSingleAnswer)replies.Last().Response).Text);
+            Assert.AreEqual("Some text for my essay Bacon ipsum dolor sit amet pork belly short loin shank ribeye fatback t-bone kevin. Shankle short ribs venison, short loin bresaola beef ribs pork. Pork loin boudin jowl, frankfurter pork belly meatloaf", replies.First().Response.PrettyPrint);
+            Assert.AreEqual("Single box", replies.Last().Response.PrettyPrint);
+
+            //Console.WriteLine(replies.First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Last().Response.PrettyPrint);
         }
 
         [Test]
@@ -96,6 +115,7 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Choice 1", multi.Rows.First().RowName);
             Assert.AreEqual("asdfasdf", multi.Rows.Last().Text);
             Assert.AreEqual("Choice 5", multi.Rows.Last().RowName);
+            Assert.AreEqual("Choice 1: asdf\r\nChoice 2: asdfasdf\r\nChoice 3: asdfasdfasdf\r\nChoice 5: asdfasdf", multi.PrettyPrint);
 
             var numeric = (OpenEndedMultipleAnswer) replies.Last().Response;
             Assert.AreEqual("101", numeric.Rows.First().Text);
@@ -103,8 +123,12 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("105", numeric.Rows.Last().Text);
             Assert.AreEqual("Choice 5", numeric.Rows.Last().RowName);
             Assert.AreEqual(4, numeric.Rows.Count);
+            Assert.AreEqual("Choice 1: 101\r\nChoice 2: 102\r\nChoice 3: 103\r\nChoice 5: 105", numeric.PrettyPrint);
 
             Assert.AreEqual(2, replies.Count());
+
+            //Console.WriteLine(multi.PrettyPrint);
+            //Console.WriteLine(numeric.PrettyPrint);
         }
 
         [Test]
@@ -122,6 +146,7 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("usa", us.Country);
             Assert.AreEqual("123456789", us.Phone);
             Assert.IsNull(us.Email);
+            Assert.AreEqual("Name: TheName\r\nCompany: TheCompany\r\nAddress2: asdf\r\nCity: London\r\nState: AL\r\nZip: 90210\r\nCountry: usa\r\nPhone: 123456789", us.PrettyPrint);
 
             var intnl = (DemographicAnswer) replies.Last().Response;
             Assert.IsNull(intnl.Name);
@@ -134,8 +159,12 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("United Kingdom", intnl.Country);
             Assert.AreEqual("123456789", intnl.Phone);
             Assert.AreEqual("testing@bla.com", intnl.Email);
+            Assert.AreEqual("Company: missing name\r\nAddress: asdf\r\nAddress2: asdf\r\nCity: asdf\r\nState: asdfa\r\nZip: asdf\r\nCountry: United Kingdom\r\nEmail: testing@bla.com\r\nPhone: 123456789", intnl.PrettyPrint);
 
             Assert.AreEqual(4, replies.Count());
+
+            //Console.WriteLine(us.PrettyPrint);
+            //Console.WriteLine(intnl.PrettyPrint);
         }
 
         [Test]
@@ -178,6 +207,18 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(new DateTime(2000, 1, 30, 13, 1, 0, DateTimeKind.Utc), timestamps.Skip(17).First());
             Assert.AreEqual(new DateTime(2000, 1, 1, 1, 1, 0, DateTimeKind.Utc), timestamps.Skip(18).First());
             Assert.AreEqual(new DateTime(2000, 12, 30, 13, 1, 0, DateTimeKind.Utc), timestamps.Skip(19).First());
+
+            Assert.AreEqual("Choice 1: 1988-01-01 00:00:00Z\r\nChoice 2: 1988-01-30 00:00:00Z\r\nChoice 3: 1988-01-13 00:00:00Z\r\nChoice 4: 2014-12-01 00:00:00Z", replies.First().Response.PrettyPrint);
+            Assert.AreEqual("Choice 1: 1988-01-01 00:00:00Z\r\nChoice 2: 1988-01-30 00:00:00Z\r\nChoice 3: 1988-01-13 00:00:00Z\r\nChoice 4: 2014-12-01 00:00:00Z", replies.Skip(1).First().Response.PrettyPrint);
+            Assert.AreEqual("Choice 1: 0001-01-01 01:51:00Z\r\nChoice 2: 0001-01-01 13:15:00Z\r\nChoice 3: 0001-01-01 11:00:00Z\r\nChoice 4: 0001-01-01 23:01:00Z", replies.Skip(2).First().Response.PrettyPrint);
+            Assert.AreEqual("Choice 1: 2000-01-01 01:01:00Z\r\nChoice 2: 2000-01-30 13:01:00Z\r\nChoice 3: 2000-01-01 01:01:00Z\r\nChoice 4: 2000-01-12 13:01:00Z", replies.Skip(3).First().Response.PrettyPrint);
+            Assert.AreEqual("Choice 1: 2000-01-01 01:01:00Z\r\nChoice 2: 2000-01-30 13:01:00Z\r\nChoice 3: 2000-01-01 01:01:00Z\r\nChoice 4: 2000-12-30 13:01:00Z", replies.Skip(4).First().Response.PrettyPrint);
+
+            //Console.WriteLine(replies.First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(1).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(2).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(3).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(4).First().Response.PrettyPrint);
         }
 
         [Test]
@@ -198,6 +239,12 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(7, reply2.Rows.Count);
             Assert.AreEqual(4, reply2.Rows.First().Value.Columns.Count);
             Assert.AreEqual("other text", reply2.OtherText);
+            
+            Assert.AreEqual("Choice 1:\r\nMenu 1 heading: Menu 1 option 1\r\nMenu 2 heading: Menu 2 option 3\r\nMenu 3 heading: Menu 3 option 1\r\nMenu 4 heading: Menu 4 option 2\r\nChoice 2:\r\nMenu 1 heading: Menu 1 option 1\r\nMenu 2 heading: Menu 2 option 3\r\nMenu 3 heading: Menu 3 option 4\r\nMenu 4 heading: Menu 4 option 4\r\nChoice 3:\r\nMenu 1 heading: Menu 1 option 1\r\nMenu 2 heading: Menu 2 option 4\r\nMenu 3 heading: Menu 3 option 2\r\nMenu 4 heading: Menu 4 option 4\r\nChoice 4:\r\nMenu 1 heading: Menu 1 option 2\r\nMenu 2 heading: Menu 2 option 5\r\nMenu 3 heading: Menu 3 option 6\r\nMenu 4 heading: Menu 4 option 6\r\nChoice 5:\r\nMenu 1 heading: Menu 1 option 5\r\nMenu 2 heading: Menu 2 option 6\r\nMenu 3 heading: Menu 3 option 1\r\nMenu 4 heading: Menu 4 option 1\r\nChoice 6:\r\nMenu 1 heading: Menu 1 option 2\r\nMenu 2 heading: Menu 2 option 6\r\nMenu 3 heading: Menu 3 option 4\r\nMenu 4 heading: Menu 4 option 3\r\nChoice 7:\r\nMenu 1 heading: Menu 1 option 3\r\nMenu 2 heading: Menu 2 option 1\r\nMenu 3 heading: Menu 3 option 3\r\nMenu 4 heading: Menu 4 option 4", reply1.PrettyPrint);
+            Assert.AreEqual("Choice 1:\r\nMenu 1 heading: Menu 1 option 3\r\nMenu 2 heading: Menu 2 option 4\r\nMenu 3 heading: Menu 3 option 1\r\nMenu 4 heading: Menu 4 option 5\r\nChoice 2:\r\nMenu 1 heading: Menu 1 option 1\r\nMenu 2 heading: Menu 2 option 3\r\nMenu 3 heading: Menu 3 option 4\r\nMenu 4 heading: Menu 4 option 6\r\nChoice 3:\r\nMenu 1 heading: Menu 1 option 2\r\nMenu 2 heading: Menu 2 option 1\r\nMenu 3 heading: Menu 3 option 3\r\nMenu 4 heading: Menu 4 option 4\r\nChoice 4:\r\nMenu 1 heading: Menu 1 option 4\r\nMenu 2 heading: Menu 2 option 2\r\nMenu 3 heading: Menu 3 option 3\r\nMenu 4 heading: Menu 4 option 2\r\nChoice 5:\r\nMenu 1 heading: Menu 1 option 4\r\nMenu 2 heading: Menu 2 option 2\r\nMenu 3 heading: Menu 3 option 6\r\nMenu 4 heading: Menu 4 option 5\r\nChoice 6:\r\nMenu 1 heading: Menu 1 option 2\r\nMenu 2 heading: Menu 2 option 3\r\nMenu 3 heading: Menu 3 option 2\r\nMenu 4 heading: Menu 4 option 4\r\nChoice 7:\r\nMenu 1 heading: Menu 1 option 5\r\nMenu 2 heading: Menu 2 option 3\r\nMenu 3 heading: Menu 3 option 6\r\nMenu 4 heading: Menu 4 option 2\r\nOther: other text", reply2.PrettyPrint);
+
+            //Console.WriteLine(reply1.PrettyPrint);
+            //Console.WriteLine(reply2.PrettyPrint);
         }
 
         [Test]
@@ -210,12 +257,17 @@ namespace SurveyMonkeyTests
             Assert.IsNull(reply1.NotApplicableText);
             Assert.AreEqual(5, reply1.Ranking.Count);
             Assert.IsEmpty(reply1.NotApplicable);
+            Assert.AreEqual("1: Fifth Answer\r\n2: Fourth Answer\r\n3: Third Answer\r\n4: Second Answer\r\n5: First Answer", reply1.PrettyPrint);
 
             var reply2 = (MatrixRankingAnswer)replies.Last().Response;
             Assert.AreEqual("Third Answer", reply2.Ranking[3]);
             Assert.AreEqual("First Answer", reply2.NotApplicable.First());
             Assert.AreEqual("Not applicable text", reply2.NotApplicableText);
             Assert.AreEqual(2, reply2.NotApplicable.Count);
+            Assert.AreEqual("1: Fifth Answer\r\n2: Fourth Answer\r\n3: Third Answer\r\nNot applicable text:\r\nFirst Answer\r\nSecond Answer", reply2.PrettyPrint);
+
+            //Console.WriteLine(reply1.PrettyPrint);
+            //Console.WriteLine(reply2.PrettyPrint);
         }
 
         [Test]
@@ -228,20 +280,29 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Label 1", reply1.Rows.First(r => r.RowName == "First Answer").Choice);
             Assert.IsNull(reply1.OtherText);
             Assert.AreEqual(5, reply1.Rows.Count);
+            Assert.AreEqual("First Answer: Label 1\r\nSecond Answer: Label 2\r\nThird Answer: Label 3\r\nFourth Answer: Label 4\r\nFifth Answer: Label 1", reply1.PrettyPrint);
 
             var reply2 = (MatrixRatingAnswer)replies.Skip(1).First().Response;
             Assert.AreEqual("Label 3", reply2.Rows.First(r => r.RowName == "Fifth Answer").Choice);
             Assert.AreEqual("Other text", reply2.OtherText);
             Assert.AreEqual(5, reply2.Rows.Count);
+            Assert.AreEqual("First Answer: Label 1\r\nSecond Answer: Label 2\r\nThird Answer: Label 3\r\nFourth Answer: Label 3\r\nFifth Answer: Label 3\r\nOther: Other text", reply2.PrettyPrint);
 
             var reply3 = (MatrixRatingAnswer)replies.Skip(2).First().Response;
             Assert.AreEqual("Label 1", reply3.Rows.First(r => r.RowName == "First Answer").Choice);
             Assert.AreEqual("other", reply3.Rows.First(r => r.RowName == "First Answer").OtherText);
             Assert.IsNull(reply3.Rows.First(r => r.RowName == "Third Answer").OtherText);
             Assert.IsNull(reply3.Rows.First(r => r.RowName == "Second Answer").Choice);
+            Assert.AreEqual("First Answer: Label 1 (Other: other)\r\nThird Answer: Label 2\r\nFourth Answer: Label 2 (Other: asdf)\r\nFifth Answer: Label 4\r\nSecond Answer:  (Other: more other)", reply3.PrettyPrint);
 
             var reply4 = (MatrixRatingAnswer)replies.Skip(3).First().Response;
             Assert.AreEqual("not applicable", reply4.Rows.First(r => r.RowName == "Fifth Answer").Choice);
+            Assert.AreEqual("First Answer: Label 1\r\nSecond Answer: Label 1\r\nThird Answer: Label 3\r\nFourth Answer: Label 3\r\nFifth Answer: not applicable", reply4.PrettyPrint);
+
+            //Console.WriteLine(reply1.PrettyPrint);
+            //Console.WriteLine(reply2.PrettyPrint);
+            //Console.WriteLine(reply3.PrettyPrint);
+            //Console.WriteLine(reply4.PrettyPrint);
         }
 
         [Test]
@@ -254,14 +315,21 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(5, reply1.Rows.Count);
             Assert.AreEqual("First Column", reply1.Rows.First(r => r.RowName == "First Row").Choice);
             Assert.IsNull(reply1.OtherText);
+            Assert.AreEqual("First Row: First Column\r\nSecond Row: Second Column\r\nThird Row: Third Column\r\nFourth Row: Third Column\r\nFifth Row: Fourth Column", reply1.PrettyPrint);
 
             var reply2 = (MatrixSingleAnswer)replies.Skip(1).First().Response;
             Assert.AreEqual(4, reply2.Rows.Count);
             Assert.AreEqual("Second Column", reply2.Rows.First(r => r.RowName == "Fifth Row").Choice);
+            Assert.AreEqual("Second Row: First Column\r\nThird Row: Third Column\r\nFourth Row: Fourth Column\r\nFifth Row: Second Column", reply2.PrettyPrint);
 
             var reply3 = (MatrixSingleAnswer)replies.Skip(2).First().Response;
             Assert.AreEqual(4, reply3.Rows.Count);
             Assert.AreEqual("other", reply3.OtherText);
+            Assert.AreEqual("First Row: First Column\r\nSecond Row: Second Column\r\nThird Row: Third Column\r\nFourth Row: Fourth Column\r\nOther: other", reply3.PrettyPrint);
+
+            //Console.WriteLine(reply1.PrettyPrint);
+            //Console.WriteLine(reply2.PrettyPrint);
+            //Console.WriteLine(reply3.PrettyPrint);
         }
 
         [Test]
@@ -276,9 +344,14 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Second Column", reply1.Rows.First(r => r.RowName == "First Row").Choices.Last());
             Assert.AreEqual(1, reply1.Rows.First(r => r.RowName == "Second Row").Choices.Count);
             Assert.IsNull(reply1.OtherText);
+            Assert.AreEqual("First Row:\r\nFirst Column\r\nSecond Column\r\nSecond Row:\r\nSecond Column\r\nThird Row:\r\nThird Column\r\nFourth Row:\r\nThird Column\r\nFifth Row:\r\nFourth Column", reply1.PrettyPrint);
 
             var reply2 = (MatrixMultiAnswer)replies.Last().Response;
             Assert.AreEqual("some other stuff", reply2.OtherText);
+            Assert.AreEqual("First Row:\r\nSecond Column\r\nSecond Row:\r\nSecond Column\r\nFourth Column\r\nThird Row:\r\nFirst Column\r\nFourth Row:\r\nSecond Column\r\nFourth Column\r\nFifth Row:\r\nThird Column\r\nOther: some other stuff", reply2.PrettyPrint);
+
+            //Console.WriteLine(reply1.PrettyPrint);
+            //Console.WriteLine(reply2.PrettyPrint);
         }
     }
 }
