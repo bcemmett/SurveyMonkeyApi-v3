@@ -22,8 +22,8 @@ namespace SurveyMonkey.ProcessedAnswers
                     {
                         if (row != null)
                         {
-                            sb.Append($"{row.RowName}: {row.Choice}");
-                            if (row.OtherText != null)
+                            sb.Append($"{row.RowName}{(!String.IsNullOrWhiteSpace(row.RowName) ? ": " : String.Empty)}{row.Choice}");
+                            if (!String.IsNullOrWhiteSpace(row.OtherText))
                             {
                                 sb.Append($" (Other: {row.OtherText})");
                             }
@@ -31,7 +31,7 @@ namespace SurveyMonkey.ProcessedAnswers
                         }
                     }
                 }
-                if (OtherText != null)
+                if (!String.IsNullOrWhiteSpace(OtherText))
                 {
                     sb.Append("Other: ");
                     sb.Append(OtherText);

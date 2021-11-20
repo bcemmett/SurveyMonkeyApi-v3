@@ -19,7 +19,7 @@ namespace SurveyMonkey.ProcessedAnswers
                     sb.Append(Choice);
                     sb.Append(Environment.NewLine);
                 }
-                if (OtherText != null)
+                if (!String.IsNullOrWhiteSpace(OtherText))
                 {
                     sb.Append($"Other: {OtherText}");
                 }
