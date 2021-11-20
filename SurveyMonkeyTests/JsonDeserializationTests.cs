@@ -487,6 +487,25 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(5, result.AnInt);
         }
 
+        [Test]
+        public void IgnoreAttributeIsRespected()
+        {
+            string input = @"{""a_string"":""hi"",""an_ignored_property"":""asdf""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual("hi", output.AString);
+            Assert.IsNull(output.AnIgnoredProperty);
+        }
+
+        [Test]
+        public void OverriddenPropertyNamesAreDeserialised()
+        {
+            string input = @"{""was_redirected"":""hi""}";
+            var parsed = JObject.Parse(input);
+            var output = parsed.ToObject<JsonDeserializationTestsContainer>();
+            Assert.AreEqual("hi", output.ARedirectedProperty);
+        }
+
         #endregion
 
         #region ObjectsHaveBeenWrittenToUseCorrectTypesAndConverters
@@ -549,6 +568,10 @@ namespace SurveyMonkeyTests
         public int? AnInt { get; set; }
         public EnumType? AnEnum { get; set; }
         public bool? ABool { get; set; }
+        [JsonIgnore]
+        public string AnIgnoredProperty { get; set; }
+        [JsonProperty("was_redirected")]
+        public string ARedirectedProperty { get; set; }
     }
 
     internal class WarningSupressingTolerantJsonConverter : TolerantJsonConverter

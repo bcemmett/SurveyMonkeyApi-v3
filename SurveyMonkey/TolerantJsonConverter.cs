@@ -59,13 +59,24 @@ namespace SurveyMonkey
             foreach (JProperty jsonProperty in jsonProperties)
             {
                 string name = PropertyCasingHelper.SnakeToCamel(jsonProperty.Name);
-                PropertyInfo property = properties.FirstOrDefault(pi => String.Equals(pi.Name, name, StringComparison.OrdinalIgnoreCase));
+                //Find a property that either matches the (case-converted) name and which isn't ignored, or which matches a JsonProperty manually describing a name.
+                PropertyInfo property = properties.FirstOrDefault(pi => 
+                        (
+                            String.Equals(pi.Name, name, StringComparison.OrdinalIgnoreCase)
+                            && !Attribute.IsDefined(pi, typeof(JsonIgnoreAttribute))
+                        )
+                        || (
+                            String.Equals(
+                                ((JsonPropertyAttribute)pi.GetCustomAttribute(typeof(JsonPropertyAttribute)))?.PropertyName,
+                                jsonProperty.Name,
+                                StringComparison.OrdinalIgnoreCase)
+                        )
+                    );
 
                 if (property != null)
                 {
                     if (
-                        !Attribute.IsDefined(property, typeof(JsonIgnoreAttribute))
-                        && jsonProperty.Value.Type != JTokenType.Null
+                        jsonProperty.Value.Type != JTokenType.Null
                         && !IsUnparseableNumeric(property, jsonProperty))
                     {
                         if (property.PropertyType == typeof(DateTime?))
@@ -103,7 +114,13 @@ namespace SurveyMonkey
                 }
                 else
                 {
-                    WarnOfMissingDeserializationOpportunity(jsonProperty.Name, type.Name);
+                    bool haveMatchingPropertyToIgnore = properties.Any(pi =>
+                        String.Equals(pi.Name, name, StringComparison.OrdinalIgnoreCase)
+                        && Attribute.IsDefined(pi, typeof(JsonIgnoreAttribute)));
+                    if (!haveMatchingPropertyToIgnore)
+                    {
+                        WarnOfMissingDeserializationOpportunity(jsonProperty.Name, type.Name);
+                    }
                 }
             }
             return instance;
