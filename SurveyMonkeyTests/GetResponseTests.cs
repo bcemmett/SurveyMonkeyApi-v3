@@ -32,7 +32,6 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(String.Empty, results.First().CustomValue);
             Assert.IsEmpty(results.First().LogicPath);
             Assert.IsEmpty(results.First().PagePath);
-            Assert.IsEmpty(results.First().Metadata);
             Assert.AreEqual(123456789, results.First().RecipientId);
             Assert.AreEqual(84672934, results.First().SurveyId);
             Assert.AreEqual(91395530, results.First().CollectorId);
@@ -103,7 +102,6 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(String.Empty, results.First().CustomValue);
             Assert.IsEmpty(results.First().LogicPath);
             Assert.IsEmpty(results.First().PagePath);
-            Assert.IsEmpty(results.First().Metadata);
             Assert.IsNull(results.First().RecipientId);
             Assert.AreEqual(84672934, results.First().SurveyId);
             Assert.AreEqual(91395530, results.First().CollectorId);
@@ -277,7 +275,6 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(4968420283, result.Id);
             Assert.AreEqual("18.187.48.612", result.IpAddress);
             Assert.IsEmpty(result.LogicPath);
-            Assert.IsEmpty(result.Metadata);
             Assert.IsEmpty(result.PagePath);
             Assert.IsNull(result.RecipientId);
             Assert.AreEqual(ResponseStatus.Completed, result.ResponseStatus);
@@ -312,7 +309,6 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(4968420283, result.Id);
             Assert.AreEqual("18.187.48.612", result.IpAddress);
             Assert.IsEmpty(result.LogicPath);
-            Assert.IsEmpty(result.Metadata);
             Assert.IsEmpty(result.PagePath);
             Assert.IsNull(result.RecipientId);
             Assert.AreEqual(ResponseStatus.Completed, result.ResponseStatus);
