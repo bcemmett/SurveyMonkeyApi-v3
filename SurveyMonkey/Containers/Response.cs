@@ -19,7 +19,6 @@ namespace SurveyMonkey.Containers
         public string EditUrl { get; set; }
         public string AnalyzeUrl { get; set; }
         public Dictionary<string, object> LogicPath { get; set; } //TODO this structure isn't documented
-        public Dictionary<string, object> Metadata { get; set; } //TODO this structure isn't documented
         public List<object> PagePath { get; set; } //TODO this structure isn't documented
         public DateTime? DateCreated { get; set; }
         public DateTime? DateModified { get; set; }
@@ -30,6 +29,7 @@ namespace SurveyMonkey.Containers
         public string FirstName { get; set; }
         public string LastName { get; set; }
         public string EmailAddress { get; set; } //Described as "email" in SurveyMonkey's docs, but actually returned as "email_address" by the api.
+        internal ResponseMetadata Metadata { get; set; } // this structure isn't documented
         public List<ResponsePage> Pages { get; set; }
         public QuizResults QuizResults { get; set; }
 
