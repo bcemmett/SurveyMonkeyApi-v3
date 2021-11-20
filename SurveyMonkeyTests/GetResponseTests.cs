@@ -316,5 +316,35 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(8, result.TotalTime);
             Assert.IsNull(result.Pages);
         }
+
+        //All deserialised to the right properties, priorise presenting email.
+        [TestCase("{\"email\":\"a\",\"email_address\":\"b\",\"metadata\":{\"contact\":{\"email\":{\"type\":\"string\",\"value\":\"c\"}}}}", "a", "a", "b", "c")]
+        //Look for next in line if email is empty
+        [TestCase("{\"email\":\"\",\"email_address\":\"b\",\"metadata\":{\"contact\":{\"email\":{\"type\":\"string\",\"value\":\"c\"}}}}", "b", "", "b", "c")]
+        //Look for next in line if email is null
+        [TestCase("{\"email_address\":\"b\",\"metadata\":{\"contact\":{\"email\":{\"type\":\"string\",\"value\":\"c\"}}}}", "b", null, "b", "c")]
+        //Look for next in line if emailaddress is empty
+        [TestCase("{\"email\":\"\",\"email_address\":\"\",\"metadata\":{\"contact\":{\"email\":{\"type\":\"string\",\"value\":\"c\"}}}}", "c", "", "", "c")]
+        //Look for next in line if emailaddress is null
+        [TestCase("{\"email\":\"\",\"metadata\":{\"contact\":{\"email\":{\"type\":\"string\",\"value\":\"c\"}}}}", "c", "", null, "c")]
+        //Null if all empty
+        [TestCase("{\"email\":\"\",\"metadata\":{\"contact\":{\"email\":{\"type\":\"string\",\"value\":\"\"}}}}", null, "", null, "")]
+        //Null if all null
+        [TestCase("{\"metadata\":{\"contact\":{\"email\":{\"type\":\"string\"}}}}", null, null, null, null)]
+        //Null if contact doesn't exist
+        [TestCase("{\"email\":\"\",\"metadata\":{}}", null, "", null, null)]
+        //Null if metadata doesn't exist
+        [TestCase("{\"email\":\"\"}", null, "", null, null)]
+        public void EmailAddressInformationForEmailCollectorResponseIsCorrectlyPresented(string json, string presentedEmail, string directEmail, string directEmailAddress, string metadataEmail)
+        {
+            var client = new MockWebClient();
+            client.Responses.Add(json);
+            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var response = api.GetSurveyResponseDetails(1, 1);
+            Assert.AreEqual(directEmail, response.EmailFromDirectReferenceToEmail);
+            Assert.AreEqual(directEmailAddress, response.EmailFromDirectReferenceToEmailAddress);
+            Assert.AreEqual(metadataEmail, response.Metadata?.Contact == null ? null : response.Metadata.Contact.ContainsKey("email") ? response.Metadata.Contact["email"].Value : null);
+            Assert.AreEqual(presentedEmail, response.EmailAddress);
+        }
     }
 }
