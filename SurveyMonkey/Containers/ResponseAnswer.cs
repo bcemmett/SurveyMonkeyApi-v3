@@ -14,5 +14,7 @@ namespace SurveyMonkey.Containers
         public int? Score { get; set; }
         [JsonIgnore]
         internal object TagData { get; set; }
+        [JsonIgnore]
+        internal object ChoiceMetadata { get; set; } //Undocumented. Available by mapping to the survey structure
     }
 }
