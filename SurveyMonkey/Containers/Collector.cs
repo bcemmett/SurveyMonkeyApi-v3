@@ -77,6 +77,7 @@ namespace SurveyMonkey.Containers
         [JsonIgnore]
         public string SenderEmail =>
             !String.IsNullOrWhiteSpace(EmailFromSenderEmail) ? EmailFromSenderEmail : EmailFromEmail;
+        public bool? IsSenderEmailVerified { get; set; } //Undocumented
         internal string Href { get; set; }
         public int? ResponseCount { get; set; }
         public int? Width { get; set; }
