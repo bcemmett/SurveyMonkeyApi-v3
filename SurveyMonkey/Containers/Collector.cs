@@ -70,7 +70,13 @@ namespace SurveyMonkey.Containers
         public DateTime? DateCreated { get; set; }
         public string Url { get; set; }
         public bool? PasswordEnabled { get; set; }
-        public string SenderEmail { get; set; }
+        [JsonProperty("sender_email")] // /surveys/{id}/collectors [GetCollectorOverList(surveyId)] names the sender email as "email"
+        internal string EmailFromSenderEmail { get; set; }
+        [JsonProperty("email")] // /collectors/{id} [GetCollectorDetails(collectorId)] names the sender email as "sender_email"
+        internal string EmailFromEmail { get; set; }
+        [JsonIgnore]
+        public string SenderEmail =>
+            !String.IsNullOrWhiteSpace(EmailFromSenderEmail) ? EmailFromSenderEmail : EmailFromEmail;
         internal string Href { get; set; }
         public int? ResponseCount { get; set; }
         public int? Width { get; set; }
