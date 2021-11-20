@@ -54,9 +54,9 @@ namespace SurveyMonkeyTests
 
             Assert.AreEqual(15, replies.Count());
 
-            Console.WriteLine(replies.First().Response.PrettyPrint);
-            Console.WriteLine(replies.Skip(1).First().Response.PrettyPrint);
-            Console.WriteLine(replies.Skip(2).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(1).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(2).First().Response.PrettyPrint);
         }
 
         [Test]
@@ -86,9 +86,9 @@ namespace SurveyMonkeyTests
 
             Assert.AreEqual(12, replies.Count());
 
-            Console.WriteLine(replies.First().Response.PrettyPrint);
-            Console.WriteLine(replies.Skip(5).First().Response.PrettyPrint);
-            Console.WriteLine(replies.Skip(11).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(5).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(11).First().Response.PrettyPrint);
         }
 
         [Test]
@@ -102,8 +102,8 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Some text for my essay Bacon ipsum dolor sit amet pork belly short loin shank ribeye fatback t-bone kevin. Shankle short ribs venison, short loin bresaola beef ribs pork. Pork loin boudin jowl, frankfurter pork belly meatloaf", replies.First().Response.PrettyPrint);
             Assert.AreEqual("Single box", replies.Last().Response.PrettyPrint);
 
-            Console.WriteLine(replies.First().Response.PrettyPrint);
-            Console.WriteLine(replies.Last().Response.PrettyPrint);
+            //Console.WriteLine(replies.First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Last().Response.PrettyPrint);
         }
 
         [Test]
@@ -127,8 +127,8 @@ namespace SurveyMonkeyTests
 
             Assert.AreEqual(2, replies.Count());
 
-            Console.WriteLine(multi.PrettyPrint);
-            Console.WriteLine(numeric.PrettyPrint);
+            //Console.WriteLine(multi.PrettyPrint);
+            //Console.WriteLine(numeric.PrettyPrint);
         }
 
         [Test]
@@ -163,8 +163,8 @@ namespace SurveyMonkeyTests
 
             Assert.AreEqual(4, replies.Count());
 
-            Console.WriteLine(us.PrettyPrint);
-            Console.WriteLine(intnl.PrettyPrint);
+            //Console.WriteLine(us.PrettyPrint);
+            //Console.WriteLine(intnl.PrettyPrint);
         }
 
         [Test]
@@ -214,11 +214,11 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Choice 1: 2000-01-01 01:01:00Z\r\nChoice 2: 2000-01-30 13:01:00Z\r\nChoice 3: 2000-01-01 01:01:00Z\r\nChoice 4: 2000-01-12 13:01:00Z", replies.Skip(3).First().Response.PrettyPrint);
             Assert.AreEqual("Choice 1: 2000-01-01 01:01:00Z\r\nChoice 2: 2000-01-30 13:01:00Z\r\nChoice 3: 2000-01-01 01:01:00Z\r\nChoice 4: 2000-12-30 13:01:00Z", replies.Skip(4).First().Response.PrettyPrint);
 
-            Console.WriteLine(replies.First().Response.PrettyPrint);
-            Console.WriteLine(replies.Skip(1).First().Response.PrettyPrint);
-            Console.WriteLine(replies.Skip(2).First().Response.PrettyPrint);
-            Console.WriteLine(replies.Skip(3).First().Response.PrettyPrint);
-            Console.WriteLine(replies.Skip(4).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(1).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(2).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(3).First().Response.PrettyPrint);
+            //Console.WriteLine(replies.Skip(4).First().Response.PrettyPrint);
         }
 
         [Test]
@@ -243,8 +243,8 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Choice 1:\r\nMenu 1 heading: Menu 1 option 1\r\nMenu 2 heading: Menu 2 option 3\r\nMenu 3 heading: Menu 3 option 1\r\nMenu 4 heading: Menu 4 option 2\r\nChoice 2:\r\nMenu 1 heading: Menu 1 option 1\r\nMenu 2 heading: Menu 2 option 3\r\nMenu 3 heading: Menu 3 option 4\r\nMenu 4 heading: Menu 4 option 4\r\nChoice 3:\r\nMenu 1 heading: Menu 1 option 1\r\nMenu 2 heading: Menu 2 option 4\r\nMenu 3 heading: Menu 3 option 2\r\nMenu 4 heading: Menu 4 option 4\r\nChoice 4:\r\nMenu 1 heading: Menu 1 option 2\r\nMenu 2 heading: Menu 2 option 5\r\nMenu 3 heading: Menu 3 option 6\r\nMenu 4 heading: Menu 4 option 6\r\nChoice 5:\r\nMenu 1 heading: Menu 1 option 5\r\nMenu 2 heading: Menu 2 option 6\r\nMenu 3 heading: Menu 3 option 1\r\nMenu 4 heading: Menu 4 option 1\r\nChoice 6:\r\nMenu 1 heading: Menu 1 option 2\r\nMenu 2 heading: Menu 2 option 6\r\nMenu 3 heading: Menu 3 option 4\r\nMenu 4 heading: Menu 4 option 3\r\nChoice 7:\r\nMenu 1 heading: Menu 1 option 3\r\nMenu 2 heading: Menu 2 option 1\r\nMenu 3 heading: Menu 3 option 3\r\nMenu 4 heading: Menu 4 option 4", reply1.PrettyPrint);
             Assert.AreEqual("Choice 1:\r\nMenu 1 heading: Menu 1 option 3\r\nMenu 2 heading: Menu 2 option 4\r\nMenu 3 heading: Menu 3 option 1\r\nMenu 4 heading: Menu 4 option 5\r\nChoice 2:\r\nMenu 1 heading: Menu 1 option 1\r\nMenu 2 heading: Menu 2 option 3\r\nMenu 3 heading: Menu 3 option 4\r\nMenu 4 heading: Menu 4 option 6\r\nChoice 3:\r\nMenu 1 heading: Menu 1 option 2\r\nMenu 2 heading: Menu 2 option 1\r\nMenu 3 heading: Menu 3 option 3\r\nMenu 4 heading: Menu 4 option 4\r\nChoice 4:\r\nMenu 1 heading: Menu 1 option 4\r\nMenu 2 heading: Menu 2 option 2\r\nMenu 3 heading: Menu 3 option 3\r\nMenu 4 heading: Menu 4 option 2\r\nChoice 5:\r\nMenu 1 heading: Menu 1 option 4\r\nMenu 2 heading: Menu 2 option 2\r\nMenu 3 heading: Menu 3 option 6\r\nMenu 4 heading: Menu 4 option 5\r\nChoice 6:\r\nMenu 1 heading: Menu 1 option 2\r\nMenu 2 heading: Menu 2 option 3\r\nMenu 3 heading: Menu 3 option 2\r\nMenu 4 heading: Menu 4 option 4\r\nChoice 7:\r\nMenu 1 heading: Menu 1 option 5\r\nMenu 2 heading: Menu 2 option 3\r\nMenu 3 heading: Menu 3 option 6\r\nMenu 4 heading: Menu 4 option 2\r\nOther: other text", reply2.PrettyPrint);
 
-            Console.WriteLine(reply1.PrettyPrint);
-            Console.WriteLine(reply2.PrettyPrint);
+            //Console.WriteLine(reply1.PrettyPrint);
+            //Console.WriteLine(reply2.PrettyPrint);
         }
 
         [Test]
@@ -266,8 +266,8 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(2, reply2.NotApplicable.Count);
             Assert.AreEqual("1: Fifth Answer\r\n2: Fourth Answer\r\n3: Third Answer\r\nNot applicable text:\r\nFirst Answer\r\nSecond Answer", reply2.PrettyPrint);
 
-            Console.WriteLine(reply1.PrettyPrint);
-            Console.WriteLine(reply2.PrettyPrint);
+            //Console.WriteLine(reply1.PrettyPrint);
+            //Console.WriteLine(reply2.PrettyPrint);
         }
 
         [Test]
@@ -299,10 +299,10 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("not applicable", reply4.Rows.First(r => r.RowName == "Fifth Answer").Choice);
             Assert.AreEqual("First Answer: Label 1\r\nSecond Answer: Label 1\r\nThird Answer: Label 3\r\nFourth Answer: Label 3\r\nFifth Answer: not applicable", reply4.PrettyPrint);
 
-            Console.WriteLine(reply1.PrettyPrint);
-            Console.WriteLine(reply2.PrettyPrint);
-            Console.WriteLine(reply3.PrettyPrint);
-            Console.WriteLine(reply4.PrettyPrint);
+            //Console.WriteLine(reply1.PrettyPrint);
+            //Console.WriteLine(reply2.PrettyPrint);
+            //Console.WriteLine(reply3.PrettyPrint);
+            //Console.WriteLine(reply4.PrettyPrint);
         }
 
         [Test]
@@ -327,9 +327,9 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("other", reply3.OtherText);
             Assert.AreEqual("First Row: First Column\r\nSecond Row: Second Column\r\nThird Row: Third Column\r\nFourth Row: Fourth Column\r\nOther: other", reply3.PrettyPrint);
 
-            Console.WriteLine(reply1.PrettyPrint);
-            Console.WriteLine(reply2.PrettyPrint);
-            Console.WriteLine(reply3.PrettyPrint);
+            //Console.WriteLine(reply1.PrettyPrint);
+            //Console.WriteLine(reply2.PrettyPrint);
+            //Console.WriteLine(reply3.PrettyPrint);
         }
 
         [Test]
@@ -350,8 +350,8 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("some other stuff", reply2.OtherText);
             Assert.AreEqual("First Row:\r\nSecond Column\r\nSecond Row:\r\nSecond Column\r\nFourth Column\r\nThird Row:\r\nFirst Column\r\nFourth Row:\r\nSecond Column\r\nFourth Column\r\nFifth Row:\r\nThird Column\r\nOther: some other stuff", reply2.PrettyPrint);
 
-            Console.WriteLine(reply1.PrettyPrint);
-            Console.WriteLine(reply2.PrettyPrint);
+            //Console.WriteLine(reply1.PrettyPrint);
+            //Console.WriteLine(reply2.PrettyPrint);
         }
     }
 }
