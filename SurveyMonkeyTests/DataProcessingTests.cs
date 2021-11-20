@@ -50,6 +50,10 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Bla bla other", reply.OtherText);
 
             Assert.AreEqual(15, replies.Count());
+
+            Console.WriteLine(replies.First().Response.PrettyPrint);
+            Console.WriteLine(replies.Skip(1).First().Response.PrettyPrint);
+            Console.WriteLine(replies.Skip(2).First().Response.PrettyPrint);
         }
 
         [Test]
@@ -75,6 +79,10 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("Bla bla other", reply.OtherText);
 
             Assert.AreEqual(12, replies.Count());
+
+            Console.WriteLine(replies.First().Response.PrettyPrint);
+            Console.WriteLine(replies.Skip(5).First().Response.PrettyPrint);
+            Console.WriteLine(replies.Skip(11).First().Response.PrettyPrint);
         }
 
         [Test]
@@ -85,6 +93,8 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(2, replies.Count());
             Assert.AreEqual("Some text for my essay Bacon ipsum dolor sit amet pork belly short loin shank ribeye fatback t-bone kevin. Shankle short ribs venison, short loin bresaola beef ribs pork. Pork loin boudin jowl, frankfurter pork belly meatloaf", ((OpenEndedSingleAnswer)replies.First().Response).Text);
             Assert.AreEqual("Single box", ((OpenEndedSingleAnswer)replies.Last().Response).Text);
+            Console.WriteLine(replies.Last().Response.PrettyPrint);
+            Console.WriteLine(replies.First().Response.PrettyPrint);
         }
 
         [Test]
@@ -105,6 +115,9 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(4, numeric.Rows.Count);
 
             Assert.AreEqual(2, replies.Count());
+
+            Console.WriteLine(replies.First().Response.PrettyPrint);
+            Console.WriteLine(replies.Last().Response.PrettyPrint);
         }
 
         [Test]
@@ -136,6 +149,9 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("testing@bla.com", intnl.Email);
 
             Assert.AreEqual(4, replies.Count());
+
+            Console.WriteLine(replies.First().Response.PrettyPrint);
+            Console.WriteLine(replies.Last().Response.PrettyPrint);
         }
 
         [Test]
@@ -178,6 +194,12 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(new DateTime(2000, 1, 30, 13, 1, 0, DateTimeKind.Utc), timestamps.Skip(17).First());
             Assert.AreEqual(new DateTime(2000, 1, 1, 1, 1, 0, DateTimeKind.Utc), timestamps.Skip(18).First());
             Assert.AreEqual(new DateTime(2000, 12, 30, 13, 1, 0, DateTimeKind.Utc), timestamps.Skip(19).First());
+
+            Console.WriteLine(replies.First().Response.PrettyPrint);
+            Console.WriteLine(replies.Skip(1).First().Response.PrettyPrint);
+            Console.WriteLine(replies.Skip(2).First().Response.PrettyPrint);
+            Console.WriteLine(replies.Skip(3).First().Response.PrettyPrint);
+            Console.WriteLine(replies.Skip(4).First().Response.PrettyPrint);
         }
 
         [Test]
@@ -198,6 +220,9 @@ namespace SurveyMonkeyTests
             Assert.AreEqual(7, reply2.Rows.Count);
             Assert.AreEqual(4, reply2.Rows.First().Value.Columns.Count);
             Assert.AreEqual("other text", reply2.OtherText);
+            
+            Console.WriteLine(reply1.PrettyPrint);
+            Console.WriteLine(reply2.PrettyPrint);
         }
 
         [Test]
@@ -216,6 +241,9 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("First Answer", reply2.NotApplicable.First());
             Assert.AreEqual("Not applicable text", reply2.NotApplicableText);
             Assert.AreEqual(2, reply2.NotApplicable.Count);
+
+            Console.WriteLine(reply1.PrettyPrint);
+            Console.WriteLine(reply2.PrettyPrint);
         }
 
         [Test]
@@ -242,6 +270,11 @@ namespace SurveyMonkeyTests
 
             var reply4 = (MatrixRatingAnswer)replies.Skip(3).First().Response;
             Assert.AreEqual("not applicable", reply4.Rows.First(r => r.RowName == "Fifth Answer").Choice);
+
+            Console.WriteLine(reply1.PrettyPrint);
+            Console.WriteLine(reply2.PrettyPrint);
+            Console.WriteLine(reply3.PrettyPrint);
+            Console.WriteLine(reply4.PrettyPrint);
         }
 
         [Test]
@@ -262,6 +295,10 @@ namespace SurveyMonkeyTests
             var reply3 = (MatrixSingleAnswer)replies.Skip(2).First().Response;
             Assert.AreEqual(4, reply3.Rows.Count);
             Assert.AreEqual("other", reply3.OtherText);
+
+            Console.WriteLine(reply1.PrettyPrint);
+            Console.WriteLine(reply2.PrettyPrint);
+            Console.WriteLine(reply3.PrettyPrint);
         }
 
         [Test]
@@ -279,6 +316,9 @@ namespace SurveyMonkeyTests
 
             var reply2 = (MatrixMultiAnswer)replies.Last().Response;
             Assert.AreEqual("some other stuff", reply2.OtherText);
+
+            Console.WriteLine(reply1.PrettyPrint);
+            Console.WriteLine(reply2.PrettyPrint);
         }
     }
 }
