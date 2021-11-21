@@ -12,6 +12,7 @@ namespace SurveyMonkey.Containers
         public string Text { get; set; }
         public bool? IsCorrect { get; set; }
         public int? Score { get; set; }
+        public string SimpleText { get; set; }
         [JsonIgnore]
         internal object TagData { get; set; }
         [JsonIgnore]
