@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Newtonsoft.Json.Linq;
 using SurveyMonkey.Containers;
+using SurveyMonkey.Helpers;
 using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkey
@@ -38,9 +39,10 @@ namespace SurveyMonkey
         private Response GetResponseRequest(long objectId, ObjectType source, long responseId, bool details)
         {
             var detailString = details ? "/details" : String.Empty;
-            string endPoint = String.Format("/{0}s/{1}/responses/{2}{3}", source.ToString().ToLower(), objectId, responseId, detailString);
+            string endPoint = $"/{source.ToString().ToLower()}s/{objectId}/responses/{responseId}{detailString}";
             var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            var requestData = details ? RequestSettingsHelper.GetPopulatedProperties(new GetResponseListSettings{Simple = true}) : new RequestData();
+            JToken result = MakeApiRequest(endPoint, verb, requestData);
             var responses = result.ToObject<Response>();
             return responses;
         }
@@ -89,11 +91,12 @@ namespace SurveyMonkey
             return GetResponseListPager(collectorId, ObjectType.Collector, settings, true);
         }
 
-        private List<Response> GetResponseListPager(long id, ObjectType objectType, IPagingSettings settings, bool details)
+        private List<Response> GetResponseListPager(long id, ObjectType objectType, GetResponseListSettings settings, bool details)
         {
             var bulk = details ? "/bulk" : String.Empty;
-            string endPoint = String.Format("/{0}s/{1}/responses{2}", objectType.ToString().ToLower(), id, bulk);
+            string endPoint = $"/{objectType.ToString().ToLower()}s/{id}/responses{bulk}";
             int maxResultsPerPage = details ? 100 : 1000;
+            settings.Simple = details ? true : null;
             var results = Page(settings, endPoint, typeof(List<Response>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Response)o);
         }

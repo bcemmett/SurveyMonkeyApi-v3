@@ -12,9 +12,11 @@ namespace SurveyMonkey.Containers
         public string Text { get; set; }
         public bool? IsCorrect { get; set; }
         public int? Score { get; set; }
+        public string DownloadUrl { get; set; }
+        public string ContentType { get; set; }
+        public string SimpleText { get; set; }
         [JsonIgnore]
         internal object TagData { get; set; }
-        [JsonIgnore]
-        internal object ChoiceMetadata { get; set; } //Undocumented. Available by mapping to the survey structure
+        public ChoiceMetadata ChoiceMetadata { get; set; }
     }
 }
