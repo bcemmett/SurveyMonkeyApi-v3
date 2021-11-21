@@ -218,39 +218,51 @@ namespace SurveyMonkeyTests
 
             api.GetSurveyResponseDetailsList(1);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/1/responses/bulk", client.Requests.Last().Url);
+            Assert.AreEqual("True", client.Requests.Last().QueryString["simple"]);
 
             api.GetCollectorResponseDetailsList(2);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/2/responses/bulk", client.Requests.Last().Url);
+            Assert.AreEqual("True", client.Requests.Last().QueryString["simple"]);
 
             api.GetSurveyResponseOverviewList(3);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/3/responses", client.Requests.Last().Url);
+            Assert.IsNull(client.Requests.Last().QueryString["simple"]);
 
             api.GetCollectorResponseOverviewList(4);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/4/responses", client.Requests.Last().Url);
+            Assert.IsNull(client.Requests.Last().QueryString["simple"]);
 
             api.GetSurveyResponseDetailsList(5, new GetResponseListSettings());
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/5/responses/bulk", client.Requests.Last().Url);
+            Assert.AreEqual("True", client.Requests.Last().QueryString["simple"]);
 
             api.GetCollectorResponseDetailsList(6, new GetResponseListSettings());
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/6/responses/bulk", client.Requests.Last().Url);
+            Assert.AreEqual("True", client.Requests.Last().QueryString["simple"]);
 
             api.GetSurveyResponseOverviewList(7,new GetResponseListSettings());
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/7/responses", client.Requests.Last().Url);
+            Assert.IsNull(client.Requests.Last().QueryString["simple"]);
 
             api.GetCollectorResponseOverviewList(8, new GetResponseListSettings());
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/8/responses", client.Requests.Last().Url);
+            Assert.IsNull(client.Requests.Last().QueryString["simple"]);
 
             api.GetSurveyResponseDetails(9, 10);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/9/responses/10/details", client.Requests.Last().Url);
+            Assert.AreEqual("True", client.Requests.Last().QueryString["simple"]);
 
             api.GetCollectorResponseDetails(11, 12);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/11/responses/12/details", client.Requests.Last().Url);
+            Assert.AreEqual("True", client.Requests.Last().QueryString["simple"]);
 
             api.GetSurveyResponseOverview(13, 14);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/13/responses/14", client.Requests.Last().Url);
+            Assert.IsNull(client.Requests.Last().QueryString["simple"]);
 
             api.GetCollectorResponseOverview(15, 16);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/15/responses/16", client.Requests.Last().Url);
+            Assert.IsNull(client.Requests.Last().QueryString["simple"]);
         }
 
         [Test]
