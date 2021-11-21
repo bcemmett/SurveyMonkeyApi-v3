@@ -18,7 +18,7 @@ namespace SurveyMonkeyTests
                 {""per_page"":1000,""total"":3,""data"":[{""status"":""new"",""name"":""Email Invitation 1"",""date_modified"":""2016-09-17T21:36:00+00:00"",""response_count"":0,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91664733"",""date_created"":""2016-09-17T21:36:00+00:00"",""type"":""email"",""id"":""91664733""},{""status"":""closed"",""name"":""Web Link 1"",""date_modified"":""2014-08-26T12:50:00+00:00"",""url"":""https:\/\/www.surveymonkey.com\/r\/9QBY7BQ"",""response_count"":1,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/57184593"",""date_created"":""2014-08-26T11:14:00+00:00"",""type"":""weblink"",""id"":""57184593""},{""status"":""closed"",""name"":""Web Link 2"",""date_modified"":""2014-08-26T12:50:00+00:00"",""url"":""https:\/\/www.surveymonkey.com\/r\/9TWKVDN"",""response_count"":98,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/57185230"",""date_created"":""2014-08-26T11:42:00+00:00"",""type"":""weblink"",""id"":""57185230""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/55249163\/collectors?page=1&per_page=1000""}}
             ");
 
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var results = api.GetCollectorList(55249163);
             Assert.AreEqual(1, client.Requests.Count);
             Assert.AreEqual(3, results.Count);
@@ -37,7 +37,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(@"
                 {""status"":""closed"",""redirect_url"":""https:\/\/www.surveymonkey.com"",""thank_you_message"":""Thank you for completing our survey!"",""response_count"":1,""closed_page_message"":""closed"",""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/57184593"",""close_date"":null,""display_survey_results"":false,""allow_multiple_responses"":true,""anonymous_type"":""not_anonymous"",""id"":""57184593"",""password_enabled"":false,""name"":""Web Link 1"",""date_modified"":""2014-08-26T12:50:00+00:00"",""url"":null,""edit_response_type"":""until_complete"",""sender_email"":null,""date_created"":""2014-08-26T11:14:00+00:00"",""disqualification_message"":""Thank you for completing our survey!"",""type"":""weblink"",""response_limit"":3,""redirect_type"":""url""}
             ");
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var result = api.GetCollectorDetails(57184593);
             Assert.IsTrue(result.AllowMultipleResponses);
             Assert.AreEqual(Collector.AnonymousOption.NotAnonymous, result.AnonymousType);
@@ -70,7 +70,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(@"
                 {""per_page"":1000,""total"":1,""data"":[{""status"":""sent"",""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/messages\/29296390"",""type"":""invite"",""id"":""29296390""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/messages?page=1&per_page=1000""}}
             ");
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var result = api.GetMessageList(85470742);
             Assert.AreEqual(1, result.Count);
             Assert.AreEqual("https://api.surveymonkey.net/v3/collectors/85470742/messages/29296390", result.First().Href);
@@ -86,7 +86,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(@"
                 {""status"":""sent"",""body"":""Hi,\r\nHere's your survey: [SurveyLink]\r\nUnsubscribe: [OptOutLink]\r\n[FooterLink]"",""recipient_status"":null,""is_branding_enabled"":true,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/messages\/29296390"",""is_scheduled"":true,""scheduled_date"":""2016-05-10T16:28:06+00:00"",""date_created"":""2016-05-10T16:23:04+00:00"",""type"":""invite"",""id"":""29296390"",""subject"":""MySubjectLine""}
             ");
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var result = api.GetMessageDetails(85470742, 29296390);
             Assert.AreEqual("Hi,\r\nHere\'s your survey: [SurveyLink]\r\nUnsubscribe: [OptOutLink]\r\n[FooterLink]", result.Body);
             Assert.AreEqual(new DateTime(2016, 5, 10, 16, 23, 4, DateTimeKind.Utc), result.DateCreated);
@@ -106,7 +106,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(@"
                 {""per_page"":1000,""total"":2,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/recipients\/2407626836"",""id"":""2407626836"",""email"":""test+12@gmail.com""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/recipients\/2407626837"",""id"":""2407626837"",""email"":""test+13@gmail.com""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/messages\/29296390\/recipients?page=1&per_page=1000""}}
             ");
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var result = api.GetMessageRecipientList(85470742, 29296390);
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual("https://api.surveymonkey.net/v3/collectors/85470742/recipients/2407626836", result.First().Href);
@@ -122,7 +122,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(@"
                 {""per_page"":1000,""total"":2,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/94732812\/recipients\/2751878525"",""id"":""2751878525"",""email"":""test1@test123456789.com""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/94732812\/recipients\/2751878526"",""id"":""2751878526"",""email"":""test2@test123456789.com""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/94732812\/recipients?page=1&per_page=1000""}}
             ");
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var result = api.GetCollectorRecipientList(94732812);
             Assert.AreEqual(2, result.Count);
             Assert.AreEqual(2751878525, result.First().Id);
@@ -137,7 +137,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(@"
                 {""survey_response_status"":""not_responded"",""mail_status"":""sent"",""id"":""2407626836"",""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/85470742\/recipients\/2407626836"",""remove_link"":""https:\/\/www.surveymonkey.com\/optout.aspx?sm=blablabla"",""survey_id"":""53774320"",""email"":""test+12@gmail.com"",""first_name"":""Firstname"",""last_name"":""lastName"",""survey_link"":""https:\/\/www.surveymonkey.com\/r\/?sm=blabla""}
             ");
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var result = api.GetRecipientDetails(85470742, 2407626836);
             Assert.AreEqual("test+12@gmail.com", result.Email);
             Assert.AreEqual("https://api.surveymonkey.net/v3/collectors/85470742/recipients/2407626836", result.Href);

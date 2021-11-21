@@ -18,7 +18,7 @@ namespace SurveyMonkeyTests
                 {""per_page"":50,""total"":3,""data"":[{""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420283"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""22222""}]}]}],""page_path"":[],""recipient_id"":""123456789"",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}},{""total_time"":7,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420510"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420510"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:21+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420510"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""2!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:14+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=Lx7StOGuxNDuVUAr8BPyjg2ViuVtA8zOHdXIxBAegrKWNdxw4B0iMvxwLegwwvY3"",""metadata"":{}},{""total_time"":15,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420845"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420845"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:40+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420845"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315477""}]},{""id"":""1013185659"",""answers"":[{""text"":""The second!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:24+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=bc2BsaGJJWvkzcJSuPORfnpY5wGZdCs_2F0hBWIXcOYE1FZDU3KKxUI_2BgiFpNVzGc4"",""metadata"":{}}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/bulk?page=1&per_page=50""}}
             ");
 
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var results = api.GetSurveyResponseDetailsList(84672934);
             Assert.AreEqual(1, client.Requests.Count);
 
@@ -55,7 +55,7 @@ namespace SurveyMonkeyTests
                 {""per_page"":50,""total"":3,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420283"",""id"":""4968420283""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420510"",""id"":""4968420510""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420845"",""id"":""4968420845""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses?page=1&per_page=50""}}
             ");
 
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var results = api.GetSurveyResponseOverviewList(84672934);
             Assert.AreEqual(1, client.Requests.Count);
 
@@ -88,7 +88,7 @@ namespace SurveyMonkeyTests
                 {""per_page"":50,""total"":3,""data"":[{""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420283"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""22222""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}},{""total_time"":7,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420510"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420510"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:21+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420510"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""2!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:14+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=Lx7StOGuxNDuVUAr8BPyjg2ViuVtA8zOHdXIxBAegrKWNdxw4B0iMvxwLegwwvY3"",""metadata"":{}},{""total_time"":15,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420845"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420845"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:40+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420845"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315477""}]},{""id"":""1013185659"",""answers"":[{""text"":""The second!""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:24+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=bc2BsaGJJWvkzcJSuPORfnpY5wGZdCs_2F0hBWIXcOYE1FZDU3KKxUI_2BgiFpNVzGc4"",""metadata"":{}}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/bulk?page=1&per_page=50""}}
             ");
 
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var results = api.GetCollectorResponseDetailsList(91395530);
             Assert.AreEqual(1, client.Requests.Count);
 
@@ -125,7 +125,7 @@ namespace SurveyMonkeyTests
                 {""per_page"":50,""total"":3,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420283"",""id"":""4968420283""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420510"",""id"":""4968420510""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420845"",""id"":""4968420845""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses?page=1&per_page=50""}}
             ");
 
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var results = api.GetCollectorResponseOverviewList(91395530);
             Assert.AreEqual(1, client.Requests.Count);
 
@@ -164,7 +164,7 @@ namespace SurveyMonkeyTests
                 {""per_page"":100,""total"":299,""data"":[{""id"":""201""},{""id"":""202""},{""id"":""203""},{""id"":""204""},{""id"":""205""},{""id"":""206""},{""id"":""207""},{""id"":""208""},{""id"":""209""},{""id"":""210""},{""id"":""211""},{""id"":""212""},{""id"":""213""},{""id"":""214""},{""id"":""215""},{""id"":""216""},{""id"":""217""},{""id"":""218""},{""id"":""219""},{""id"":""220""},{""id"":""221""},{""id"":""222""},{""id"":""223""},{""id"":""224""},{""id"":""225""},{""id"":""226""},{""id"":""227""},{""id"":""228""},{""id"":""229""},{""id"":""230""},{""id"":""231""},{""id"":""232""},{""id"":""233""},{""id"":""234""},{""id"":""235""},{""id"":""236""},{""id"":""237""},{""id"":""238""},{""id"":""239""},{""id"":""240""},{""id"":""241""},{""id"":""242""},{""id"":""243""},{""id"":""244""},{""id"":""245""},{""id"":""246""},{""id"":""247""},{""id"":""248""},{""id"":""249""},{""id"":""250""},{""id"":""251""},{""id"":""252""},{""id"":""253""},{""id"":""254""},{""id"":""255""},{""id"":""256""},{""id"":""257""},{""id"":""258""},{""id"":""259""},{""id"":""260""},{""id"":""261""},{""id"":""262""},{""id"":""263""},{""id"":""264""},{""id"":""265""},{""id"":""266""},{""id"":""267""},{""id"":""268""},{""id"":""269""},{""id"":""270""},{""id"":""271""},{""id"":""272""},{""id"":""273""},{""id"":""274""},{""id"":""275""},{""id"":""276""},{""id"":""277""},{""id"":""278""},{""id"":""279""},{""id"":""280""},{""id"":""281""},{""id"":""282""},{""id"":""283""},{""id"":""284""},{""id"":""285""},{""id"":""286""},{""id"":""287""},{""id"":""288""},{""id"":""289""},{""id"":""290""},{""id"":""291""},{""id"":""292""},{""id"":""293""},{""id"":""294""},{""id"":""295""},{""id"":""296""},{""id"":""297""},{""id"":""298""},{""id"":""299""}],""page"":3,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/?page=3&per_page=100""}}
             ");
 
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var results = api.GetSurveyResponseDetailsList(84672934);
             Assert.AreEqual(299, results.Count);
             Assert.AreEqual(299, results.Last().Id);
@@ -188,7 +188,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(@"
                 {""per_page"":100,""total"":300,""data"":[],""page"":4,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/?page=4&per_page=100""}}
             ");
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var results = api.GetCollectorResponseDetailsList(91395530, new GetResponseListSettings {Custom = "asdf"});
             Assert.AreEqual(300, results.Count);
             Assert.AreEqual(300, results.Last().Id);
@@ -214,7 +214,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(standardIndividualResponse);
             client.Responses.Add(standardIndividualResponse);
             client.Responses.Add(standardIndividualResponse);
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
 
             api.GetSurveyResponseDetailsList(1);
             Assert.AreEqual(@"https://api.surveymonkey.net/v3/surveys/1/responses/bulk", client.Requests.Last().Url);
@@ -260,7 +260,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(@"
                 {""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420283"",""custom_variables"":{""custvar_1"":""one"",""custvar_2"":""two""},""ip_address"":""18.187.48.612"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""22222""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}}
             ");
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var result = api.GetSurveyResponseDetails(84672934, 4968420283);
 
             Assert.AreEqual(@"http://www.surveymonkey.com/analyze/browse/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283", result.AnalyzeUrl);
@@ -294,7 +294,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(@"
                 {""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420283"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}}
             ");
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var result = api.GetCollectorResponseDetails(84672934, 4968420283);
 
             Assert.AreEqual(@"http://www.surveymonkey.com/analyze/browse/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283", result.AnalyzeUrl);
@@ -339,7 +339,7 @@ namespace SurveyMonkeyTests
         {
             var client = new MockWebClient();
             client.Responses.Add(json);
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var response = api.GetSurveyResponseDetails(1, 1);
             Assert.AreEqual(directEmail, response.EmailFromDirectReferenceToEmail);
             Assert.AreEqual(directEmailAddress, response.EmailFromDirectReferenceToEmailAddress);

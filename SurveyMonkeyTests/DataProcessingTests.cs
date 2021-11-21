@@ -24,7 +24,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(getCollectorDetails1);
             client.Responses.Add(getCollectorDetails2);
             client.Responses.Add(getResponseDetails);
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             var results = api.PopulateSurveyResponseInformation(53774320);
             return results.Responses.First().Questions.Select(q => q.ProcessedAnswer).ToList();
         }
