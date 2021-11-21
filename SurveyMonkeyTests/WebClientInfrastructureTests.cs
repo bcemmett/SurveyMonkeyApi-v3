@@ -25,7 +25,7 @@ namespace SurveyMonkeyTests
             Assert.AreEqual("application/json", client.Requests.First().Headers["Content-Type"]);
             Assert.AreEqual("bearer TestOAuthToken", client.Requests.First().Headers["Authorization"]);
             Assert.AreEqual(Encoding.UTF8, client.Requests.First().Encoding);
-            Assert.AreEqual("https://api.surveymonkey.net/v3/surveys", client.Requests.First().Url);
+            Assert.AreEqual("https://api.surveymonkey.com/v3/surveys", client.Requests.First().Url);
         }
 
         [Test]
