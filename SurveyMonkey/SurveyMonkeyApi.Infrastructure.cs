@@ -21,6 +21,9 @@ namespace SurveyMonkey
         private readonly int[] _retrySequence = { 5, 30, 300, 900 };
         private int _requestsMade;
 
+        /// <summary>
+        /// The total number of api requests, including retries, made in the lifetime of this object.
+        /// </summary>
         public int ApiRequestsMade => _requestsMade;
 
         public IWebProxy Proxy
@@ -29,21 +32,29 @@ namespace SurveyMonkey
             set { _webClient.Proxy = value; }
         }
 
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
         public SurveyMonkeyApi(string accessToken)
             : this(accessToken, null, null, null)
         {
         }
 
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
+        /// <param name="rateLimitDelay">The number of milliseconds to wait between each api request. 500ms by default to accomodate SurveyMonkey's default 120/s limit. Set to a lower number if you have been granted a higher rate limit.</param>
         public SurveyMonkeyApi(string accessToken, int rateLimitDelay)
             : this(accessToken, rateLimitDelay, null, null)
         {
         }
 
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
+        /// <param name="retrySequence">A sequence of the number of seconds to wait between retries if connectivity issues are encountered. Defaults to 5, 30, 300, then 900 seconds.</param>
         public SurveyMonkeyApi(string accessToken, int[] retrySequence)
             : this(accessToken, null, retrySequence, null)
         {
         }
 
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
+        /// <param name="rateLimitDelay">The number of milliseconds to wait between each api request. 500ms by default to accomodate SurveyMonkey's default 120/s limit. Set to a lower number if you have been granted a higher rate limit.</param>
+        /// <param name="retrySequence">A sequence of the number of seconds to wait between retries if connectivity issues are encountered. Defaults to 5, 30, 300, then 900 seconds.</param>
         public SurveyMonkeyApi(string accessToken, int rateLimitDelay, int[] retrySequence)
             : this(accessToken, rateLimitDelay, retrySequence, null)
         {
