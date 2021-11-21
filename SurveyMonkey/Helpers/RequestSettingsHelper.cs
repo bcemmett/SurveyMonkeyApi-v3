@@ -38,6 +38,10 @@ namespace SurveyMonkey.Helpers
                     {
                         output.Add(PropertyCasingHelper.CamelToSnake(property.Name), ((List<long>)property.GetValue(obj)).ConvertAll(x => x.ToString()));
                     }
+                    else if (underlyingType == typeof(bool))
+                    {
+                        output.Add(PropertyCasingHelper.CamelToSnake(property.Name), PropertyCasingHelper.CamelToSnake(property.GetValue(obj).ToString()));
+                    }
                     else
                     {
                         output.Add(PropertyCasingHelper.CamelToSnake(property.Name), property.GetValue(obj));
