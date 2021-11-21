@@ -15,7 +15,6 @@ namespace SurveyMonkey.Containers
         internal string Href { get; set; }
         public Dictionary<string, string> CustomVariables { get; set; }
         public int? TotalTime { get; set; }
-        public string CustomValue { get; set; }
         public string EditUrl { get; set; }
         public string AnalyzeUrl { get; set; }
         public Dictionary<string, object> LogicPath { get; set; } //TODO this structure isn't documented
@@ -26,8 +25,6 @@ namespace SurveyMonkey.Containers
         public CollectionMode? CollectionMode { get; set; }
         public string IpAddress { get; set; }
         public long? RecipientId { get; set; }
-        public string FirstName { get; set; }
-        public string LastName { get; set; }
 
         /*
          * SurveyMonkey's docs say that for an email collector, responses will have a property "email". I've never
@@ -59,6 +56,27 @@ namespace SurveyMonkey.Containers
             !String.IsNullOrWhiteSpace(EmailFromDirectReferenceToEmail) ? EmailFromDirectReferenceToEmail :
                 !String.IsNullOrWhiteSpace(EmailFromDirectReferenceToEmailAddress) ? EmailFromDirectReferenceToEmailAddress :
                     Metadata?.GetValueByKeyOrNull("email");
+
+        /*
+         * Because of the fragility of how the api presents contact data for email responses and how it's duplicated in the metadata
+         * object in an undocumented way, we'll also look for first_name, last_name, and custom_value info there in case they
+         * change that behaviour in the future.
+         */
+
+        [JsonProperty("first_name")]
+        internal string FirstNameFromDirectReference { get; set; }
+        [JsonIgnore]
+        public string FirstName => FirstNameFromDirectReference ?? Metadata?.GetValueByKeyOrNull("first_name");
+
+        [JsonProperty("last_name")]
+        internal string LastNameFromDirectReference { get; set; }
+        [JsonIgnore]
+        public string LastName => LastNameFromDirectReference ?? Metadata?.GetValueByKeyOrNull("last_name");
+
+        [JsonProperty("custom_value")]
+        internal string CustomValueFromDirectReference { get; set; }
+        [JsonIgnore]
+        public string CustomValue => CustomValueFromDirectReference ?? Metadata?.GetValueByKeyOrNull("custom_value");
 
         public List<ResponsePage> Pages { get; set; }
         public QuizResults QuizResults { get; set; }
