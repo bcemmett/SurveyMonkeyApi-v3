@@ -14,7 +14,6 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi : IDisposable, ISurveyMonkeyApi
     {
-        private readonly string _apiKey;
         private readonly string _accessToken;
         private IWebClient _webClient;
         private DateTime _lastRequestTime = DateTime.MinValue;
@@ -31,66 +30,44 @@ namespace SurveyMonkey
         }
 
         public SurveyMonkeyApi(string accessToken)
-            : this(null, accessToken, null, null, null)
+            : this(accessToken, null, null, null)
         {
         }
 
         public SurveyMonkeyApi(string accessToken, int rateLimitDelay)
-            : this(null, accessToken, rateLimitDelay, null, null)
+            : this(accessToken, rateLimitDelay, null, null)
         {
         }
 
         public SurveyMonkeyApi(string accessToken, int[] retrySequence)
-            : this(null, accessToken, null, retrySequence, null)
+            : this(accessToken, null, retrySequence, null)
         {
         }
 
         public SurveyMonkeyApi(string accessToken, int rateLimitDelay, int[] retrySequence)
-            : this(null, accessToken, rateLimitDelay, retrySequence, null)
+            : this(accessToken, rateLimitDelay, retrySequence, null)
         {
         }
 
-        public SurveyMonkeyApi(string apiKey, string accessToken)
-            : this(apiKey, accessToken, null, null, null)
+        internal SurveyMonkeyApi(string accessToken, IWebClient webClient)
+            : this(accessToken, 0, null, webClient)
         {
         }
 
-        public SurveyMonkeyApi(string apiKey, string accessToken, int rateLimitDelay)
-            : this(apiKey, accessToken, rateLimitDelay, null, null)
+        internal SurveyMonkeyApi(string accessToken, IWebClient webClient, int rateLimitDelay)
+            : this(accessToken, rateLimitDelay, null, webClient)
         {
         }
 
-        public SurveyMonkeyApi(string apiKey, string accessToken, int[] retrySequence)
-            : this(apiKey, accessToken, null, retrySequence, null)
+        internal SurveyMonkeyApi(string accessToken, IWebClient webClient, int[] retrySequence)
+            : this(accessToken, null, retrySequence, webClient)
         {
         }
 
-        public SurveyMonkeyApi(string apiKey, string accessToken, int rateLimitDelay, int[] retrySequence)
-            : this(apiKey, accessToken, rateLimitDelay, retrySequence, null)
-        {
-        }
-
-
-        internal SurveyMonkeyApi(string apiKey, string accessToken, IWebClient webClient)
-            : this(apiKey, accessToken, 0, null, webClient)
-        {
-        }
-
-        internal SurveyMonkeyApi(string apiKey, string accessToken, IWebClient webClient, int rateLimitDelay)
-            : this(apiKey, accessToken, rateLimitDelay, null, webClient)
-        {
-        }
-
-        internal SurveyMonkeyApi(string apiKey, string accessToken, IWebClient webClient, int[] retrySequence)
-            : this(apiKey, accessToken, null, retrySequence, webClient)
-        {
-        }
-
-        private SurveyMonkeyApi(string apiKey, string accessToken, int? rateLimitDelay, int[] retrySequence, IWebClient webClient)
+        private SurveyMonkeyApi(string accessToken, int? rateLimitDelay, int[] retrySequence, IWebClient webClient)
         {
             _webClient = webClient ?? new LiveWebClient();
             _webClient.Encoding = Encoding.UTF8;
-            _apiKey = apiKey;
             _accessToken = accessToken;
 
             if (rateLimitDelay.HasValue)
@@ -112,10 +89,6 @@ namespace SurveyMonkey
             var url = "https://api.surveymonkey.net/v3" + endpoint;
             _webClient.Headers.Add("Content-Type", "application/json");
             _webClient.Headers.Add("Authorization", "bearer " + _accessToken);
-            if (!String.IsNullOrEmpty(_apiKey))
-            {
-                _webClient.QueryString.Add("api_key", _apiKey);
-            }
             if (verb == Verb.GET)
             {
                 foreach (var item in data)
