@@ -97,7 +97,7 @@ namespace SurveyMonkey
             RateLimit();
             ResetWebClient();
 
-            var url = "https://api.surveymonkey.net/v3" + endpoint;
+            var url = "https://api.surveymonkey.com/v3" + endpoint;
             _webClient.Headers.Add("Content-Type", "application/json");
             _webClient.Headers.Add("Authorization", "bearer " + _accessToken);
             if (verb == Verb.GET)
