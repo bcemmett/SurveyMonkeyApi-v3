@@ -32,10 +32,12 @@ namespace SurveyMonkey.Containers
         /*
          * SurveyMonkey's docs say that for an email collector, responses will have a property "email". I've never
          * seen that property exist. There does appear to always be a property email_address, which has always
-         * been an empty string. Finally, they have an undocumented metadata object, with a contact which has
-         * key value pair properties for first_name, last_name, custom_value, and email. The first_name,
-         * last_name, and custom_value properties also exist duplicated as root properties on the response object.
-         * Suspect that their intention was to do that with email too, and that they've misnamed the root email property
+         * been an empty string when retrieving responses in bulk, and is populated when retrieving an individual response.
+         * Finally, they have an undocumented metadata object, with a contact which has key value pair properties for
+         * first_name, last_name, custom_value, and email when retriving responses in bulk, and the same when
+         * retrieving an individual response but with the email property bring populated. The first_name, last_name,
+         * and custom_value properties also exist duplicated as root properties on the response object. Suspect
+         * that their intention was to do that with email too, and that they've misnamed the root email property
          * as email_address in a way which prevents the data being populated correctly but still makes it appear as
          * an empty string.
          *
