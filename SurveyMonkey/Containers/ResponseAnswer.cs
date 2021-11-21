@@ -15,7 +15,6 @@ namespace SurveyMonkey.Containers
         public string SimpleText { get; set; }
         [JsonIgnore]
         internal object TagData { get; set; }
-        [JsonIgnore]
-        internal object ChoiceMetadata { get; set; } //Undocumented. Available by mapping to the survey structure
+        public ChoiceMetadata ChoiceMetadata { get; set; }
     }
 }
