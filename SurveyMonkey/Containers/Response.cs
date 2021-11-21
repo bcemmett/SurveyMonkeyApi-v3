@@ -56,9 +56,7 @@ namespace SurveyMonkey.Containers
         public string EmailAddress =>
             !String.IsNullOrWhiteSpace(EmailFromDirectReferenceToEmail) ? EmailFromDirectReferenceToEmail :
                 !String.IsNullOrWhiteSpace(EmailFromDirectReferenceToEmailAddress) ? EmailFromDirectReferenceToEmailAddress :
-                    Metadata?.Contact != null && Metadata.Contact.ContainsKey("email") ?
-                        !String.IsNullOrWhiteSpace(Metadata.Contact["email"].Value) ? Metadata.Contact["email"].Value :
-                        null : null;
+                    Metadata?.GetValueByKeyOrNull("email");
 
         public List<ResponsePage> Pages { get; set; }
         public QuizResults QuizResults { get; set; }
