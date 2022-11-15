@@ -18,7 +18,7 @@ namespace SurveyMonkey.ProcessedAnswers
                 {
                     foreach (var row in Rows)
                     {
-                        sb.Append($"{row.RowName}: {row.Text}{Environment.NewLine}");
+                        sb.Append($"{row.RowName}{(!String.IsNullOrWhiteSpace(row.RowName) ? ": " : String.Empty)}{row.Text}{Environment.NewLine}");
                     }
                 }
 

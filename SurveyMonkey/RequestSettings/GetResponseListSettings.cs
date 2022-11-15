@@ -41,5 +41,6 @@ namespace SurveyMonkey.RequestSettings
         public TotalTimeUnitsOption? TotalTimeUnits { get; set; }
         public SortOrderOption? SortOrder { get; set; }
         public SortByOption? SortBy { get; set; }
+        internal bool? Simple { get; set; }
     }
 }

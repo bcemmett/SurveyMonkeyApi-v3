@@ -18,7 +18,11 @@ namespace SurveyMonkey.Containers
         public enum CollectorType
         {
             Weblink,
-            Email
+            Email,
+            Sms,
+            PopupInvitation,
+            PopupSurvey,
+            EmbeddedSurvey
         }
 
         [JsonConverter(typeof(TolerantJsonConverter))]
@@ -47,13 +51,12 @@ namespace SurveyMonkey.Containers
 
         public StatusType? Status { get; set; }
         public long? Id { get; set; }
-        public long? SurveyId { get; set; }
         public string Name { get; set; }
         public CollectorType? Type { get; set; }
         public string ThankYouMessage { get; set; }
-        public string DisqualificationType { get; set; }
         public string DisqualificationMessage { get; set; }
         public string DisqualificationUrl { get; set; }
+        public string DisqualificationType { get; set; }
         public DateTime? CloseDate { get; set; }
         public string ClosedPageMessage { get; set; }
         public string RedirectUrl { get; set; }
@@ -67,8 +70,25 @@ namespace SurveyMonkey.Containers
         public DateTime? DateCreated { get; set; }
         public string Url { get; set; }
         public bool? PasswordEnabled { get; set; }
-        public string SenderEmail { get; set; }
+        [JsonProperty("sender_email")] // /surveys/{id}/collectors [GetCollectorOverList(surveyId)] names the sender email as "email"
+        internal string EmailFromSenderEmail { get; set; }
+        [JsonProperty("email")] // /collectors/{id} [GetCollectorDetails(collectorId)] names the sender email as "sender_email"
+        internal string EmailFromEmail { get; set; }
+        [JsonIgnore]
+        public string SenderEmail =>
+            !String.IsNullOrWhiteSpace(EmailFromSenderEmail) ? EmailFromSenderEmail : EmailFromEmail;
+        public bool? IsSenderEmailVerified { get; set; } //Undocumented
         internal string Href { get; set; }
         public int? ResponseCount { get; set; }
+        public int? Width { get; set; }
+        public int? Height { get; set; }
+        public string BorderColor { get; set; }
+        public bool? IsBrandingEnabled { get; set; }
+        public string Headline { get; set; }
+        public string Message { get; set; }
+        public int? SampleRate { get; set; }
+        public Button PrimaryButton { get; set; }
+        public Button SecondaryButton { get; set; }
+        public long? SurveyId { get; set; }
     }
 }

@@ -14,14 +14,17 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi : IDisposable, ISurveyMonkeyApi
     {
-        private readonly string _apiKey;
         private readonly string _accessToken;
         private IWebClient _webClient;
         private DateTime _lastRequestTime = DateTime.MinValue;
         private readonly int _rateLimitDelay = 500;
         private readonly int[] _retrySequence = { 5, 30, 300, 900 };
+        private readonly string _baseAccessUrl = "https://api.surveymonkey.com";
         private int _requestsMade;
 
+        /// <summary>
+        /// The total number of api requests, including retries, made in the lifetime of this object.
+        /// </summary>
         public int ApiRequestsMade => _requestsMade;
 
         public IWebProxy Proxy
@@ -30,67 +33,85 @@ namespace SurveyMonkey
             set { _webClient.Proxy = value; }
         }
 
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
         public SurveyMonkeyApi(string accessToken)
-            : this(null, accessToken, null, null, null)
+            : this(accessToken, null, null, null, null)
         {
         }
 
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
+        /// <param name="rateLimitDelay">The number of milliseconds to wait between each api request. 500ms by default to accomodate SurveyMonkey's default 120/s limit. Set to a lower number if you have been granted a higher rate limit.</param>
         public SurveyMonkeyApi(string accessToken, int rateLimitDelay)
-            : this(null, accessToken, rateLimitDelay, null, null)
+            : this(accessToken, rateLimitDelay, null, null, null)
         {
         }
 
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
+        /// <param name="retrySequence">A sequence of the number of seconds to wait between retries if connectivity issues are encountered. Defaults to 5, 30, 300, then 900 seconds.</param>
         public SurveyMonkeyApi(string accessToken, int[] retrySequence)
-            : this(null, accessToken, null, retrySequence, null)
+            : this(accessToken, null, retrySequence, null, null)
         {
         }
 
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
+        /// <param name="rateLimitDelay">The number of milliseconds to wait between each api request. 500ms by default to accomodate SurveyMonkey's default 120/s limit. Set to a lower number if you have been granted a higher rate limit.</param>
+        /// <param name="retrySequence">A sequence of the number of seconds to wait between retries if connectivity issues are encountered. Defaults to 5, 30, 300, then 900 seconds.</param>
         public SurveyMonkeyApi(string accessToken, int rateLimitDelay, int[] retrySequence)
-            : this(null, accessToken, rateLimitDelay, retrySequence, null)
+            : this(accessToken, rateLimitDelay, retrySequence, null, null)
         {
         }
 
-        public SurveyMonkeyApi(string apiKey, string accessToken)
-            : this(apiKey, accessToken, null, null, null)
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
+        /// <param name="accessUrl">Use to connect to an api access url other than the default https://api.surveymonkey.com.</param>
+        public SurveyMonkeyApi(string accessToken, string accessUrl)
+            : this(accessToken, null, null, accessUrl, null)
         {
         }
 
-        public SurveyMonkeyApi(string apiKey, string accessToken, int rateLimitDelay)
-            : this(apiKey, accessToken, rateLimitDelay, null, null)
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
+        /// <param name="rateLimitDelay">The number of milliseconds to wait between each api request. 500ms by default to accomodate SurveyMonkey's default 120/s limit. Set to a lower number if you have been granted a higher rate limit.</param>
+        /// <param name="accessUrl">Use to connect to an api access url other than the default https://api.surveymonkey.com.</param>
+        public SurveyMonkeyApi(string accessToken, int rateLimitDelay, string accessUrl)
+            : this(accessToken, rateLimitDelay, null, accessUrl, null)
         {
         }
 
-        public SurveyMonkeyApi(string apiKey, string accessToken, int[] retrySequence)
-            : this(apiKey, accessToken, null, retrySequence, null)
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
+        /// <param name="retrySequence">A sequence of the number of seconds to wait between retries if connectivity issues are encountered. Defaults to 5, 30, 300, then 900 seconds.</param>
+        /// <param name="accessUrl">Use to connect to an api access url other than the default https://api.surveymonkey.com.</param>
+        public SurveyMonkeyApi(string accessToken, int[] retrySequence, string accessUrl)
+            : this(accessToken, null, retrySequence, accessUrl, null)
         {
         }
 
-        public SurveyMonkeyApi(string apiKey, string accessToken, int rateLimitDelay, int[] retrySequence)
-            : this(apiKey, accessToken, rateLimitDelay, retrySequence, null)
+        /// <param name="accessToken">The Access Token, representing either a private app's access token, or the long-lived token granted by an OAuth 2.0 flow.</param>
+        /// <param name="rateLimitDelay">The number of milliseconds to wait between each api request. 500ms by default to accomodate SurveyMonkey's default 120/s limit. Set to a lower number if you have been granted a higher rate limit.</param>
+        /// <param name="retrySequence">A sequence of the number of seconds to wait between retries if connectivity issues are encountered. Defaults to 5, 30, 300, then 900 seconds.</param>
+        /// <param name="accessUrl">Use to connect to an api access url other than the default https://api.surveymonkey.com.</param>
+        public SurveyMonkeyApi(string accessToken, int rateLimitDelay, int[] retrySequence, string accessUrl)
+            : this(accessToken, rateLimitDelay, retrySequence, accessUrl, null)
         {
         }
 
-
-        internal SurveyMonkeyApi(string apiKey, string accessToken, IWebClient webClient)
-            : this(apiKey, accessToken, 0, null, webClient)
+        internal SurveyMonkeyApi(string accessToken, IWebClient webClient)
+            : this(accessToken, 0, null, null, webClient)
         {
         }
 
-        internal SurveyMonkeyApi(string apiKey, string accessToken, IWebClient webClient, int rateLimitDelay)
-            : this(apiKey, accessToken, rateLimitDelay, null, webClient)
+        internal SurveyMonkeyApi(string accessToken, IWebClient webClient, int rateLimitDelay)
+            : this(accessToken, rateLimitDelay, null, null, webClient)
         {
         }
 
-        internal SurveyMonkeyApi(string apiKey, string accessToken, IWebClient webClient, int[] retrySequence)
-            : this(apiKey, accessToken, null, retrySequence, webClient)
+        internal SurveyMonkeyApi(string accessToken, IWebClient webClient, int[] retrySequence)
+            : this(accessToken, null, retrySequence, null, webClient)
         {
         }
 
-        private SurveyMonkeyApi(string apiKey, string accessToken, int? rateLimitDelay, int[] retrySequence, IWebClient webClient)
+        private SurveyMonkeyApi(string accessToken, int? rateLimitDelay, int[] retrySequence, string accessUrl, IWebClient webClient)
         {
             _webClient = webClient ?? new LiveWebClient();
             _webClient.Encoding = Encoding.UTF8;
-            _apiKey = apiKey;
             _accessToken = accessToken;
 
             if (rateLimitDelay.HasValue)
@@ -102,6 +123,15 @@ namespace SurveyMonkey
             {
                 _retrySequence = retrySequence;
             }
+
+            if (accessUrl != null)
+            {
+                if (!accessUrl.StartsWith("http"))
+                {
+                    throw new ArgumentException($"Invalid url {accessUrl} given. Base access url must be a full url, eg \"https://api.eu.surveymonkey.com\"");
+                }
+                _baseAccessUrl = accessUrl;
+            }
         }
 
         private JToken MakeApiRequest(string endpoint, Verb verb, RequestData data)
@@ -109,13 +139,9 @@ namespace SurveyMonkey
             RateLimit();
             ResetWebClient();
 
-            var url = "https://api.surveymonkey.net/v3" + endpoint;
+            var url = $"{_baseAccessUrl}/v3{endpoint}";
             _webClient.Headers.Add("Content-Type", "application/json");
             _webClient.Headers.Add("Authorization", "bearer " + _accessToken);
-            if (!String.IsNullOrEmpty(_apiKey))
-            {
-                _webClient.QueryString.Add("api_key", _apiKey);
-            }
             if (verb == Verb.GET)
             {
                 foreach (var item in data)

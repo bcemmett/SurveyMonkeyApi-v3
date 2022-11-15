@@ -32,6 +32,7 @@ namespace SurveyMonkey.Containers
         public List<Page> Pages { get; set; }
         public List<Collector> Collectors { get; set; }
         public List<Response> Responses { get; set; }
+        public QuizOptions QuizOptions { get; set; }
 
         public List<Question> Questions {
             get { return Pages?.SelectMany(page => page.Questions).ToList(); }

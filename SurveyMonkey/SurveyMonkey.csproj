@@ -1,8 +1,8 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
     <Company>Walnut Tree Software</Company>
-    <AssemblyFileVersion>1.0.0.0</AssemblyFileVersion>
-    <AssemblyInformationalVersion>1.0.0.0</AssemblyInformationalVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <InformationalVersion>1.0.0.0</InformationalVersion>
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <Product>SurveyMonkeyApi</Product>
     <Title>SurveyMonkeyApi</Title>
@@ -16,12 +16,12 @@
     <DelaySign>false</DelaySign>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' != 'Debug'">
-    <TargetFrameworks>net40;net45;net451;net451;net452;net46;net461;net462;net47;net471;netcoreapp2.0</TargetFrameworks>
+    <TargetFrameworks>net45;netstandard2.0</TargetFrameworks>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'">
-    <TargetFramework>net452</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Newtonsoft.Json" Version="10.0.3" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
   </ItemGroup>
 </Project>

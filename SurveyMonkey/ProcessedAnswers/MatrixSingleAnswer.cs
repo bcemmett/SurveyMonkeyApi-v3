@@ -22,11 +22,11 @@ namespace SurveyMonkey.ProcessedAnswers
                     {
                         if (row != null)
                         {
-                            sb.Append($"{row.RowName}: {row.Choice}{Environment.NewLine}");
+                            sb.Append($"{row.RowName}{(!String.IsNullOrWhiteSpace(row.RowName) ? ": " : String.Empty)}{row.Choice}{Environment.NewLine}");
                         }
                     }
                 }
-                if (OtherText != null)
+                if (!String.IsNullOrWhiteSpace(OtherText))
                 {
                     sb.Append("Other: ");
                     sb.Append(OtherText);

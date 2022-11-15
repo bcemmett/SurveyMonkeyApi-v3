@@ -19,14 +19,13 @@ namespace SurveyMonkeyTests
                 {""per_page"":50,""total"":2,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/55249163"",""id"":""55249163"",""title"":""All Question Types Test""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934"",""id"":""84672934"",""title"":""Two Question Survey""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/?page=1&per_page=50""}}
             ");
 
-            var api = new SurveyMonkeyApi("TestApiKey", "TestOAuthToken", client);
+            var api = new SurveyMonkeyApi("TestOAuthToken", client);
             api.GetSurveyList();
             
             Assert.AreEqual("application/json", client.Requests.First().Headers["Content-Type"]);
             Assert.AreEqual("bearer TestOAuthToken", client.Requests.First().Headers["Authorization"]);
-            Assert.AreEqual("TestApiKey", client.Requests.First().QueryString["api_key"]);
             Assert.AreEqual(Encoding.UTF8, client.Requests.First().Encoding);
-            Assert.AreEqual("https://api.surveymonkey.net/v3/surveys", client.Requests.First().Url);
+            Assert.AreEqual("https://api.surveymonkey.com/v3/surveys", client.Requests.First().Url);
         }
 
         [Test]
@@ -45,7 +44,7 @@ namespace SurveyMonkeyTests
             client.Responses.Add(repeatedResponse);
             client.Responses.Add(repeatedResponse);
 
-            var api = new SurveyMonkeyApi("key", "token", client, 500);
+            var api = new SurveyMonkeyApi("token", client, 500);
 
             //Should be no rate limit first time
             stopwatch.Start();
@@ -84,7 +83,7 @@ namespace SurveyMonkeyTests
             client.Exceptions.Add(new WebException("1"));
             client.Exceptions.Add(new WebException("2"));
             client.Exceptions.Add(new WebException("3"));
-            var api = new SurveyMonkeyApi("key", "token", client, new [] { 1, 2 });
+            var api = new SurveyMonkeyApi("token", client, new [] { 1, 2 });
 
             var exception = Assert.Throws<WebException>(delegate { api.GetGroupDetails(1234); });
             Assert.AreEqual("3", exception.Message);
