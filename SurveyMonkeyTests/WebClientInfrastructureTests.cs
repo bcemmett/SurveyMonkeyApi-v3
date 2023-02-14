@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Threading;
+using System;
 
 namespace SurveyMonkeyTests
 {
@@ -96,6 +97,82 @@ namespace SurveyMonkeyTests
 
             Assert.LessOrEqual(3000 - toleranceMilliseconds, client.Requests.Skip(2).First().TimeSinceInitialisation);
             Assert.GreaterOrEqual(3000 + toleranceMilliseconds, client.Requests.Skip(2).First().TimeSinceInitialisation);
+        }
+
+        [Test]
+        public void TlsErrorIsNotRetried()
+        {
+            string expectedMessage = "SSL/TLS error. SurveyMonkey requires TLS 1.2, as of 13 June 2018. "
+                    + "Configure this globally with \"ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;\" anywhere before using this library. "
+                    + "See https://github.com/bcemmett/SurveyMonkeyApi-v3/issues/66 for details.";
+
+            var client = new MockWebClient();
+            client.Exceptions.Add(new WebException("1", null, WebExceptionStatus.SecureChannelFailure, null));
+            var api = new SurveyMonkeyApi("token", client, new[] { 1, 2 });
+            var e = Assert.Throws<WebException>(delegate { api.GetSurveyList(); });
+            Assert.AreEqual(expectedMessage, e.Message);
+        }
+
+        [Test]
+        public void FailuresAreNotRetriedBeyondTheRetryLimit()
+        {
+            var client = new MockWebClient();
+            client.Exceptions.Add(new WebException("bla1"));
+            client.Exceptions.Add(new WebException("bla2"));
+            client.Exceptions.Add(new WebException("bla3"));
+            client.Exceptions.Add(new WebException("bla4"));
+            var api = new SurveyMonkeyApi("token", client, new[] { 1, 2 });
+            var e = Assert.Throws<WebException>(delegate { api.GetSurveyList(); });
+            Assert.AreEqual(3, client.Requests.Count);
+            Assert.AreEqual("bla3", e.Message);
+        }
+
+        [Test]
+        public void ServiceUnavailableErrorIsRetried()
+        {
+            var apiResponse = @"{""id"":""1234"",""name"":""Test Group"",""member_count"":1,""max_invites"":100,""date_created"":""2015-10-06T12:56:55+00:00""}";
+            var errorResponse = new MockHttpWebResponse(String.Empty, HttpStatusCode.ServiceUnavailable);
+            var client = new MockWebClient();
+            client.Exceptions.Add(new WebException("Fail", null, WebExceptionStatus.MessageLengthLimitExceeded, errorResponse));
+            client.Responses.Add(String.Empty);
+            client.Responses.Add(apiResponse);
+            var api = new SurveyMonkeyApi("token", client, new[] { 1, 2, 3 });
+            var result = api.GetGroupDetails(1234);
+            Assert.AreEqual(2, client.Requests.Count);
+            Assert.AreEqual("Test Group", result.Name);
+        }
+
+        [Test]
+        public void SurveyMonkeyErrorResponsesAreNotRetriedAndDisplayASpecialError()
+        {
+            string errorResponse = "{\"error\":{\"docs\":\"a\",\"message\":\"b\",\"id\":\"c\",\"name\":\"d\",\"http_status_code\":7}}";
+            string expectedMessage = $"Http status: 7, error code c. d: b. See a for more information.";
+
+            var response = new MockHttpWebResponse(errorResponse, HttpStatusCode.NonAuthoritativeInformation);
+            var client = new MockWebClient();
+
+            client.Exceptions.Add(new WebException("OriginalFail", null, WebExceptionStatus.MessageLengthLimitExceeded, response));
+            var api = new SurveyMonkeyApi("token", client, new[] { 1, 2, 3 });
+            var e = Assert.Throws<WebException>(delegate { api.GetSurveyList(); });
+            Assert.AreEqual(1, client.Requests.Count);
+            Assert.AreEqual(expectedMessage, e.Message);
+            Assert.AreEqual("OriginalFail", e.InnerException.Message);
+        }
+
+        [Test]
+        public void ErrorsOtherThanServiceUnavailableAreWhichDoNotComeFromSurveyMonkeyAreNotRetried()
+        {
+            string errorResponse = "A badly formed message";
+
+            var response = new MockHttpWebResponse(errorResponse, HttpStatusCode.NonAuthoritativeInformation);
+            var client = new MockWebClient();
+
+            client.Exceptions.Add(new WebException("OriginalFail", null, WebExceptionStatus.MessageLengthLimitExceeded, response));
+            var api = new SurveyMonkeyApi("token", client, new[] { 1, 2, 3 });
+            var e = Assert.Throws<WebException>(delegate { api.GetSurveyList(); });
+            Assert.AreEqual(1, client.Requests.Count);
+            Assert.AreEqual("OriginalFail", e.Message);
+            Assert.IsNull(e.InnerException);
         }
     }
 }
