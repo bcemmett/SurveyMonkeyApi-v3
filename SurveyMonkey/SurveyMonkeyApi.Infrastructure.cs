@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using SurveyMonkey.Containers;
@@ -147,6 +148,19 @@ namespace SurveyMonkey
             return JObject.Parse(result);
         }
 
+        private async Task<JToken> MakeApiRequestAsync(string endpoint, Verb verb, RequestData data)
+        {
+            await RateLimitAsync();
+            PrepareWebClientForRequest(endpoint, verb, data);
+
+            string url = GetFullUrl(endpoint);
+            string result = await AttemptApiRequestWithRetryAsync(url, verb, data);
+
+            _lastRequestTime = DateTime.UtcNow;
+
+            return JObject.Parse(result);
+        }
+
         private void PrepareWebClientForRequest(string endpoint, Verb verb, RequestData data)
         {
             ResetWebClient();
@@ -184,6 +198,35 @@ namespace SurveyMonkey
                     if (FailedRequestShouldBeRetried(webEx, attempt))
                     {
                         Thread.Sleep(_retrySequence[attempt] * 1000);
+                    }
+                    else
+                    {
+                        HandleWebConnectivityErrors(webEx);
+                        throw;
+                    }
+                }
+            }
+            return String.Empty;
+        }
+
+        private async Task<string> AttemptApiRequestWithRetryAsync(string url, Verb verb, RequestData data)
+        {
+            if (_retrySequence == null || _retrySequence.Length == 0)
+            {
+                return await AttemptApiRequestAsync(url, verb, data);
+            }
+            for (int attempt = 0; attempt <= _retrySequence.Length; attempt++)
+            {
+                try
+                {
+                    return await AttemptApiRequestAsync(url, verb, data);
+                }
+                catch (WebException webEx)
+                {
+                    CheckForTlsError(webEx);
+                    if (FailedRequestShouldBeRetried(webEx, attempt))
+                    {
+                        await Task.Delay(_retrySequence[attempt] * 1000);
                     }
                     else
                     {
@@ -252,12 +295,33 @@ namespace SurveyMonkey
             return _webClient.UploadString(url, verb.ToString(), JsonConvert.SerializeObject(data));
         }
 
+        private async Task<string> AttemptApiRequestAsync(string url, Verb verb, RequestData data)
+        {
+            _requestsMade++;
+
+            if (verb == Verb.GET)
+            {
+                return await _webClient.DownloadStringTaskAsync(url);
+            }
+            return await _webClient.UploadStringTaskAsync(url, verb.ToString(), JsonConvert.SerializeObject(data));
+        }
+
         private void RateLimit()
         {
             int remainingTime = GetRemainingRateLimitTime();
             if (remainingTime > 0)
             {
                 Thread.Sleep(remainingTime);
+            }
+            _lastRequestTime = DateTime.UtcNow; //Also setting here as otherwise if an exception is thrown while making the request it wouldn't get set at all
+        }
+
+        private async Task RateLimitAsync()
+        {
+            int remainingTime = GetRemainingRateLimitTime();
+            if (remainingTime > 0)
+            {
+                await Task.Delay(remainingTime);
             }
             _lastRequestTime = DateTime.UtcNow; //Also setting here as otherwise if an exception is thrown while making the request it wouldn't get set at all
         }
@@ -304,12 +368,50 @@ namespace SurveyMonkey
             return results;
         }
 
+        private async Task<IEnumerable<IPageableContainer>> PageAsync(IPagingSettings settings, string url, Type type, int maxResultsPerPage)
+        {
+            if (settings.Page.HasValue || settings.PerPage.HasValue)
+            {
+                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
+                return await PageRequestAsync(url, requestData, type);
+            }
+
+            var results = new List<IPageableContainer>();
+            bool cont = true;
+            int page = 1;
+            while (cont)
+            {
+                settings.Page = page;
+                settings.PerPage = maxResultsPerPage;
+                var requestData = RequestSettingsHelper.GetPopulatedProperties(settings);
+                var newResults = await PageRequestAsync(url, requestData, type);
+                if (newResults.Any())
+                {
+                    results.AddRange(newResults);
+                }
+                if (newResults.Count() < maxResultsPerPage)
+                {
+                    cont = false;
+                }
+                page++;
+            }
+            return results;
+        }
+
         private IEnumerable<IPageableContainer> PageRequest(string url, RequestData requestData, Type type)
         {
             var verb = Verb.GET;
             JToken result = MakeApiRequest(url, verb, requestData);
             var results = result["data"].ToObject(type);
             return (IEnumerable<IPageableContainer>) results;
+        }
+
+        private async Task<IEnumerable<IPageableContainer>> PageRequestAsync(string url, RequestData requestData, Type type)
+        {
+            var verb = Verb.GET;
+            JToken result = await MakeApiRequestAsync(url, verb, requestData);
+            var results = result["data"].ToObject(type);
+            return (IEnumerable<IPageableContainer>)results;
         }
 
         private void ResetWebClient()
