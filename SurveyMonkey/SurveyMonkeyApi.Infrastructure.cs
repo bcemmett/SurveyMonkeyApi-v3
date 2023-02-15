@@ -138,7 +138,7 @@ namespace SurveyMonkey
         private JToken MakeApiRequest(string endpoint, Verb verb, RequestData data)
         {
             RateLimit();
-            PrepareWebClientForRequest(endpoint, verb, data);
+            PrepareWebClientForRequest(verb, data);
 
             string url = GetFullUrl(endpoint);
             string result = AttemptApiRequestWithRetry(url, verb, data);
@@ -151,7 +151,7 @@ namespace SurveyMonkey
         private async Task<JToken> MakeApiRequestAsync(string endpoint, Verb verb, RequestData data)
         {
             await RateLimitAsync();
-            PrepareWebClientForRequest(endpoint, verb, data);
+            PrepareWebClientForRequest(verb, data);
 
             string url = GetFullUrl(endpoint);
             string result = await AttemptApiRequestWithRetryAsync(url, verb, data);
@@ -161,7 +161,7 @@ namespace SurveyMonkey
             return JObject.Parse(result);
         }
 
-        private void PrepareWebClientForRequest(string endpoint, Verb verb, RequestData data)
+        private void PrepareWebClientForRequest(Verb verb, RequestData data)
         {
             ResetWebClient();
             _webClient.Headers.Add("Content-Type", "application/json");
