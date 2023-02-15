@@ -6,9 +6,16 @@ using SurveyMonkey.Enums;
 
 namespace SurveyMonkeyTests
 {
-    [TestFixture]
+    [TestFixtureSource(typeof(AsyncTestFixtureSource))]
     public class GetUserTests
     {
+        private readonly bool _useAsync;
+
+        public GetUserTests(bool useAsync)
+        {
+            _useAsync = useAsync;
+        }
+
         [Test]
         public void GetUserMeIsDeserialised()
         {
@@ -18,7 +25,9 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetUserDetails();
+            var results = _useAsync
+                ? api.GetUserDetailsAsync().GetAwaiter().GetResult()
+                : api.GetUserDetails();
             Assert.AreEqual("test@gmail.com", results.Username);
             Assert.IsNull(results.FirstName);
             Assert.AreEqual("McTest", results.LastName);
@@ -40,7 +49,9 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetGroupList();
+            var results = _useAsync
+                ? api.GetGroupListAsync().GetAwaiter().GetResult()
+                : api.GetGroupList();
             Assert.AreEqual(1234, results.First().Id);
             Assert.AreEqual("Test Group", results.First().Name);
             Assert.AreEqual("https://api.surveymonkey.net/v3/groups/1234", results.First().Href);
@@ -55,7 +66,9 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetGroupDetails(1234);
+            var results = _useAsync
+                ? api.GetGroupDetailsAsync(1234).GetAwaiter().GetResult()
+                : api.GetGroupDetails(1234);
             Assert.AreEqual(1234, results.Id);
             Assert.AreEqual("Test Group", results.Name);
             Assert.AreEqual(100, results.MaxInvites);
@@ -72,7 +85,9 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetMemberList(1234);
+            var results = _useAsync
+                ? api.GetMemberListAsync(1234).GetAwaiter().GetResult()
+                : api.GetMemberList(1234);
             Assert.AreEqual(1234, results.First().Id);
             Assert.AreEqual("test_user", results.First().Username);
             Assert.AreEqual("http://api.surveymonkey.com/v3/members/1234", results.First().Href);
@@ -88,7 +103,9 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetMemberDetails(1234, 1234);
+            var results = _useAsync
+                ? api.GetMemberDetailsAsync(1234, 1234).GetAwaiter().GetResult()
+                : api.GetMemberDetails(1234, 1234);
             Assert.AreEqual(1234, results.Id);
             Assert.AreEqual("test_user", results.Username);
             Assert.AreEqual("test@surveymonkey.com", results.Email);
