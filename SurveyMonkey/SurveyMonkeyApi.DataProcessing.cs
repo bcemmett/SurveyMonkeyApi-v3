@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Reflection;
+using System.Threading.Tasks;
 using SurveyMonkey.Containers;
 using SurveyMonkey.Enums;
 using SurveyMonkey.ProcessedAnswers;
@@ -11,6 +12,7 @@ namespace SurveyMonkey
 {
     public partial class SurveyMonkeyApi
     {
+        //Retrieving data
         public List<Survey> PopulateSurveyResponseInformationBulk(List<long> surveyIds)
         {
             var result = new List<Survey>();
@@ -42,6 +44,39 @@ namespace SurveyMonkey
             return survey;
         }
 
+        public async Task<List<Survey>> PopulateSurveyResponseInformationBulkAsync(List<long> surveyIds)
+        {
+            var result = new List<Survey>();
+            foreach (var surveyId in surveyIds)
+            {
+                result.Add(await PopulateSurveyResponseInformationAsync(surveyId));
+            }
+            return result;
+        }
+
+        public async Task<Survey> PopulateSurveyResponseInformationAsync(long surveyId)
+        {
+            Survey survey = await GetSurveyDetailsAsync(surveyId);
+
+            var collectorsDetails = new List<Collector>();
+            var collectorsOverviews = await GetCollectorListAsync(surveyId);
+            foreach (var collectorOverview in collectorsOverviews)
+            {
+                collectorsDetails.Add(await GetCollectorDetailsAsync(collectorOverview.Id.Value));
+            }
+            survey.Collectors = collectorsDetails;
+            survey.Responses = await GetSurveyResponseDetailsListAsync(surveyId);
+
+            foreach (var response in survey.Responses)
+            {
+                MatchResponseToSurveyStructure(survey, response);
+            }
+
+            return survey;
+        }
+
+
+        //Matching logic
         public void MatchResponseToSurveyStructure(Survey survey, Response response)
         {
             foreach (var question in survey.Questions)
