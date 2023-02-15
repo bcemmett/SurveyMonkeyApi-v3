@@ -41,8 +41,7 @@ namespace SurveyMonkey
         public Collector GetCollectorDetails(long collectorId)
         {
             string endPoint = String.Format("/collectors/{0}", collectorId);
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var collector = result.ToObject<Collector>();
             return collector;
         }
@@ -69,8 +68,7 @@ namespace SurveyMonkey
         public Message GetMessageDetails(long collectorId, long messageId)
         {
             string endPoint = String.Format("/collectors/{0}/messages/{1}", collectorId, messageId);
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var message = result.ToObject<Message>();
             return message;
         }
@@ -122,8 +120,7 @@ namespace SurveyMonkey
         public Recipient GetRecipientDetails(long collectorId, long recipientId)
         {
             string endPoint = String.Format("/collectors/{0}/recipients/{1}", collectorId, recipientId);
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var recipient = result.ToObject<Recipient>();
             return recipient;
         }

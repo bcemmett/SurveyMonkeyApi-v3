@@ -135,6 +135,11 @@ namespace SurveyMonkey
             }
         }
 
+        private JToken MakeApiGetRequest(string endpoint, RequestData data)
+        {
+            return MakeApiRequest(endpoint, Verb.GET, data);
+        }
+
         private JToken MakeApiRequest(string endpoint, Verb verb, RequestData data)
         {
             RateLimit();
@@ -146,6 +151,11 @@ namespace SurveyMonkey
             _lastRequestTime = DateTime.UtcNow;
 
             return JObject.Parse(result);
+        }
+
+        private async Task<JToken> MakeApiGetRequestAsync(string endpoint, RequestData data)
+        {
+            return await MakeApiRequestAsync(endpoint, Verb.GET, data);
         }
 
         private async Task<JToken> MakeApiRequestAsync(string endpoint, Verb verb, RequestData data)
@@ -400,16 +410,14 @@ namespace SurveyMonkey
 
         private IEnumerable<IPageableContainer> PageRequest(string url, RequestData requestData, Type type)
         {
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(url, verb, requestData);
+            JToken result = MakeApiGetRequest(url, requestData);
             var results = result["data"].ToObject(type);
             return (IEnumerable<IPageableContainer>) results;
         }
 
         private async Task<IEnumerable<IPageableContainer>> PageRequestAsync(string url, RequestData requestData, Type type)
         {
-            var verb = Verb.GET;
-            JToken result = await MakeApiRequestAsync(url, verb, requestData);
+            JToken result = await MakeApiGetRequestAsync(url, requestData);
             var results = result["data"].ToObject(type);
             return (IEnumerable<IPageableContainer>)results;
         }

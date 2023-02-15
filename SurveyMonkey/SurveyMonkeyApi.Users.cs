@@ -12,8 +12,7 @@ namespace SurveyMonkey
         public User GetUserDetails()
         {
             string endPoint = "/users/me";
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var user = result.ToObject<User>();
             return user;
         }
@@ -40,8 +39,7 @@ namespace SurveyMonkey
         public Group GetGroupDetails(long groupId)
         {
             string endPoint = String.Format("/groups/{0}", groupId);
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var user = result.ToObject<Group>();
             return user;
         }
@@ -68,8 +66,7 @@ namespace SurveyMonkey
         public Member GetMemberDetails(long groupId, long memberId)
         {
             string endPoint = String.Format("/groups/{0}", groupId);
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var member = result.ToObject<Member>();
             return member;
         }

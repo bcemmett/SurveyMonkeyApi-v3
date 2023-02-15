@@ -52,18 +52,16 @@ namespace SurveyMonkey
         //Individual survey
         public Survey GetSurveyOverview(long surveyId)
         {
-            var verb = Verb.GET;
             var endpoint = String.Format("/surveys/{0}", surveyId);
-            JToken result = MakeApiRequest(endpoint, verb, new RequestData());
+            JToken result = MakeApiGetRequest(endpoint, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
         }
 
         public async Task<Survey> GetSurveyOverviewAsync(long surveyId)
         {
-            var verb = Verb.GET;
             var endpoint = String.Format("/surveys/{0}", surveyId);
-            JToken result = await MakeApiRequestAsync(endpoint, verb, new RequestData());
+            JToken result = await MakeApiGetRequestAsync(endpoint, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
         }
@@ -71,8 +69,7 @@ namespace SurveyMonkey
         public Survey GetSurveyDetails(long surveyId)
         {
             string endPoint = String.Format("/surveys/{0}/details", surveyId);
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
         }
@@ -80,8 +77,7 @@ namespace SurveyMonkey
         public async Task<Survey> GetSurveyDetailsAsync(long surveyId)
         {
             string endPoint = String.Format("/surveys/{0}/details", surveyId);
-            var verb = Verb.GET;
-            JToken result = await MakeApiRequestAsync(endPoint, verb, new RequestData());
+            JToken result = await MakeApiGetRequestAsync(endPoint, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
         }
@@ -207,8 +203,7 @@ namespace SurveyMonkey
         public Page GetPageDetails(long surveyId, long pageId)
         {
             string endPoint = String.Format("/surveys/{0}/pages/{1}", surveyId, pageId);
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var page = result.ToObject<Page>();
             return page;
         }
@@ -216,8 +211,7 @@ namespace SurveyMonkey
         public async Task<Page> GetPageDetailsAsync(long surveyId, long pageId)
         {
             string endPoint = String.Format("/surveys/{0}/pages/{1}", surveyId, pageId);
-            var verb = Verb.GET;
-            JToken result = await MakeApiRequestAsync(endPoint, verb, new RequestData());
+            JToken result = await MakeApiGetRequestAsync(endPoint, new RequestData());
             var page = result.ToObject<Page>();
             return page;
         }
@@ -265,8 +259,7 @@ namespace SurveyMonkey
         public Question GetQuestionDetails(long surveyId, long pageId, long questionId)
         {
             string endPoint = String.Format("/surveys/{0}/pages/{1}/questions/{2}", surveyId, pageId, questionId);
-            var verb = Verb.GET;
-            JToken result = MakeApiRequest(endPoint, verb, new RequestData());
+            JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var question = result.ToObject<Question>();
             return question;
         }
@@ -274,8 +267,7 @@ namespace SurveyMonkey
         public async Task<Question> GetQuestionDetailsAsync(long surveyId, long pageId, long questionId)
         {
             string endPoint = String.Format("/surveys/{0}/pages/{1}/questions/{2}", surveyId, pageId, questionId);
-            var verb = Verb.GET;
-            JToken result = await MakeApiRequestAsync(endPoint, verb, new RequestData());
+            JToken result = await MakeApiGetRequestAsync(endPoint, new RequestData());
             var question = result.ToObject<Question>();
             return question;
         }

@@ -40,9 +40,8 @@ namespace SurveyMonkey
         {
             var detailString = details ? "/details" : String.Empty;
             string endPoint = $"/{source.ToString().ToLower()}s/{objectId}/responses/{responseId}{detailString}";
-            var verb = Verb.GET;
             var requestData = details ? RequestSettingsHelper.GetPopulatedProperties(new GetResponseListSettings{Simple = true}) : new RequestData();
-            JToken result = MakeApiRequest(endPoint, verb, requestData);
+            JToken result = MakeApiGetRequest(endPoint, requestData);
             var responses = result.ToObject<Response>();
             return responses;
         }
