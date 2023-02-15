@@ -52,7 +52,7 @@ namespace SurveyMonkey
         //Individual survey
         public Survey GetSurveyOverview(long surveyId)
         {
-            var endpoint = String.Format("/surveys/{0}", surveyId);
+            var endpoint = $"/surveys/{surveyId}";
             JToken result = MakeApiGetRequest(endpoint, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
@@ -60,7 +60,7 @@ namespace SurveyMonkey
 
         public async Task<Survey> GetSurveyOverviewAsync(long surveyId)
         {
-            var endpoint = String.Format("/surveys/{0}", surveyId);
+            var endpoint = $"/surveys/{surveyId}";
             JToken result = await MakeApiGetRequestAsync(endpoint, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
@@ -68,7 +68,7 @@ namespace SurveyMonkey
 
         public Survey GetSurveyDetails(long surveyId)
         {
-            string endPoint = String.Format("/surveys/{0}/details", surveyId);
+            string endPoint = $"/surveys/{surveyId}/details";
             JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
@@ -76,7 +76,7 @@ namespace SurveyMonkey
 
         public async Task<Survey> GetSurveyDetailsAsync(long surveyId)
         {
-            string endPoint = String.Format("/surveys/{0}/details", surveyId);
+            string endPoint = $"/surveys/{surveyId}/details";
             JToken result = await MakeApiGetRequestAsync(endPoint, new RequestData());
             var survey = result.ToObject<Survey>();
             return survey;
@@ -174,7 +174,7 @@ namespace SurveyMonkey
 
         private List<Page> GetPageListPager(long surveyId, IPagingSettings settings)
         {
-            string endPoint = String.Format("/surveys/{0}/pages", surveyId);
+            string endPoint = $"/surveys/{surveyId}/pages";
             const int maxResultsPerPage = 100;
             var results = Page(settings, endPoint, typeof(List<Page>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Page)o);
@@ -193,7 +193,7 @@ namespace SurveyMonkey
 
         private async Task<List<Page>> GetPageListPagerAsync(long surveyId, IPagingSettings settings)
         {
-            string endPoint = String.Format("/surveys/{0}/pages", surveyId);
+            string endPoint = $"/surveys/{surveyId}/pages";
             const int maxResultsPerPage = 100;
             var results = await PageAsync(settings, endPoint, typeof(List<Page>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Page)o);
@@ -202,7 +202,7 @@ namespace SurveyMonkey
         //Individual page
         public Page GetPageDetails(long surveyId, long pageId)
         {
-            string endPoint = String.Format("/surveys/{0}/pages/{1}", surveyId, pageId);
+            string endPoint = $"/surveys/{surveyId}/pages/{pageId}";
             JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var page = result.ToObject<Page>();
             return page;
@@ -210,7 +210,7 @@ namespace SurveyMonkey
         
         public async Task<Page> GetPageDetailsAsync(long surveyId, long pageId)
         {
-            string endPoint = String.Format("/surveys/{0}/pages/{1}", surveyId, pageId);
+            string endPoint = $"/surveys/{surveyId}/pages/{pageId}";
             JToken result = await MakeApiGetRequestAsync(endPoint, new RequestData());
             var page = result.ToObject<Page>();
             return page;
@@ -230,7 +230,7 @@ namespace SurveyMonkey
 
         private List<Question> GetQuestionListPager(long surveyId, long pageId, IPagingSettings settings)
         {
-            string endPoint = String.Format("/surveys/{0}/pages/{1}/questions", surveyId, pageId);
+            string endPoint = $"/surveys/{surveyId}/pages/{pageId}/questions";
             const int maxResultsPerPage = 100;
             var results = Page(settings, endPoint, typeof(List<Question>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Question)o);
@@ -249,7 +249,7 @@ namespace SurveyMonkey
 
         private async Task<List<Question>> GetQuestionListPagerAsync(long surveyId, long pageId, IPagingSettings settings)
         {
-            string endPoint = String.Format("/surveys/{0}/pages/{1}/questions", surveyId, pageId);
+            string endPoint = $"/surveys/{surveyId}/pages/{pageId}/questions";
             const int maxResultsPerPage = 100;
             var results = await PageAsync(settings, endPoint, typeof(List<Question>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Question)o);
@@ -258,7 +258,7 @@ namespace SurveyMonkey
         //Individual question
         public Question GetQuestionDetails(long surveyId, long pageId, long questionId)
         {
-            string endPoint = String.Format("/surveys/{0}/pages/{1}/questions/{2}", surveyId, pageId, questionId);
+            string endPoint = $"/surveys/{surveyId}/pages/{pageId}/questions/{questionId}";
             JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var question = result.ToObject<Question>();
             return question;
@@ -266,7 +266,7 @@ namespace SurveyMonkey
 
         public async Task<Question> GetQuestionDetailsAsync(long surveyId, long pageId, long questionId)
         {
-            string endPoint = String.Format("/surveys/{0}/pages/{1}/questions/{2}", surveyId, pageId, questionId);
+            string endPoint = $"/surveys/{surveyId}/pages/{pageId}/questions/{questionId}";
             JToken result = await MakeApiGetRequestAsync(endPoint, new RequestData());
             var question = result.ToObject<Question>();
             return question;
