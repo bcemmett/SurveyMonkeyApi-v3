@@ -11,7 +11,7 @@ namespace SurveyMonkey
     {
         public Collector CreateCollector(long surveyId, CreateCollectorSettings settings)
         {
-            string endPoint = String.Format("/surveys/{0}/collectors", surveyId);
+            string endPoint = $"/surveys/{surveyId}/collectors";
             var verb = Verb.POST;
             var requestData = Helpers.RequestSettingsHelper.GetPopulatedProperties(settings);
             JToken result = MakeApiRequest(endPoint, verb, requestData);
@@ -32,7 +32,7 @@ namespace SurveyMonkey
 
         private List<Collector> GetCollectorListPager(long surveyId, IPagingSettings settings)
         {
-            string endPoint = String.Format("/surveys/{0}/collectors", surveyId);
+            string endPoint = $"/surveys/{surveyId}/collectors";
             const int maxResultsPerPage = 1000;
             var results = Page(settings, endPoint, typeof(List<Collector>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Collector)o);
@@ -40,7 +40,7 @@ namespace SurveyMonkey
 
         public Collector GetCollectorDetails(long collectorId)
         {
-            string endPoint = String.Format("/collectors/{0}", collectorId);
+            string endPoint = $"/collectors/{collectorId}";
             JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var collector = result.ToObject<Collector>();
             return collector;
@@ -59,7 +59,7 @@ namespace SurveyMonkey
 
         private List<Message> GetMessageListPager(long collectorId, IPagingSettings settings)
         {
-            string endPoint = String.Format("/collectors/{0}/messages", collectorId);
+            string endPoint = $"/collectors/{collectorId}/messages";
             const int maxResultsPerPage = 1000;
             var results = Page(settings, endPoint, typeof(List<Message>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Message)o);
@@ -67,7 +67,7 @@ namespace SurveyMonkey
 
         public Message GetMessageDetails(long collectorId, long messageId)
         {
-            string endPoint = String.Format("/collectors/{0}/messages/{1}", collectorId, messageId);
+            string endPoint = $"/collectors/{collectorId}/messages/{messageId}";
             JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var message = result.ToObject<Message>();
             return message;
@@ -110,8 +110,8 @@ namespace SurveyMonkey
         private List<Recipient> GetRecipientListPager(long collectorId, long? messageId, GetRecipientListSettings settings)
         {
             string endPoint = messageId.HasValue ?
-                String.Format("/collectors/{0}/messages/{1}/recipients", collectorId, messageId) :
-                String.Format("/collectors/{0}/recipients", collectorId);
+                $"/collectors/{collectorId}/messages/{messageId}/recipients" :
+                $"/collectors/{collectorId}/recipients";
             const int maxResultsPerPage = 1000;
             var results = Page(settings, endPoint, typeof(List<Recipient>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Recipient)o);
@@ -119,7 +119,7 @@ namespace SurveyMonkey
 
         public Recipient GetRecipientDetails(long collectorId, long recipientId)
         {
-            string endPoint = String.Format("/collectors/{0}/recipients/{1}", collectorId, recipientId);
+            string endPoint = $"/collectors/{collectorId}/recipients/{recipientId}";
             JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var recipient = result.ToObject<Recipient>();
             return recipient;

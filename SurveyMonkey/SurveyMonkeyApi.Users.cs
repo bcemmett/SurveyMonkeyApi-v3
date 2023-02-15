@@ -38,7 +38,7 @@ namespace SurveyMonkey
 
         public Group GetGroupDetails(long groupId)
         {
-            string endPoint = String.Format("/groups/{0}", groupId);
+            string endPoint = $"/groups/{groupId}";
             JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var user = result.ToObject<Group>();
             return user;
@@ -57,7 +57,7 @@ namespace SurveyMonkey
 
         private List<Member> GetMemberListPager(long groupId, IPagingSettings settings)
         {
-            string endPoint = String.Format("/groups/{0}/members", groupId);
+            string endPoint = $"/groups/{groupId}/members";
             const int maxResultsPerPage = 1000;
             var results = Page(settings, endPoint, typeof(List<Member>), maxResultsPerPage);
             return results.ToList().ConvertAll(o => (Member)o);
@@ -65,7 +65,7 @@ namespace SurveyMonkey
         
         public Member GetMemberDetails(long groupId, long memberId)
         {
-            string endPoint = String.Format("/groups/{0}", groupId);
+            string endPoint = $"/groups/{groupId}";
             JToken result = MakeApiGetRequest(endPoint, new RequestData());
             var member = result.ToObject<Member>();
             return member;
