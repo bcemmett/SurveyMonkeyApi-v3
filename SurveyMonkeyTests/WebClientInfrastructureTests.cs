@@ -6,22 +6,30 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System;
+using SurveyMonkey.Containers;
+using System.Collections.Generic;
 
 namespace SurveyMonkeyTests
 {
-    [TestFixture]
+    [TestFixtureSource(typeof(AsyncTestFixtureSource))]
     public class WebClientInfrastructureTests
     {
+        private readonly bool _useAsync;
+        private const string CGetSurveyListResponse = "{\"per_page\":50,\"total\":2,\"data\":[{\"href\":\"url1\",\"id\":\"55249163\",\"title\":\"title1\"},{\"href\":\"url2\",\"id\":\"84672934\",\"title\":\"title2\"}],\"page\":17}";
+
+        public WebClientInfrastructureTests(bool useAsync)
+        {
+            _useAsync = useAsync;
+        }
+
         [Test]
         public void AuthenticationIsPassedToApi()
         {
             var client = new MockWebClient();
-            client.Responses.Add(@"
-                {""per_page"":50,""total"":2,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/55249163"",""id"":""55249163"",""title"":""All Question Types Test""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934"",""id"":""84672934"",""title"":""Two Question Survey""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/?page=1&per_page=50""}}
-            ");
+            client.Responses.Add(CGetSurveyListResponse);
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            api.GetSurveyList();
+            MakeARequest(api);
             
             Assert.AreEqual("application/json", client.Requests.First().Headers["Content-Type"]);
             Assert.AreEqual("bearer TestOAuthToken", client.Requests.First().Headers["Authorization"]);
@@ -37,37 +45,35 @@ namespace SurveyMonkeyTests
 
             var stopwatch = new Stopwatch();
             var client = new MockWebClient();
-            var repeatedResponse = @"
-                {""per_page"":50,""total"":2,""data"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/55249163"",""id"":""55249163"",""title"":""All Question Types Test""},{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934"",""id"":""84672934"",""title"":""Two Question Survey""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/?page=1&per_page=50""}}
-            ";
-            client.Responses.Add(repeatedResponse);
-            client.Responses.Add(repeatedResponse);
-            client.Responses.Add(repeatedResponse);
-            client.Responses.Add(repeatedResponse);
+
+            client.Responses.Add(CGetSurveyListResponse);
+            client.Responses.Add(CGetSurveyListResponse);
+            client.Responses.Add(CGetSurveyListResponse);
+            client.Responses.Add(CGetSurveyListResponse);
 
             var api = new SurveyMonkeyApi("token", client, 500);
 
             //Should be no rate limit first time
             stopwatch.Start();
-            api.GetSurveyList();
+            MakeARequest(api);
             Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, toleranceMilliseconds);
 
             //Second request should be rate limited
             stopwatch.Restart();
-            api.GetSurveyList();
+            MakeARequest(api);
             Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds - toleranceMilliseconds);
             Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds + toleranceMilliseconds);
             
             //Check subsequent requests are rate limited too
             stopwatch.Restart();
-            api.GetSurveyList();
+            MakeARequest(api);
             Assert.GreaterOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds - toleranceMilliseconds);
             Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, defaultRateLimitMilliseconds + toleranceMilliseconds);
 
             //If some time has elapsed, there should be no delay
             Thread.Sleep(1000);
             stopwatch.Restart();
-            api.GetSurveyList();
+            MakeARequest(api);
             Assert.LessOrEqual(stopwatch.ElapsedMilliseconds, toleranceMilliseconds);
         }
 
@@ -76,17 +82,16 @@ namespace SurveyMonkeyTests
         {
             var toleranceMilliseconds = 80;
 
-            var response = @"{""id"":""1234"",""name"":""Test Group"",""member_count"":1,""max_invites"":100,""date_created"":""2015-10-06T12:56:55+00:00""}";
             var client = new MockWebClient();
-            client.Responses.Add(response);
-            client.Responses.Add(response);
-            client.Responses.Add(response);
+            client.Responses.Add(CGetSurveyListResponse);
+            client.Responses.Add(CGetSurveyListResponse);
+            client.Responses.Add(CGetSurveyListResponse);
             client.Exceptions.Add(new WebException("1"));
             client.Exceptions.Add(new WebException("2"));
             client.Exceptions.Add(new WebException("3"));
             var api = new SurveyMonkeyApi("token", client, new [] { 1, 2 });
 
-            var exception = Assert.Throws<WebException>(delegate { api.GetGroupDetails(1234); });
+            var exception = Assert.Throws<WebException>(delegate { MakeARequest(api); });
             Assert.AreEqual("3", exception.Message);
             Assert.AreEqual(3, client.Requests.Count);
 
@@ -109,7 +114,7 @@ namespace SurveyMonkeyTests
             var client = new MockWebClient();
             client.Exceptions.Add(new WebException("1", null, WebExceptionStatus.SecureChannelFailure, null));
             var api = new SurveyMonkeyApi("token", client, new[] { 1, 2 });
-            var e = Assert.Throws<WebException>(delegate { api.GetSurveyList(); });
+            var e = Assert.Throws<WebException>(delegate { MakeARequest(api); });
             Assert.AreEqual(expectedMessage, e.Message);
         }
 
@@ -122,7 +127,7 @@ namespace SurveyMonkeyTests
             client.Exceptions.Add(new WebException("bla3"));
             client.Exceptions.Add(new WebException("bla4"));
             var api = new SurveyMonkeyApi("token", client, new[] { 1, 2 });
-            var e = Assert.Throws<WebException>(delegate { api.GetSurveyList(); });
+            var e = Assert.Throws<WebException>(delegate { MakeARequest(api); });
             Assert.AreEqual(3, client.Requests.Count);
             Assert.AreEqual("bla3", e.Message);
         }
@@ -130,16 +135,15 @@ namespace SurveyMonkeyTests
         [Test]
         public void ServiceUnavailableErrorIsRetried()
         {
-            var apiResponse = @"{""id"":""1234"",""name"":""Test Group"",""member_count"":1,""max_invites"":100,""date_created"":""2015-10-06T12:56:55+00:00""}";
             var errorResponse = new MockHttpWebResponse(String.Empty, HttpStatusCode.ServiceUnavailable);
             var client = new MockWebClient();
             client.Exceptions.Add(new WebException("Fail", null, WebExceptionStatus.MessageLengthLimitExceeded, errorResponse));
             client.Responses.Add(String.Empty);
-            client.Responses.Add(apiResponse);
+            client.Responses.Add(CGetSurveyListResponse);
             var api = new SurveyMonkeyApi("token", client, new[] { 1, 2, 3 });
-            var result = api.GetGroupDetails(1234);
+            var result = MakeARequest(api);
             Assert.AreEqual(2, client.Requests.Count);
-            Assert.AreEqual("Test Group", result.Name);
+            Assert.AreEqual("title2", result.Last().Title);
         }
 
         [Test]
@@ -153,7 +157,7 @@ namespace SurveyMonkeyTests
 
             client.Exceptions.Add(new WebException("OriginalFail", null, WebExceptionStatus.MessageLengthLimitExceeded, response));
             var api = new SurveyMonkeyApi("token", client, new[] { 1, 2, 3 });
-            var e = Assert.Throws<WebException>(delegate { api.GetSurveyList(); });
+            var e = Assert.Throws<WebException>(delegate { MakeARequest(api); });
             Assert.AreEqual(1, client.Requests.Count);
             Assert.AreEqual(expectedMessage, e.Message);
             Assert.AreEqual("OriginalFail", e.InnerException.Message);
@@ -169,10 +173,22 @@ namespace SurveyMonkeyTests
 
             client.Exceptions.Add(new WebException("OriginalFail", null, WebExceptionStatus.MessageLengthLimitExceeded, response));
             var api = new SurveyMonkeyApi("token", client, new[] { 1, 2, 3 });
-            var e = Assert.Throws<WebException>(delegate { api.GetSurveyList(); });
+            var e = Assert.Throws<WebException>(delegate { MakeARequest(api); });
             Assert.AreEqual(1, client.Requests.Count);
             Assert.AreEqual("OriginalFail", e.Message);
             Assert.IsNull(e.InnerException);
+        }
+
+        private List<Survey> MakeARequest(SurveyMonkeyApi api)
+        {
+            if (_useAsync)
+            {
+                return api.GetSurveyListAsync().GetAwaiter().GetResult();
+            }
+            else
+            {
+                return api.GetSurveyList();
+            }
         }
     }
 }
