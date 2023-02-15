@@ -181,14 +181,9 @@ namespace SurveyMonkeyTests
 
         private List<Survey> MakeARequest(SurveyMonkeyApi api)
         {
-            if (_useAsync)
-            {
-                return api.GetSurveyListAsync().GetAwaiter().GetResult();
-            }
-            else
-            {
-                return api.GetSurveyList();
-            }
+            return _useAsync
+                ? api.GetSurveyListAsync().GetAwaiter().GetResult()
+                : api.GetSurveyList();
         }
     }
 }
