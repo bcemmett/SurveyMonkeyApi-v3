@@ -78,7 +78,7 @@ namespace SurveyMonkey
             return responses;
         }
 
-        //Response list
+        //Responses list
         public List<Response> GetSurveyResponseOverviewList(long surveyId)
         {
             var settings = new GetResponseListSettings();

@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using System.Net;
 using NUnit.Framework;
 using SurveyMonkey;
 using SurveyMonkey.Containers;
@@ -8,9 +7,16 @@ using SurveyMonkey.Enums;
 
 namespace SurveyMonkeyTests
 {
-    [TestFixture]
+    [TestFixtureSource(typeof(AsyncTestFixtureSource))]
     public class WebhookTests
     {
+        private readonly bool _useAsync;
+
+        public WebhookTests(bool useAsync)
+        {
+            _useAsync = useAsync;
+        }
+
         [Test]
         public void GetWebhookListIsDeserialised()
         {
@@ -20,7 +26,9 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetWebhookList();
+            var results = _useAsync
+                ? api.GetWebhookListAsync().GetAwaiter().GetResult()
+                : api.GetWebhookList();
             Assert.AreEqual(1, client.Requests.Count);
             Assert.AreEqual(3618472, results.First().Id);
             Assert.AreEqual("Second webhook", results.Last().Name);
@@ -35,8 +43,9 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            
-            var result = api.GetWebhookDetails(3285187);
+            var result = _useAsync
+                ? api.GetWebhookDetailsAsync(3285187).GetAwaiter().GetResult()
+                : api.GetWebhookDetails(3285187);
             Assert.AreEqual("First webhook", result.Name);
             Assert.AreEqual(3285187, result.Id);
             Assert.AreEqual("http://targetsite.com/api/", result.SubscriptionUrl);
@@ -63,7 +72,9 @@ namespace SurveyMonkeyTests
                 ObjectIds = new List<long> { 49143218 }
             };
 
-            var result = api.CreateWebhook(webhook);
+            var result = _useAsync
+                ? api.CreateWebhookAsync(webhook).GetAwaiter().GetResult()
+                : api.CreateWebhook(webhook);
             Assert.AreEqual("New webhook", result.Name);
             Assert.AreEqual(3289918, result.Id);
             Assert.AreEqual("POST", client.Requests.First().Verb);
@@ -85,7 +96,9 @@ namespace SurveyMonkeyTests
                 ObjectIds = new List<long> { 49143218, 49146481 }
             };
 
-            var result = api.ModifyWebhook(3289918, webhook);
+            var result = _useAsync
+                ? api.ModifyWebhookAsync(3289918, webhook).GetAwaiter().GetResult()
+                : api.ModifyWebhook(3289918, webhook);
             Assert.AreEqual("First webhook", result.Name);
             Assert.AreEqual(3289918, result.Id);
             Assert.AreEqual("PATCH", client.Requests.First().Verb);
@@ -111,7 +124,9 @@ namespace SurveyMonkeyTests
                 ObjectIds = new List<long> { 49143218 }
             };
 
-            var result = api.ReplaceWebhook(3289918, webhook);
+            var result = _useAsync
+                ? api.ReplaceWebhookAsync(3289918, webhook).GetAwaiter().GetResult()
+                : api.ReplaceWebhook(3289918, webhook);
             Assert.AreEqual("New webhook", result.Name);
             Assert.AreEqual(3289918, result.Id);
             Assert.AreEqual("PUT", client.Requests.First().Verb);
@@ -128,7 +143,9 @@ namespace SurveyMonkeyTests
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
 
-            var result = api.DeleteWebhook(3289918);
+            var result = _useAsync
+                ? api.DeleteWebhookAsync(3289918).GetAwaiter().GetResult()
+                : api.DeleteWebhook(3289918);
             Assert.AreEqual("First webhook", result.Name);
             Assert.AreEqual(3289918, result.Id);
             Assert.AreEqual("DELETE", client.Requests.First().Verb);
