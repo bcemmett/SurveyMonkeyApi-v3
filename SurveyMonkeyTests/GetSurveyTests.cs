@@ -1,14 +1,23 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using SurveyMonkey;
 using SurveyMonkey.Enums;
+using SurveyMonkey.Containers;
 
 namespace SurveyMonkeyTests
 {
-    [TestFixture]
+    [TestFixtureSource(typeof(AsyncTestFixtureSource))]
     public class GetSurveyTests
     {
+        private readonly bool _useAsync;
+
+        public GetSurveyTests(bool useAsync)
+        {
+            _useAsync = useAsync;
+        }
+
         [Test]
         public void GetSurveyListIsDeserialised()
         {
@@ -18,7 +27,17 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetSurveyList();
+            
+            List<Survey> results;
+            if (_useAsync)
+            {
+                results = api.GetSurveyListAsync().GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = api.GetSurveyList();
+            }
+            
             Assert.AreEqual(1, client.Requests.Count);
             Assert.AreEqual(84718275, results.First().Id);
             Assert.AreEqual(@"https://api.surveymonkey.net/v3/surveys/84718275", results.First().Href);
@@ -40,7 +59,17 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetSurveyList();
+            
+            List<Survey> results;
+            if (_useAsync)
+            {
+                results = api.GetSurveyListAsync().GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = api.GetSurveyList();
+            }
+
             Assert.AreEqual(2999, results.Count);
             Assert.AreEqual(2999, results.Last().Id);
             Assert.AreEqual(1, results.First().Id);
@@ -64,7 +93,17 @@ namespace SurveyMonkeyTests
                 {""per_page"":1000,""total"":3000,""data"":[],""page"":4,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/?page=4&per_page=1000""}}
             ");
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetSurveyList();
+
+            List<Survey> results;
+            if (_useAsync)
+            {
+                results = api.GetSurveyListAsync().GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = api.GetSurveyList();
+            }
+
             Assert.AreEqual(3000, results.Count);
             Assert.AreEqual(3000, results.Last().Id);
             Assert.AreEqual(1, results.First().Id);
@@ -79,7 +118,17 @@ namespace SurveyMonkeyTests
                 {""response_count"":3,""page_count"":1,""buttons_text"":{""done_button"":""Done"",""prev_button"":""Prev"",""exit_button"":""Exit"",""next_button"":""Next""},""custom_variables"":{},""id"":""84672934"",""question_count"":2,""category"":""community"",""preview"":""http:\/\/www.surveymonkey.com\/r\/Preview\/?sm=5D7q7s9Ip1l2yW2UWuInqzCAAX34ti6xYe_2F8M_2FE1CvU_3D"",""language"":""en"",""date_modified"":""2016-09-13T07:30:00"",""title"":""Two Question Survey"",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D"",""summary_url"":""http:\/\/www.surveymonkey.com\/summary\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D"",""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934"",""date_created"":""2016-09-13T07:25:00"",""collect_url"":""http:\/\/www.surveymonkey.com\/collect\/list?sm=9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D"",""edit_url"":""http:\/\/www.surveymonkey.com\/create\/?sm=9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D""}
             ");
             var api = new SurveyMonkeyApi("token", client);
-            var results = api.GetSurveyOverview(84672934);
+
+            Survey results;
+            if (_useAsync)
+            {
+                results = api.GetSurveyOverviewAsync(84672934).GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = api.GetSurveyOverview(84672934);
+            }
+
             Assert.AreEqual(3, results.ResponseCount);
             Assert.AreEqual(1, results.PageCount);
             Assert.AreEqual("Done", results.ButtonsText.DoneButton);
@@ -110,7 +159,17 @@ namespace SurveyMonkeyTests
                 {""response_count"":0,""page_count"":2,""buttons_text"":{""done_button"":""Done"",""prev_button"":""Prev"",""exit_button"":""Exit"",""next_button"":""Next""},""custom_variables"":{ ""custvar_1"": ""one"", ""custvar_2"": ""two""},""nickname"":""Internal nickname"",""id"":""84718275"",""question_count"":2,""category"":""non-profit"",""preview"":""http:\/\/www.surveymonkey.com\/r\/Preview\/?sm=p2hLUoVMWDiMHvAyMM54c0dgHj5dMXyps4vu30ofkoE_3D"",""language"":""en"",""date_modified"":""2016-09-13T21:27:00"",""title"":""Two page survey"",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/AdWVZnUbwxtN65VGmI7A6PwvGUomM4FqZh394SA9Q9s_3D"",""pages"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84718275\/pages\/253894293"",""description"":""<div>Page 1<\/div>"",""questions"":[{""sorting"":null,""family"":""open_ended"",""subtype"":""single"",""required"":null,""visible"":true,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84718275\/pages\/253894293\/questions\/1013662081"",""headings"":[{""heading"":""Why is <strong>question<\/strong> 1?""}],""position"":1,""validation"":null,""id"":""1013662081"",""forced_ranking"":false}],""title"":""First page"",""position"":1,""id"":""253894293"",""question_count"":1},{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84718275\/pages\/253894451"",""description"":""<div>The second page<\/div>"",""questions"":[{""sorting"":null,""family"":""single_choice"",""subtype"":""menu"",""required"":null,""answers"":{""choices"":[{""visible"":true,""text"":""A"",""position"":1,""id"":""10568741072""},{""visible"":true,""text"":""B"",""position"":2,""id"":""10568741073""},{""visible"":true,""text"":""CCC"",""position"":3,""id"":""10568741074""}]},""visible"":true,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84718275\/pages\/253894451\/questions\/1013662957"",""headings"":[{""heading"":""Choose question two""}],""position"":1,""validation"":null,""id"":""1013662957"",""forced_ranking"":false}],""title"":""Page <span style=\""text-decoration: underline;\"">two<\/span>!"",""position"":2,""id"":""253894451"",""question_count"":1}],""summary_url"":""http:\/\/www.surveymonkey.com\/summary\/AdWVZnUbwxtN65VGmI7A6PwvGUomM4FqZh394SA9Q9s_3D"",""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84718275"",""date_created"":""2016-09-13T21:25:00"",""collect_url"":""http:\/\/www.surveymonkey.com\/collect\/list?sm=AdWVZnUbwxtN65VGmI7A6PwvGUomM4FqZh394SA9Q9s_3D"",""edit_url"":""http:\/\/www.surveymonkey.com\/create\/?sm=AdWVZnUbwxtN65VGmI7A6PwvGUomM4FqZh394SA9Q9s_3D""}
             ");
             var api = new SurveyMonkeyApi("token", client);
-            var results = api.GetSurveyOverview(84718275);
+
+            Survey results;
+            if (_useAsync)
+            {
+                results = api.GetSurveyDetailsAsync(84718275).GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = api.GetSurveyDetails(84718275);
+            }
+
             Assert.AreEqual(0, results.ResponseCount);
             Assert.AreEqual(2, results.PageCount);
             Assert.AreEqual("Done", results.ButtonsText.DoneButton);
@@ -167,7 +226,17 @@ namespace SurveyMonkeyTests
                 {""response_count"":0,""page_count"":1,""buttons_text"":{""done_button"":""Done"",""prev_button"":""Prev"",""exit_button"":"""",""next_button"":""Next""},""custom_variables"":{},""nickname"":"""",""id"":""111044731"",""question_count"":4,""category"":""just_for_fun"",""preview"":""http:\/\/www.surveymonkey.com\/r\/Preview\/?sm=3xPTLnQijuMipjifZ9k_2FVukjirLLPAKVfaBrf1JCs90_3D"",""is_owner"":true,""language"":""en"",""date_modified"":""2016-11-12T12:54:00"",""title"":""Display Options"",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/MObdzQVcRwjUOr76k_2FLcaHOV77NDCclQJrt1h8Oci_2B0_3D"",""pages"":[{""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/111044731\/pages\/26572098"",""description"":"""",""questions"":[{""display_options"":{""middle_label"":"""",""show_display_number"":true,""display_subtype"":null,""right_label"":"""",""display_type"":null,""custom_options"":{},""left_label"":""""},""sorting"":{""type"":""random"",""ignore_last"":false},""family"":""multiple_choice"",""subtype"":""vertical_two_col"",""required"":null,""answers"":{""other"":{""id"":""538437547"",""visible"":true,""is_answer_choice"":true,""apply_all_rows"":false,""text"":""Other (please specify)"",""position"":0,""num_chars"":50,""error_text"":""Please enter a comment."",""num_lines"":3},""choices"":[{""visible"":true,""text"":""first"",""position"":1,""id"":""538427822""},{""visible"":true,""text"":""second"",""position"":2,""id"":""538427823""},{""visible"":true,""text"":""third"",""position"":3,""id"":""538427824""}]},""visible"":true,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/111044731\/pages\/26572098\/questions\/66540434"",""headings"":[{""heading"":""Tickboxes""}],""position"":1,""validation"":{""sum_text"":"""",""min"":""0"",""text"":""The comment you entered is in an invalid format."",""sum"":null,""max"":""5000"",""type"":""text_length""},""id"":""66540434"",""forced_ranking"":false},{""display_options"":{""middle_label"":""Middle"",""show_display_number"":true,""display_subtype"":"""",""right_label"":""Rhs"",""display_type"":""slider"",""custom_options"":{""starting_position"":99,""option_set"":[""hide_numeric_input"",""adjusted_scale""],""step_size"":2},""left_label"":""The left""},""sorting"":null,""family"":""open_ended"",""subtype"":""single"",""required"":{""text"":""This question requires an answer."",""amount"":""0"",""type"":""all""},""visible"":true,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/111044731\/pages\/26572098\/questions\/66541489"",""headings"":[{""heading"":""Slider""}],""position"":2,""validation"":{""sum_text"":"""",""min"":""2"",""text"":""Please enter a whole number between {0} and {1}."",""sum"":null,""max"":""99"",""type"":""integer""},""id"":""66541489"",""forced_ranking"":false},{""display_options"":{""middle_label"":"""",""show_display_number"":true,""display_subtype"":""heart"",""right_label"":"""",""display_type"":""emoji"",""custom_options"":{""color"":""#D0021B"",""option_set"":[]},""left_label"":""""},""sorting"":null,""family"":""matrix"",""subtype"":""rating"",""required"":null,""answers"":{""rows"":[{""visible"":true,""text"":"""",""position"":1,""id"":""538438985""}],""choices"":[{""description"":"""",""weight"":1,""id"":""538438986"",""visible"":true,""is_na"":false,""text"":"""",""position"":1},{""description"":"""",""weight"":2,""id"":""538438987"",""visible"":true,""is_na"":false,""text"":"""",""position"":2},{""description"":"""",""weight"":3,""id"":""538438988"",""visible"":true,""is_na"":false,""text"":"""",""position"":3},{""description"":"""",""weight"":4,""id"":""538438989"",""visible"":true,""is_na"":false,""text"":"""",""position"":4},{""description"":"""",""weight"":5,""id"":""538438990"",""visible"":true,""is_na"":false,""text"":"""",""position"":5},{""description"":"""",""weight"":6,""id"":""538438991"",""visible"":true,""is_na"":false,""text"":"""",""position"":6}]},""visible"":true,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/111044731\/pages\/26572098\/questions\/66542392"",""headings"":[{""heading"":""StarRating""}],""position"":3,""validation"":null,""id"":""66542392"",""forced_ranking"":false},{""display_options"":{""middle_label"":"""",""show_display_number"":true,""display_subtype"":null,""right_label"":"""",""display_type"":null,""custom_options"":{},""left_label"":""""},""sorting"":null,""family"":""open_ended"",""subtype"":""numerical"",""required"":null,""answers"":{""rows"":[{""visible"":true,""text"":""One"",""position"":1,""id"":""538440163""},{""visible"":true,""text"":""Two"",""position"":2,""id"":""538440164""}]},""visible"":true,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/111044731\/pages\/26572098\/questions\/66542595"",""headings"":[{""heading"":""SumTextboxes""}],""position"":4,""validation"":{""sum_text"":""The choices need to add up to [enter sum here]."",""min"":null,""text"":""Please enter a number. Decimals, percentages, and non-numeric characters are not accepted."",""sum"":50,""max"":null,""type"":""integer""},""id"":""66542595"",""forced_ranking"":false}],""title"":"""",""position"":1,""id"":""26572098"",""question_count"":4}],""summary_url"":""http:\/\/www.surveymonkey.com\/summary\/MObdzQVcRwjUOr76k_2FLcaHOV77NDCclQJrt1h8Oci_2B0_3D"",""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/111044731"",""date_created"":""2016-11-12T11:58:00"",""collect_url"":""http:\/\/www.surveymonkey.com\/collect\/list?sm=MObdzQVcRwjUOr76k_2FLcaHOV77NDCclQJrt1h8Oci_2B0_3D"",""edit_url"":""http:\/\/www.surveymonkey.com\/create\/?sm=MObdzQVcRwjUOr76k_2FLcaHOV77NDCclQJrt1h8Oci_2B0_3D""}
             ");
             var api = new SurveyMonkeyApi("token", client);
-            var survey = api.GetSurveyDetails(111044731);
+
+            Survey survey;
+            if (_useAsync)
+            {
+                survey = api.GetSurveyDetailsAsync(111044731).GetAwaiter().GetResult();
+            }
+            else
+            {
+                survey = api.GetSurveyDetails(111044731);
+            }
+
 
             Assert.IsTrue(survey.Questions.First(q => q.Headings.First().Heading == "Tickboxes").DisplayOptions.ShowDisplayNumber);
             Assert.IsEmpty(survey.Questions.First(q => q.Headings.First().Heading == "Tickboxes").DisplayOptions.MiddleLabel);
@@ -198,7 +267,17 @@ namespace SurveyMonkeyTests
                 {""per_page"":1000,""total"":20,""data"":[{""name"":""Academic\/Research"",""id"":""academic\/research""},{""name"":""General Business"",""id"":""general_business""},{""name"":""Marketing"",""id"":""marketing""},{""name"":""Satisfaction"",""id"":""satisfaction""},{""name"":""Services"",""id"":""services""},{""name"":""Social and Political"",""id"":""social_and_political""},{""name"":""Most Popular"",""id"":""most_popular""},{""name"":""Benchmarkable"",""id"":""benchmarkable""},{""name"":""Community"",""id"":""community""},{""name"":""Customer Feedback"",""id"":""customer_feedback""},{""name"":""Demographics"",""id"":""demographics""},{""name"":""Education"",""id"":""education""},{""name"":""Events"",""id"":""events""},{""name"":""Healthcare"",""id"":""healthcare""},{""name"":""Human Resources"",""id"":""human_resources""},{""name"":""Industry Specific"",""id"":""industry_specific""},{""name"":""Just for Fun"",""id"":""just_for_fun""},{""name"":""Market Research"",""id"":""market_research""},{""name"":""Nonprofit "",""id"":""nonprofit_""},{""name"":""Political"",""id"":""political""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/survey_categories\/?page=1&per_page=1000""}}
             ");
             var api = new SurveyMonkeyApi("token", client);
-            var results = api.GetSurveyCategoryList();
+            
+            List<SurveyCategory> results;
+            if (_useAsync)
+            {
+                results = api.GetSurveyCategoryListAsync().GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = api.GetSurveyCategoryList();
+            }
+
             Assert.AreEqual(20, results.Count);
             Assert.AreEqual("Academic/Research", results.First().Name);
             Assert.AreEqual("political", results.Last().Id);
@@ -212,7 +291,17 @@ namespace SurveyMonkeyTests
                 {""per_page"":1000,""total"":5,""data"":[{""category"":""most_popular"",""available"":true,""num_questions"":10,""name"":""Customer Satisfaction Survey Template"",""title"":""Customer Satisfaction Survey Template"",""preview_link"":""https:\/\/www.surveymonkey.com\/s.aspx?PREVIEW_MODE=DO_NOT_USE_THIS_LINK_FOR_COLLECTION&sm=ozqhZSBsM2xIkL8TbEOPeZ5bLN1dHhmKbD8dHzREAoc_3D"",""id"":""293"",""description"":""Your customers can make or break your business. Hear from them directly about what you're doing well and what you need to improve.""},{""category"":""most_popular"",""available"":true,""num_questions"":42,""name"":""Employee Engagement Survey Template"",""title"":""Employee Engagement Survey Template"",""preview_link"":""https:\/\/www.surveymonkey.com\/s.aspx?PREVIEW_MODE=DO_NOT_USE_THIS_LINK_FOR_COLLECTION&sm=_2BhBMbCXiwc3fQfRxWBFkApa5LJLP_2FOdl0hwcUWYL8X8_3D"",""id"":""607"",""description"":""Find out how your employees really feel about their job and get the feedback you need to keep them happy.""},{""category"":""most_popular"",""available"":true,""num_questions"":10,""name"":""Market Research - Product Testing Template"",""title"":""Market Research - Product Testing Template"",""preview_link"":""https:\/\/www.surveymonkey.com\/s.aspx?PREVIEW_MODE=DO_NOT_USE_THIS_LINK_FOR_COLLECTION&sm=WJLO4njvoZ3NYX6CG9w6ivSam_2Bp2U8GMYCOHa128Vdo_3D"",""id"":""319"",""description"":""Launching a new product isn't easy. Verify you have the right audience and get input on what people think of your offerings before going to market.""},{""category"":""most_popular"",""available"":true,""num_questions"":8,""name"":""Net Promoter\u00ae Score (NPS) Template"",""title"":""Net Promoter\u00ae Score (NPS) Template"",""preview_link"":""https:\/\/www.surveymonkey.com\/s.aspx?PREVIEW_MODE=DO_NOT_USE_THIS_LINK_FOR_COLLECTION&sm=C_2BM25IB2iGqbXDRdOlT7cngvJiifF4WynQ4iXicx3fo_3D"",""id"":""257"",""description"":""Gather customer feedback using Net Promoter\u00ae Score. (Net Promoter Score is a trademark of Satmetrix Systems, Inc, F. Reichheld, and Bain & Company)""},{""category"":""most_popular"",""available"":true,""num_questions"":6,""name"":""Software and App Customer Feedback with NPS\u00ae"",""title"":""Software and App Customer Feedback with NPS\u00ae"",""preview_link"":""https:\/\/www.surveymonkey.com\/s.aspx?PREVIEW_MODE=DO_NOT_USE_THIS_LINK_FOR_COLLECTION&sm=JRNfSqTXNKpyTHnksTyPFCjwqNAewHYHXGijTZfr5eg_3D"",""id"":""1115"",""description"":""Would your customers recommend your software or app to others? Survey your customers to learn how your software or app performs against key drivers of NPS.""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/survey_templates\/?page=1&per_page=1000""}}
             ");
             var api = new SurveyMonkeyApi("token", client);
-            var results = api.GetSurveyTemplateList();
+
+            List<SurveyTemplate> results;
+            if (_useAsync)
+            {
+                results = api.GetSurveyTemplateListAsync().GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = api.GetSurveyTemplateList();
+            }
+
             Assert.AreEqual(5, results.Count);
             Assert.IsTrue(results.First().Available);
             Assert.AreEqual("most_popular", results.First().Category);
@@ -232,7 +321,17 @@ namespace SurveyMonkeyTests
                 {""per_page"":100,""total"":20,""data"":[{""id"":""171499222"",""position"":1,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222"",""description"":""Description of page 1"",""title"":""Multiple choice 1 answer, choices as buttons 1 col""},{""id"":""171500785"",""position"":2,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171500785"",""description"":""Description of page 2"",""title"":""Multiple choice 1 answer, choices as buttons 2 cols""},{""id"":""171500884"",""position"":3,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171500884"",""description"":""Description of page 3"",""title"":""Multiple choice 1 answer, choices as buttons 3 cols""},{""id"":""171501162"",""position"":4,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171501162"",""description"":""Description of page 4"",""title"":""Multiple choice 1 answer, choices as horizontal buttons""},{""id"":""171501458"",""position"":5,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171501458"",""description"":""Description of page 5"",""title"":""Multiple choice 1 answer, choices as dropdown menu""},{""id"":""171502085"",""position"":6,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171502085"",""description"":""Description of page 6"",""title"":""Multiple choice multiple answers, choices as buttons 1 col""},{""id"":""171502501"",""position"":7,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171502501"",""description"":""Description of page 7"",""title"":""Multiple choice multiple answers, choices as buttons 2 cols""},{""id"":""171502908"",""position"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171502908"",""description"":""Description of page 8"",""title"":""Multiple choice multiple answers, choices as buttons 3 cols""},{""id"":""171503187"",""position"":9,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171503187"",""description"":""Description of page 9"",""title"":""Multiple choice multiple answers, choices as horizontal buttons""},{""id"":""171503545"",""position"":10,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171503545"",""description"":""Description of page 10"",""title"":""Essay box page""},{""id"":""171504307"",""position"":11,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171504307"",""description"":""Description for page 11"",""title"":""Ranking page""},{""id"":""171504521"",""position"":12,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171504521"",""description"":""Description for page 12"",""title"":""Rating page without n\/a""},{""id"":""171505204"",""position"":13,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171505204"",""description"":""Description for page 13"",""title"":""Rating page with n\/a""},{""id"":""171505369"",""position"":14,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171505369"",""description"":""Description for page 14"",""title"":""Matrix of choices page, one per row""},{""id"":""171506114"",""position"":15,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171506114"",""description"":""Description for page 15"",""title"":""Matrix of choices page, multiple per row""},{""id"":""171506258"",""position"":16,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171506258"",""description"":""Description for page 16"",""title"":""Matrix of dropdowns page""},{""id"":""171506770"",""position"":17,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171506770"",""description"":""Description for page 17"",""title"":""Textboxes page""},{""id"":""171507155"",""position"":18,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171507155"",""description"":""Description for page 18"",""title"":""Misc presentational page""},{""id"":""171507538"",""position"":19,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171507538"",""description"":""Description for page 19"",""title"":""Date and time page""},{""id"":""171508354"",""position"":20,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171508354"",""description"":""Description of page 20"",""title"":""Demographics page""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages?page=1&per_page=100""}}
             ");
             var api = new SurveyMonkeyApi("token", client);
-            var results = api.GetPageList(53774320);
+
+            List<Page> results;
+            if (_useAsync)
+            {
+                results = api.GetPageListAsync(53774320).GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = api.GetPageList(53774320);
+            }
+
             Assert.AreEqual(20, results.Count);
             Assert.AreEqual("Description of page 1", results.First().Description);
             Assert.AreEqual("https://api.surveymonkey.net/v3/surveys/53774320/pages/171499222", results.First().Href);
@@ -250,7 +349,17 @@ namespace SurveyMonkeyTests
                 {""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222"",""description"":""Description of page 1"",""title"":""Multiple choice 1 answer, choices as buttons 1 col"",""position"":1,""id"":""171499222"",""question_count"":3}
             ");
             var api = new SurveyMonkeyApi("token", client);
-            var results = api.GetPageDetails(53774320, 171499222);
+
+            Page results;
+            if (_useAsync)
+            {
+                results = api.GetPageDetailsAsync(53774320, 171499222).GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = api.GetPageDetails(53774320, 171499222);
+            }
+
             Assert.AreEqual("Description of page 1", results.Description);
             Assert.AreEqual("https://api.surveymonkey.net/v3/surveys/53774320/pages/171499222", results.Href);
             Assert.AreEqual(171499222, results.Id);
@@ -267,7 +376,17 @@ namespace SurveyMonkeyTests
                 {""per_page"":100,""total"":3,""data"":[{""position"":1,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222\/questions\/673465896"",""heading"":""Text for multiple choice (1 answer), display choices as buttons (1 column), no comment"",""id"":""673465896""},{""position"":2,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222\/questions\/673467411"",""heading"":""Text for multiple choice (1 answer), display choices as buttons (1 column), with comment"",""id"":""673467411""},{""position"":3,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222\/questions\/673467997"",""heading"":""Text for multiple choice (1 answer), display choices as buttons (1 column), with comment as answer choice"",""id"":""673467997""}],""page"":1,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222\/questions?page=1&per_page=100""}}
             ");
             var api = new SurveyMonkeyApi("token", client);
-            var results = api.GetQuestionList(53774320, 171499222);
+
+            List<Question> results;
+            if (_useAsync)
+            {
+                results = api.GetQuestionListAsync(53774320, 171499222).GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = api.GetQuestionList(53774320, 171499222);
+            }
+
             Assert.AreEqual(3, results.Count);
             Assert.AreEqual("Text for multiple choice (1 answer), display choices as buttons (1 column), no comment", results.First().Heading);
             Assert.AreEqual("https://api.surveymonkey.net/v3/surveys/53774320/pages/171499222/questions/673465896", results.First().Href);
@@ -284,7 +403,17 @@ namespace SurveyMonkeyTests
                 {""sorting"":null,""family"":""single_choice"",""subtype"":""vertical"",""required"":null,""answers"":{""choices"":[{""visible"":true,""text"":""First Answer"",""position"":1,""id"":""7761126552""},{""visible"":true,""text"":""Second Answer"",""position"":2,""id"":""7761126553""},{""visible"":true,""text"":""Third Answer"",""position"":3,""id"":""7761126554""},{""visible"":true,""text"":""Fourth Answer"",""position"":4,""id"":""7761126555""},{""visible"":true,""text"":""Fifth Answer"",""position"":5,""id"":""7761126556""}]},""visible"":true,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/53774320\/pages\/171499222\/questions\/673465896"",""headings"":[{""heading"":""Text for multiple choice (1 answer), display choices as buttons (1 column), no comment""}],""position"":1,""validation"":null,""id"":""673465896"",""forced_ranking"":false}
             ");
             var api = new SurveyMonkeyApi("token", client);
-            var results = api.GetQuestionDetails(53774320, 171499222, 673465896);
+
+            Question results;
+            if (_useAsync)
+            {
+                results = api.GetQuestionDetailsAsync(53774320, 171499222, 673465896).GetAwaiter().GetResult();
+            }
+            else
+            {
+                results = api.GetQuestionDetails(53774320, 171499222, 673465896);
+            }
+
             Assert.AreEqual("https://api.surveymonkey.net/v3/surveys/53774320/pages/171499222/questions/673465896", results.Href);
             Assert.AreEqual(673465896, results.Id);
             Assert.AreEqual(1, results.Position);

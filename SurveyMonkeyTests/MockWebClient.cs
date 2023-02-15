@@ -76,14 +76,14 @@ namespace SurveyMonkeyTests
         {
         }
 
-        public Task<string> DownloadStringTaskAsync(string url)
+        public async Task<string> DownloadStringTaskAsync(string url)
         {
-            throw new NotImplementedException();
+            return DownloadString(url);
         }
 
-        public Task<string> UploadStringTaskAsync(string url, string verb, string body)
+        public async Task<string> UploadStringTaskAsync(string url, string verb, string body)
         {
-            throw new NotImplementedException();
+            return UploadString(url, verb, body);
         }
 
         #endregion
