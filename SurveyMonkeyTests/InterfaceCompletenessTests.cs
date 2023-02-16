@@ -23,11 +23,12 @@ namespace SurveyMonkeyTests
                 !c.IsSpecialName
                 && !interfaceMethods.Any(i => i.Name == c.Name)
                 && !allowedExceptions.Contains(c.Name)
+                && !c.GetCustomAttributes<ObsoleteAttribute>().Any()
                 );
 
             Assert.IsNotEmpty(concreteMethods);
             Assert.IsNotEmpty(interfaceMethods);
-            Assert.IsEmpty(missing, String.Join(",", missing.Select(m => m.Name)));
+            Assert.IsEmpty(missing, "Missing:" + Environment.NewLine + String.Join(Environment.NewLine, missing.Select(m => m.Name)));
         }
 
         [Test]
@@ -47,7 +48,7 @@ namespace SurveyMonkeyTests
 
             Assert.IsNotEmpty(concreteProperties);
             Assert.IsNotEmpty(interfaceProperties);
-            Assert.IsEmpty(missing, String.Join(",", missing.Select(m => m.Name)));
+            Assert.IsEmpty(missing, "Missing:" + Environment.NewLine + String.Join(Environment.NewLine, missing.Select(m => m.Name)));
         }
 
         private IEnumerable<MethodInfo> GetMethods(Type type)
