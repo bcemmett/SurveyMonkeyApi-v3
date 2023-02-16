@@ -5,6 +5,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Threading.Tasks;
 using SurveyMonkey;
 
 namespace SurveyMonkeyTests
@@ -73,6 +74,16 @@ namespace SurveyMonkeyTests
 
         public void Dispose()
         {
+        }
+
+        public async Task<string> DownloadStringTaskAsync(string url)
+        {
+            return DownloadString(url);
+        }
+
+        public async Task<string> UploadStringTaskAsync(string url, string verb, string body)
+        {
+            return UploadString(url, verb, body);
         }
 
         #endregion

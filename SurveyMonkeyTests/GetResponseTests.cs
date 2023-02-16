@@ -7,9 +7,16 @@ using SurveyMonkey.RequestSettings;
 
 namespace SurveyMonkeyTests
 {
-    [TestFixture]
+    [TestFixtureSource(typeof(AsyncTestFixtureSource))]
     public class GetResponseTests
     {
+        private readonly bool _useAsync;
+
+        public GetResponseTests(bool useAsync)
+        {
+            _useAsync = useAsync;
+        }
+
         [Test]
         public void GetSurveyResponseDetailListIsDeserialised()
         {
@@ -19,7 +26,11 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetSurveyResponseDetailsList(84672934);
+
+            var results = _useAsync
+                ? api.GetSurveyResponseDetailsListAsync(84672934).GetAwaiter().GetResult()
+                : api.GetSurveyResponseDetailsList(84672934);
+
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
@@ -56,7 +67,9 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetSurveyResponseOverviewList(84672934);
+            var results = _useAsync
+                ? api.GetSurveyResponseOverviewListAsync(84672934).GetAwaiter().GetResult()
+                : api.GetSurveyResponseOverviewList(84672934);
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
@@ -89,7 +102,9 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetCollectorResponseDetailsList(91395530);
+            var results = _useAsync
+                ? api.GetCollectorResponseDetailsListAsync(91395530).GetAwaiter().GetResult()
+                : api.GetCollectorResponseDetailsList(91395530);
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
@@ -126,7 +141,9 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetCollectorResponseOverviewList(91395530);
+            var results = _useAsync
+                ? api.GetCollectorResponseOverviewListAsync(91395530).GetAwaiter().GetResult()
+                : api.GetCollectorResponseOverviewList(91395530);
             Assert.AreEqual(1, client.Requests.Count);
 
             Assert.AreEqual(4968420283, results.First().Id);
@@ -165,7 +182,9 @@ namespace SurveyMonkeyTests
             ");
 
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetSurveyResponseDetailsList(84672934);
+            var results = _useAsync
+                ? api.GetSurveyResponseDetailsListAsync(84672934).GetAwaiter().GetResult()
+                : api.GetSurveyResponseDetailsList(84672934);
             Assert.AreEqual(299, results.Count);
             Assert.AreEqual(299, results.Last().Id);
             Assert.AreEqual(1, results.First().Id);
@@ -189,7 +208,9 @@ namespace SurveyMonkeyTests
                 {""per_page"":100,""total"":300,""data"":[],""page"":4,""links"":{""self"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/?page=4&per_page=100""}}
             ");
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var results = api.GetCollectorResponseDetailsList(91395530, new GetResponseListSettings {Custom = "asdf"});
+            var results = _useAsync
+                ? api.GetCollectorResponseDetailsListAsync(91395530, new GetResponseListSettings { Custom = "asdf" }).GetAwaiter().GetResult()
+                : api.GetCollectorResponseDetailsList(91395530, new GetResponseListSettings { Custom = "asdf" });
             Assert.AreEqual(300, results.Count);
             Assert.AreEqual(300, results.Last().Id);
             Assert.AreEqual(1, results.First().Id);
@@ -216,51 +237,75 @@ namespace SurveyMonkeyTests
             client.Responses.Add(standardIndividualResponse);
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
 
-            api.GetSurveyResponseDetailsList(1);
+            var a = _useAsync
+                ? api.GetSurveyResponseDetailsListAsync(1).GetAwaiter().GetResult()
+                : api.GetSurveyResponseDetailsList(1);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/1/responses/bulk", client.Requests.Last().Url);
             Assert.AreEqual("true", client.Requests.Last().QueryString["simple"]);
 
-            api.GetCollectorResponseDetailsList(2);
+            var b = _useAsync
+                ? api.GetCollectorResponseDetailsListAsync(2).GetAwaiter().GetResult()
+                : api.GetCollectorResponseDetailsList(2);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/2/responses/bulk", client.Requests.Last().Url);
             Assert.AreEqual("true", client.Requests.Last().QueryString["simple"]);
 
-            api.GetSurveyResponseOverviewList(3);
+            var c = _useAsync
+                ? api.GetSurveyResponseOverviewListAsync(3).GetAwaiter().GetResult()
+                : api.GetSurveyResponseOverviewList(3);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/3/responses", client.Requests.Last().Url);
             Assert.IsNull(client.Requests.Last().QueryString["simple"]);
 
-            api.GetCollectorResponseOverviewList(4);
+            var d = _useAsync
+                ? api.GetCollectorResponseOverviewListAsync(4).GetAwaiter().GetResult()
+                : api.GetCollectorResponseOverviewList(4);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/4/responses", client.Requests.Last().Url);
             Assert.IsNull(client.Requests.Last().QueryString["simple"]);
 
-            api.GetSurveyResponseDetailsList(5, new GetResponseListSettings());
+            var e = _useAsync
+                ? api.GetSurveyResponseDetailsListAsync(5, new GetResponseListSettings()).GetAwaiter().GetResult()
+                : api.GetSurveyResponseDetailsList(5, new GetResponseListSettings());
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/5/responses/bulk", client.Requests.Last().Url);
             Assert.AreEqual("true", client.Requests.Last().QueryString["simple"]);
 
-            api.GetCollectorResponseDetailsList(6, new GetResponseListSettings());
+            var f = _useAsync
+                ? api.GetCollectorResponseDetailsListAsync(6, new GetResponseListSettings()).GetAwaiter().GetResult()
+                : api.GetCollectorResponseDetailsList(6, new GetResponseListSettings());
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/6/responses/bulk", client.Requests.Last().Url);
             Assert.AreEqual("true", client.Requests.Last().QueryString["simple"]);
 
-            api.GetSurveyResponseOverviewList(7,new GetResponseListSettings());
+            var g = _useAsync
+                ? api.GetSurveyResponseOverviewListAsync(7, new GetResponseListSettings()).GetAwaiter().GetResult()
+                : api.GetSurveyResponseOverviewList(7,new GetResponseListSettings());
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/7/responses", client.Requests.Last().Url);
             Assert.IsNull(client.Requests.Last().QueryString["simple"]);
 
-            api.GetCollectorResponseOverviewList(8, new GetResponseListSettings());
+            var h = _useAsync
+                ? api.GetCollectorResponseOverviewListAsync(8, new GetResponseListSettings()).GetAwaiter().GetResult()
+                : api.GetCollectorResponseOverviewList(8, new GetResponseListSettings());
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/8/responses", client.Requests.Last().Url);
             Assert.IsNull(client.Requests.Last().QueryString["simple"]);
 
-            api.GetSurveyResponseDetails(9, 10);
+            var i = _useAsync
+                ? api.GetSurveyResponseDetailsAsync(9, 10).GetAwaiter().GetResult()
+                : api.GetSurveyResponseDetails(9, 10);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/9/responses/10/details", client.Requests.Last().Url);
             Assert.AreEqual("true", client.Requests.Last().QueryString["simple"]);
 
-            api.GetCollectorResponseDetails(11, 12);
+            var j = _useAsync
+                ? api.GetCollectorResponseDetailsAsync(11, 12).GetAwaiter().GetResult()
+                : api.GetCollectorResponseDetails(11, 12);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/11/responses/12/details", client.Requests.Last().Url);
             Assert.AreEqual("true", client.Requests.Last().QueryString["simple"]);
 
-            api.GetSurveyResponseOverview(13, 14);
+            var k = _useAsync
+                ? api.GetSurveyResponseOverviewAsync(13, 14).GetAwaiter().GetResult()
+                : api.GetSurveyResponseOverview(13, 14);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/surveys/13/responses/14", client.Requests.Last().Url);
             Assert.IsNull(client.Requests.Last().QueryString["simple"]);
 
-            api.GetCollectorResponseOverview(15, 16);
+            var l = _useAsync
+                ? api.GetCollectorResponseOverviewAsync(15, 16).GetAwaiter().GetResult()
+                : api.GetCollectorResponseOverview(15, 16);
             Assert.AreEqual(@"https://api.surveymonkey.com/v3/collectors/15/responses/16", client.Requests.Last().Url);
             Assert.IsNull(client.Requests.Last().QueryString["simple"]);
         }
@@ -273,7 +318,9 @@ namespace SurveyMonkeyTests
                 {""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/surveys\/84672934\/responses\/4968420283"",""custom_variables"":{""custvar_1"":""one"",""custvar_2"":""two""},""ip_address"":""18.187.48.612"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""pages"":[{""id"":""253784818"",""questions"":[{""id"":""1013185278"",""answers"":[{""choice_id"":""10565315476""}]},{""id"":""1013185659"",""answers"":[{""text"":""22222""}]}]}],""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}}
             ");
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var result = api.GetSurveyResponseDetails(84672934, 4968420283);
+            var result = _useAsync
+                ? api.GetSurveyResponseDetailsAsync(84672934, 4968420283).GetAwaiter().GetResult()
+                : api.GetSurveyResponseDetails(84672934, 4968420283);
 
             Assert.AreEqual(@"http://www.surveymonkey.com/analyze/browse/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283", result.AnalyzeUrl);
             Assert.AreEqual(CollectionMode.Default, result.CollectionMode);
@@ -307,7 +354,9 @@ namespace SurveyMonkeyTests
                 {""total_time"":8,""href"":""https:\/\/api.surveymonkey.net\/v3\/collectors\/91395530\/responses\/4968420283"",""custom_variables"":{},""ip_address"":""18.187.48.612"",""id"":""4968420283"",""logic_path"":{},""date_modified"":""2016-09-13T07:29:09+00:00"",""response_status"":""completed"",""custom_value"":"""",""analyze_url"":""http:\/\/www.surveymonkey.com\/analyze\/browse\/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283"",""page_path"":[],""recipient_id"":"""",""collector_id"":""91395530"",""date_created"":""2016-09-13T07:29:01+00:00"",""survey_id"":""84672934"",""collection_mode"":""default"",""edit_url"":""http:\/\/www.surveymonkey.com\/r\/?sm=db1E_2B5FvGitK17_2F_2F8_2Blnhcl_2BCTwKHT5dPY9EBCDJmi8tUeGDo34qJJ5CuL7ceRS7"",""metadata"":{}}
             ");
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var result = api.GetCollectorResponseDetails(84672934, 4968420283);
+            var result = _useAsync
+                ? api.GetCollectorResponseDetailsAsync(84672934, 4968420283).GetAwaiter().GetResult()
+                : api.GetCollectorResponseDetails(84672934, 4968420283);
 
             Assert.AreEqual(@"http://www.surveymonkey.com/analyze/browse/9GyriWHWhcPYK8l_2FdYdcIEvqmtt5hBjuRL79fS2mOFI_3D?respondent_id=4968420283", result.AnalyzeUrl);
             Assert.AreEqual(CollectionMode.Default, result.CollectionMode);
@@ -352,7 +401,9 @@ namespace SurveyMonkeyTests
             var client = new MockWebClient();
             client.Responses.Add(json);
             var api = new SurveyMonkeyApi("TestOAuthToken", client);
-            var response = api.GetSurveyResponseDetails(1, 1);
+            var response = _useAsync
+                ? api.GetSurveyResponseDetailsAsync(1, 1).GetAwaiter().GetResult()
+                : api.GetSurveyResponseDetails(1, 1);
             Assert.AreEqual(directEmail, response.EmailFromDirectReferenceToEmail);
             Assert.AreEqual(directEmailAddress, response.EmailFromDirectReferenceToEmailAddress);
             Assert.AreEqual(metadataEmail, response.Metadata?.Contact == null ? null : response.Metadata.Contact.ContainsKey("email") ? response.Metadata.Contact["email"].Value : null);
